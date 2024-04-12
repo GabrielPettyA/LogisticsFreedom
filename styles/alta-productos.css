@@ -1,0 +1,27 @@
+body{
+  background-image: linear-gradient(135deg,var(--blue),var(--green));
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardSection{
+  padding: 2rem 0;
+  width: 95%;
+  background-color: var(--lgray);
+  min-height: 60vh;
+  border-radius: 1rem;
+}
+
+.title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.formulario{
+  width: 95%;
+  margin: auto;
+}

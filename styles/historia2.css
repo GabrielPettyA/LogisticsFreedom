@@ -1,0 +1,113 @@
+body {
+  background-image: linear-gradient(180deg, var(--blue), var(--green));
+  height: 100%;
+  width: 100%;
+  padding: 0%;
+  min-width: 679px;
+  min-height: 850px;
+}
+
+header {
+  background-color: dodgerblue;
+  margin-top: 15px;
+  margin-left: 4px;
+  border-radius: 25px;
+  border-top-left-radius: 75px;
+  border-bottom-left-radius: 75px;
+  font-size: x-large;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+
+  .logo {
+    margin-top: 8px;
+    margin-left: 8px;
+    border-radius: 70%;
+    height: auto;
+    width: 10%;
+  }
+}
+
+div h2 {
+  font-family: 'Courier New', Courier, monospace;
+  text-decoration-line: underline;
+  margin-left: 7px;
+}
+
+div h3 {
+  margin-left: 95px;
+}
+
+.parrafo1 {
+  margin-left: 180px;
+  width: 75%;
+  text-align: justify;
+}
+
+#meta {
+  margin-left: 7px;
+  margin-top: 80px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.parrafo2 {
+  margin-top: 30px;
+  margin-left: 3%;
+  margin-right: 3%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: justify;
+}
+
+.nuestraMeta {
+  display:flex;
+  margin: auto;
+  
+}
+
+.logoCuadrado {
+  display: flex;
+  height: 100px;/* AGREGADO */
+  margin-left: 0px;
+  margin-right: 5%;
+  
+}
+
+.crecimiento {
+  margin: 6.5%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: xx-large;
+}
+
+.cierre {
+  display: flex;
+  width: auto;
+  height: auto;
+  margin: auto;
+}
+
+#fEmpresa {
+  width: 300px;
+  height: 250px;
+  padding: 1%;
+  display: block;
+  margin: auto;
+}
+
+.volver {
+  margin-top: 1%;
+  height: auto;
+  width: 100%;
+  margin-bottom: 4%;
+}
+.volver a{
+  color: black;
+  font-size: xx-large;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 45%;
+  text-decoration-color:rgb(30, 106, 237);
+  transition: 1s ease;
+}
+.volver a:hover{
+    color:rgb(30, 106, 237);;
+    text-decoration-color: rgb(6, 6, 6);
+}
+
+

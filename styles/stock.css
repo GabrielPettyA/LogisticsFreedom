@@ -1,0 +1,27 @@
+body{
+    background-image: linear-gradient(135deg,var(--blue),var(--green));
+    min-height: 100vh;
+}
+
+main{
+    width: 95%;
+    background-color: var(--lgray);
+    border-radius: 1rem;
+    min-height: 40vh;
+    padding: 2rem 0;
+    margin: 8rem auto;
+
+}
+
+#tableStock{
+    width: 95%;
+    margin: auto;
+}
+
+.stock_title{
+    text-align: center;
+}
+
+.tab_h{
+    text-align: center;
+}

@@ -1,0 +1,21 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, sans-serif;
+}
+
+:root{
+    --green: #30ec5c;
+    --blue: #0f77e6;
+    --lgray: #f5f5f5;
+    --dgray: #c5c5c5;
+}
+
+.botones{
+    margin: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
