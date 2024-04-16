@@ -1,0 +1,55 @@
+body{
+  min-width: 82vh;
+  min-height: 100vh;
+  height: auto;
+  padding: 0;
+  border: 0;
+}
+
+.cardSection{
+  width: 98%;
+  height: 100%;
+  padding: 0;
+}
+
+.formulario{
+  width: 100%;
+  padding: 10px 0px;
+  box-shadow: 0 0 10px rbga(0,0,0,.2);
+  
+}
+
+#container > div{
+  width: auto;
+  height: 100%;
+  gap: 2px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+#container{
+  width: 100%;
+  height: auto;
+  display:inline-block;
+  
+}
+
+#borrar{
+  width: 25px;
+  height: 30px;
+  color: rgb(255, 17, 17);
+  margin-left: 5px;
+  background-color: rgb(232, 208, 208);
+  border-radius: 25%;
+  text-align: center;
+  justify-content: center;
+}
+
+#cant{
+  margin-left: 7px;
+}
+
+#prod{
+  margin-left: 6px;
+}
+

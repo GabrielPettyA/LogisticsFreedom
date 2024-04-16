@@ -1,8 +1,7 @@
 <?php 
-  echo"esto es baja de orden";
-
+  echo"baja orden";
   ?>
-<a href="../index.php"> Volver </a>
-
-<?php 
-?>
+  <a href="../index.php"> Volver </a>
+  
+  <?php 
+  ?>

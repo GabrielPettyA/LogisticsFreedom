@@ -1,0 +1,86 @@
+/*CSS DE infoInstitucional.php y DE borrarMensaje.php*/
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Times New Roman', Times, serif;
+  background-color: rgba(156, 133, 199, 0.473);
+}
+body{
+  min-width: 120vh;
+}
+.titulo{
+  background-color: rgb(156, 133, 199);
+  border-style:double;
+  margin: 1%;
+  border-color: black;
+  min-width: 115vh;
+}
+.container{
+  min-width: 115vh;
+}
+h2{
+  width: auto;
+  display: flex;
+  font-size: xx-large;
+  margin-left: 38%;
+}
+.calendario{
+  color: rgb(8, 8, 8); 
+}
+.form-control{
+  background-color: rgb(241, 213, 213);
+  width: 10%;
+  font-size: large;
+  margin-left: 2%;
+}
+.btnBuscar{
+  background-color: rgb(226, 173, 226);
+  text-align: center;
+  font-size: large;
+  width: 14.3%;
+  border-color: aqua;
+  margin-left: 3.2%;
+}
+.btnBuscar:hover{
+  color: rgb(202, 245, 12);
+  font-style: italic;
+  background-color: rgba(0, 0, 255, 0.623);
+  margin-top: 0.25%;
+  margin-left: 4.2%;
+  border-style: groove;
+  border-color: yellow;
+  transition:all 450ms ease-out;
+}
+.tablaInicio{
+  background-color: rgb(0, 0, 0);
+  width: 100%;
+  font-size: large;
+  line-height: 150%;
+  justify-content:space-between;
+}
+.tablaInicio td{
+  background-color: rgba(104, 207, 109, 0.521);
+}
+.tablaInicio .nombre{
+  background-color: rgba(207, 197, 104, 0.521);
+}
+.tablaInicio .fecha{
+  background-color: rgba(207, 197, 104, 0.521);
+  text-align: center;
+}
+
+.volver{
+  margin-left: 2%;
+  margin-bottom: 1%;
+}
+.volver .pPrincipal{
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+.volver .pPrincipal:hover{
+  color: rgb(252, 227, 227);
+  text-decoration:underline;
+  transition: all 600ms ease;
+  font-style: italic;
+}
