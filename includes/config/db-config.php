@@ -52,11 +52,11 @@ function conectarBaseDeDatos()
   // Crear la tabla "orden_compra" si no existe
   $sql = "CREATE TABLE IF NOT EXISTS orden_compra (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      n_orden VARCHAR(255),
+      n_orden VARCHAR(5),
       fecha_orden DATE,
-      proveedor VARCHAR(30),
-      administrador VARCHAR(30),
-      sn VARCHAR(13),
+      proveedor VARCHAR(30) ,
+      administrador VARCHAR(30) ,
+      sn VARCHAR(13) ,
       cant INT,
       estado_orden VARCHAR(30),
       motivo_orden VARCHAR(255)

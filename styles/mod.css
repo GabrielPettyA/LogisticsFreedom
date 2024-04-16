@@ -1,0 +1,75 @@
+*{
+  padding: 0%;
+  margin: 0%;
+  font-family: 'Times New Roman', Times, serif;
+}
+.bodyModificar{
+  background-color: rgb(221, 221, 193);
+}
+.tituloMod{
+  margin: 2rem;
+  margin-left: auto;
+  text-align: center;
+  font-size: 4rem;
+}
+.formModificar{
+  margin-top: 2rem;
+  margin-left: 35%;
+}
+.formModificar .ind{
+  width: 45%;
+  height: 30px;
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  font-size: 1.2rem;
+}
+#mensaje{
+  resize: vertical;
+  width: 50%;
+  border-radius: 0.3rem;
+  border-color: rgb(9, 39, 85);
+  height: 3rem;
+  font-size: 1.2rem;
+}
+.botonModificar{
+  margin-top: 0.2rem;
+  background-color: rgb(42, 130, 165);
+  color: white;
+  width: 20%;
+  height: 25px;
+  border-radius: 0.4rem;
+  font-size: 1.2rem;
+}
+.botonModificar:hover{
+  margin-left: 0.3rem;
+  margin-top: 0.45rem;
+  background-color: green;
+  color: black;
+  width: 22%;
+  height: 32px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.2rem;
+}
+.modif{
+  margin-top: 2rem;
+}
+.modificarPublicacion{
+  margin-left: 35%;
+  background-color: rgba(0, 0, 0, 0.190);
+  border-radius: 0.2rem;
+  color: rgb(48, 87, 138);
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+.modificarPublicacion:hover{
+  background-color: rgb(221, 221, 193);
+  color: rgb(0, 0, 0);
+  font-size: 2.1rem;
+}
+
+
+
+
+
