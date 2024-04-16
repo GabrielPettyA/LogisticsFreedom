@@ -1,7 +1,7 @@
 <?php
 function conectarBaseDeDatos()
 {
-  $servername = "localhost:3306"; // Ojo caso particular de lucas puerto 3308
+  $servername = "localhost:3308"; // Ojo caso particular de lucas puerto 3308
   $username = "root";
   $password = "";
   $dbname = "bd_stock";
@@ -124,6 +124,34 @@ function conectarBaseDeDatos()
     $result = $conn->query($sql);
   }
 
+
+  /// --------------- Inicio Modificación alarmas
+
+  //Crear la tabla de alarmas
+  $sql = "CREATE TABLE IF NOT EXISTS alarmas (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      productoFK INT,
+      stockAviso INT,
+      estado VARCHAR(15),
+      fechaActivacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  )";
+  if ($conn->query($sql) !== TRUE) {
+    die("Error al crear la tabla 'usuarios': " . $conn->error);
+  }
+
+  //Crear la tabla de modificaciones de alarmas
+  $sql = "CREATE TABLE IF NOT EXISTS alarmasMod (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      alarmaFK INT,
+      modificadaPor VARCHAR(50),
+      motivo VARCHAR(500),
+      password VARCHAR(255),
+      estadoAnterior VARCHAR(15),
+      fechaMod TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  )";
+  if ($conn->query($sql) !== TRUE) {
+    die("Error al crear la tabla 'usuarios': " . $conn->error);
+  }
 
   // Devolver la conexión
   return $conn;
