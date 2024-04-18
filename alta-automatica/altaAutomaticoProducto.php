@@ -23,8 +23,7 @@ if ($varsession == null || $varsession == '') {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
@@ -41,8 +40,7 @@ if ($varsession == null || $varsession == '') {
         <a class="btn btn-warning m-1" href="../includes/api/auth-api/logout.php"> Cerrar session </a>
       </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -98,6 +96,7 @@ if ($varsession == null || $varsession == '') {
   <?php
 
   require("../includes/config/db-config.php");
+  require "../includes/api/alarmas-reposicion-api/servAlarmas.php";
 
 
   $sql = "INSERT INTO productos (name,sn,cant) VALUES 
@@ -110,7 +109,7 @@ if ($varsession == null || $varsession == '') {
   ('Reproductor de señal AXR 1000/TR','7799852963741','19'),
   ('Estabilizador MACO x6efe','7799159123456','45'),
   ('Fuente mather xscoria REmado','7799111456332','78'),
-  ('Gabinete acrílico R70pro MAGO','7799753464221','45')";
+  ('Gabinete acrílico R70pro','7799753464221','45')";
 
   $consulta = "SELECT * FROM productos";
   $resultado = $conexion->query($consulta);
@@ -129,7 +128,28 @@ if ($varsession == null || $varsession == '') {
     
     </section>';
   } elseif ($resultado->num_rows == 0) {
+    
     $result = $conexion->query($sql);
+
+    $sql = "SELECT * FROM productos";
+    $productosQuery = $conexion->query($sql);
+
+    if ($productosQuery->num_rows > 0) {
+
+      $alarmaServ = new AlarmaService($conexion);
+
+      while ($row = $productosQuery->fetch_assoc()) {
+
+        $productoFK = $row["id"];
+        $alarmaCreada = $alarmaServ->crearAlarma($productoFK);
+
+      }
+
+      $alarmaServ->cerrarConexion();
+
+    }
+
+
     echo '<section> 
 
     <h1>  Carga de Datos Exitosa </h1>
@@ -167,9 +187,7 @@ if ($varsession == null || $varsession == '') {
 
 
   <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 
 </html>
