@@ -32,3 +32,17 @@
     align-items: center;
 
 }
+
+.cuadroHeadTable15 {
+
+    text-align: center;
+    min-width: 15rem;
+
+}
+
+.cuadroHeadTable10 {
+
+    text-align: center;
+    min-width: 10rem;
+
+}

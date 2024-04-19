@@ -1,8 +1,7 @@
 <?php
 
-require_once '../../config/db-config.php';
-
-class AlarmaService{
+class AlarmaService
+{
 
     private $conexion;
 
@@ -11,7 +10,8 @@ class AlarmaService{
         $this->conexion = $conexion;
     }
 
-    public function verAlarmas(){
+    public function verAlarmas()
+    {
 
         $sql = "SELECT alarmas.id, productos.name, productos.sn, productos.cant, alarmas.stockAviso, alarmas.estado
         FROM productos
@@ -33,7 +33,6 @@ class AlarmaService{
                 );
 
                 $alarmasData[] = $datos;
-
             }
         }
 
@@ -41,7 +40,31 @@ class AlarmaService{
         return $alarmasData;
     }
 
-    
+    public function crearAlarma($productoFK){
+
+        $sql2 = "INSERT INTO alarmas (productoFK, stockAviso, estado )VALUE ('$productoFK', '0','I')";
+        $result = $this->conexion->query($sql2);
+        return $result;
+        
+    }
+
+    public function editarAlarma($alarma)
+    {
+
+        $sql = "UPDATE alarmas SET stockAviso = ?, estado = ? WHERE id = ?";
+        $smtp = $this->conexion->prepare($sql);
+        $smtp->bind_param("isi", $alarma->stockAviso, $alarma->estado, $alarma->id);
+
+        if ($smtp->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
+        $smtp->close();
+    }
+
+
     public function cerrarConexion()
     {
         $this->conexion->close();
