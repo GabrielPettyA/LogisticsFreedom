@@ -11,7 +11,7 @@ if (!in_array("gestion ordenes", $roles)) {
   header("Location:http://localhost/tp2/inicio/");
 }
 
-$email = $varsession;
+//$email = $varsession;
 
 ?>
 <!DOCTYPE html>
@@ -20,57 +20,72 @@ $email = $varsession;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="../images/favicon.png">
   <title>Logistic freedom</title>
-  <link rel="stylesheet" href="../styles/modificar_orden.css">
+  <link rel="icon" type="image/x-icon" href="../images/favicon.png">
+  <link rel="stylesheet" href="/styles/main.css ">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
+
 <style>
   body {
-    background-color: rgb(130, 130, 150);
-    border-style: double;
-    margin: 1%;
-    border-color: black;
-    min-width: 115vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: cadetblue;
   }
-  table{
+
+  .inicio {
+    color: black;
+    margin-top: 2%;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 7vh;
+    background-color: cadetblue;
+    border-radius: 10px;
+  }
+
+  .container {
+    background-color: darkcyan;
+  }
+
+  table {
     width: 100%;
     border-collapse: collapse;
-    background-color: seagreen ;
   }
-  th{
+
+  th {
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.32rem;
     color: blue;
   }
-  td{
+
+  td {
     text-align: center;
     color: black;
   }
 
-  table th, td{
-    border:1px solid #ddd;
+  table th,
+  td {
+    border: 1px solid #ddd;
     padding: 10px;
-    padding-top: 8px;    
+    padding-top: 8px;
     padding-bottom: 8px;
+    background-color: seagreen;
 
-}
-
-  
+  }
 </style>
 
+<body translate="no">
 
-<body>
-
-  <br>
   <div class="container">
-    <div class="titulo">
-      <h2 style="color:black;" >Sistema Órdenes de Compra</h2>
+    <div class="">
+      <h2 class="inicio">Sistema Órdenes de Compra</h2>
       <h4>Buscador por fecha</h4>
       <br>
       <div class="tablaGeneral">
@@ -94,54 +109,45 @@ $email = $varsession;
             </div>
             <div class="#">
               <div class="form-group">
-                <label><b></b></label> <br>
-                <button type="submit" class="btnBuscar">Buscar</button>
+                <b></b> <br>
+                <button type="submit" class=" btn btn-success">Buscar</button>
               </div>
             </div>
           </div>
-          <br>
         </form>
-        <table class="tablaInicio" id="tabla_id">
-          <thead class="tabla">
-            <tr class="titulosTabla"><br>
+        <table class="container text-center mb-5">
+          <thead class="">
+            <tr class=""><br>
               <th> id </th>
-              
               <th> n_orden </th>
-              
               <th> fecha_orden </th>
-             
               <th> proveedor</th>
-             
               <th> administrador </th>
-              
               <th> sn_producto </th>
-              
               <th> cant </th>
-             
               <th> estado_orden </th>
-              
               <th> motivo_orden </th>
-
             </tr>
           </thead>
           <form class="id" action="../modificar-ordenes/modificar.php" method="post">
-            Modificar Orden <br>
-            <label for="idu"></label>
-            <input class="#" type="text" placeholder="id  *" name="idu" id="idu" required><br>
-            <input type="submit" value="CAMBIAR" class="boton">
+            <div class="mt-1">
+              <label for="formGroupExampleInput" class="form-label">Sección Modificar</label>
+              <input class="form-control" type="number" min="0" step="1" 
+              onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"  
+              placeholder="Ingrese id de producto  *" name="modificar"  required><br>
+              <button type="submit" class="btn btn-warning ">Modificar</button>
+            </div>
           </form>
-          <br><br>
-          <form class="id" action="eliminarPublicacion.php" method="post">
-            Eliminar Orden <br>
-            <label for="idu"></label>
-            <input class="#" type="text" placeholder="id *" name="idu" id="idu" required><br>
-            <input type="submit" value="ELIMINAR" class="boton">
-            <br>
-            <br>
-            <a style="color: darkblue ; border:groove; border-color:aliceblue; 
-            font-family:'Franklin Gothic Medium', 'Arial Narrow', 
-            Arial, sans-serif;
-            text-decoration:none; background-color:chocolate;" href="../index.php"> Volver ► Alta Orden de Compra ◄
+          <form class="id" action="../baja-ordenes/index.php" method="post">
+            <div class="mt-5">
+              <label for="formGroupExampleInput" class="form-label">Sección Eliminar</label>
+              <input class="form-control" type="text" 
+              placeholder="Ingrese N° Orden de compra  *" name="eliminar" id="eliminar" required><br>
+              <button type="submit" class="btn btn-danger ">Eliminar</button>
+            </div>
+
+            <a class="volver" href="../index.php"> <button type="button" 
+            class="btn btn-primary mt-5">Volver ► Alta Orden de Compra ◄</button>
             </a>
           </form>
           <br>
@@ -181,7 +187,7 @@ $email = $varsession;
                       </td>
                       <td class="fecha_orden">
                         <!--<input id="casilla2" type="checkbox" name="casilla2" value="1">-->
-                        <?php echo "-" . $fila['fecha_orden']; ?>
+                        <?php echo $fila['fecha_orden']; ?>
                       </td>
                       <td class="proveedor">
                         <?php echo $fila['proveedor']; ?>
@@ -204,7 +210,7 @@ $email = $varsession;
                       </td>
                     </tr>
                   </tbody>
-                  
+
                   <?php
                 }
               }
@@ -230,6 +236,12 @@ $email = $varsession;
 
         </table>
       </div>
+      <!-- Bootstrap -->
+      <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+      <script src="obtenerAlarmas.js"></script>
 
 </body>
 

@@ -130,7 +130,6 @@ $email = $varsession;
 
     <h4 style="margin-left:3%"> Administrador : <?php echo $email ?> </h4>
 
-
     <form class="formulario" action="../gestion-ordenes/altaOrden.php" method="post">
       <div >
         <label style="margin-left: 100px;" for="prov" class="form-label"> Fecha:</label>
@@ -145,7 +144,6 @@ $email = $varsession;
         <input type="text" class="form-control" name="prov" id="prov" placeholder="Ingrese proveedor." required
           autocomplete="off">
       </div>
-
 
       <div id='container'>
 
@@ -165,8 +163,6 @@ $email = $varsession;
       </div>
 
 
-
-
       <input class="btn btn-warning" style="background-color:dodgerblue; margin-left: 5px;" type="button"
         value="agregar prod." id="agregar" />
       <br>
@@ -177,14 +173,16 @@ $email = $varsession;
 
     </form>
 
-
     <input class="btn btn-warning" style="margin-left: 11px; margin-bottom: 5px; " type="button" name="cancelar"
       value="Cancelar" onclick="location.href='../gestion-ordenes/index.php'">
+
+      <!--
     <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px; "
       href="../gestion-ordenes/baja-ordenes/index.php"> Baja
       Orden </a>
+          -->
 
-    <a class="btn btn-success" style="margin-left: 2%; margin-bottom: 5px;"
+    <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
       href="../gestion-ordenes/modificar-ordenes/index.php">
       Modificar / Eliminar</a>
   </dbody>
