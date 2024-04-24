@@ -134,7 +134,7 @@ if (!in_array("gestion ordenes", $roles)) {
               <label for="formGroupExampleInput" class="form-label">Sección Modificar</label>
               <input class="form-control" type="number" min="0" step="1" 
               onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"  
-              placeholder="Ingrese id de producto  *" name="modificar"  required><br>
+              placeholder="Ingrese id de producto  *" name="modificar"  required autocomplete="off" ><br>
               <button type="submit" class="btn btn-warning ">Modificar</button>
             </div>
           </form>
@@ -142,12 +142,12 @@ if (!in_array("gestion ordenes", $roles)) {
             <div class="mt-5">
               <label for="formGroupExampleInput" class="form-label">Sección Eliminar</label>
               <input class="form-control" type="text" 
-              placeholder="Ingrese N° Orden de compra  *" name="eliminar" id="eliminar" required><br>
-              <button type="submit" class="btn btn-danger ">Eliminar</button>
+              placeholder="Ingrese N° Orden de compra  *" name="eliminar" id="eliminar" required autocomplete="off" ><br>
+              <button type="submit" class="btn btn-danger "  >Eliminar</button>
             </div>
 
             <a class="volver" href="../index.php"> <button type="button" 
-            class="btn btn-primary mt-5">Volver ► Alta Orden de Compra ◄</button>
+            class="btn btn-primary mt-5"><h5>Volver</h5> "Alta Orden de Compra" </button>
             </a>
           </form>
           <br>

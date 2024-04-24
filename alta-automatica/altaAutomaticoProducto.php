@@ -83,6 +83,10 @@ if ($varsession == null || $varsession == '') {
               <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
             </li>
 
+            <li class="nav-item">
+              <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de Órdenes</a>
+            </li>
+
           </ul>
 
         </div>

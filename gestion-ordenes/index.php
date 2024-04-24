@@ -108,6 +108,13 @@ $email = $varsession;
                             </li>';
             }
 
+            if (in_array("recepcion ordenes", $roles)) {
+              echo '<li class="nav-item">
+                                    <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                    </li>';
+            }
+
+
             ?>
 
             <li class="nav-item">
@@ -155,8 +162,9 @@ $email = $varsession;
 
           <div>
             <span style="margin-left: 7px;">Cantidad de prod:</span>
-            <input type="text" name="cantidad[]" id="cantidad" placeholder="Ingrese unidad." required
-              autocomplete="off">
+            <input name="cantidad[]" id="cantidad" placeholder="Ingrese unidad." required
+              autocomplete="off" type="number" min="0" step="1"
+              onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;" >
           </div>
         </div>
 

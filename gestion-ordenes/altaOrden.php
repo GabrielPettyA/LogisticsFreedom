@@ -92,13 +92,16 @@ $email = $varsession;
       $motivo = 'Compra';
       $fecha = $_POST['date'];
       $orden = $ordenCompra;
+      $fechaRecep = 0;
+      $admRecep = 'pendiente';
+      $cantRecep = 0;
 
       if ($prod == true) {
         $validar = "SELECT * FROM productos WHERE sn = $prod";
         $validando = $conexion->query($validar);
         if ($validando->num_rows > 0) {
           
-          $sql = "INSERT INTO orden_compra (n_orden,fecha_orden,proveedor,administrador,sn,cant,estado_orden,motivo_orden) VALUE ('$orden','$fecha','$prov','$adm','$prod','$cantidad','$estado','$motivo')";
+          $sql = "INSERT INTO orden_compra (n_orden,fecha_orden,proveedor,administrador,sn,cant,fecha_recep,adm_recepcion,cant_recep,estado_orden,motivo_orden) VALUE ('$orden','$fecha','$prov','$adm','$prod','$cantidad','$fechaRecep','$admRecep','$cantRecep','$estado','$motivo')";
           $guardando = $conexion->query($sql);
           $prodok=$prod;
 

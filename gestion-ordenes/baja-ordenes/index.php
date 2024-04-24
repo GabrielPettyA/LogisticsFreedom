@@ -47,8 +47,8 @@ if (!in_array("gestion ordenes", $roles)) {
     $administrador = $fila[4];
     $sn = $fila[5];
     $cant = $fila[6];
-    $estado_orden = $fila[7];
-    $motivo_orden = $fila[8];
+    $estado_orden = $fila[10];
+    $motivo_orden = $fila[11];
     $baja = 'baja';
     ?>
     <form style="margin-left:26%" class="formModificar" action="../baja-ordenes/eliminar.php" method="post">
@@ -74,22 +74,20 @@ if (!in_array("gestion ordenes", $roles)) {
       <div class="mb-1">
         <label for="exampleFormControlTextarea1" class="form-label">Motivo de baja</label><br>
         <textarea style="border-radius: 10px; padding:10px;" name="mensaje" id="mensaje" rows="2" cols="61"
-        placeholder=" Verifique estado de N° Orden que no este dada de baja."></textarea>
+          placeholder=" Verifique estado de N° Orden que no este dada de baja."></textarea>
       </div>
       <?php
       ?>
-      <br>
-      <br>
+     
 
+      <div class="form-group mt-5">
+        <input type="submit" class="botonEliminar" value="Eliminar" style="border-radius: 10px; background-color:darkred; color: white; 
+      font-size:1.2rem; width: 100px; height: 40px; ">
 
-      <input style="border-radius: 10px; background-color:darkred; color: white; 
-      font-size:1.2rem; width: 100px; height: 40px; " class="botonEliminar" type="submit" value="Eliminar">
-
-      <a class="botonModificar" style="margin-left: 30px;
+        <a class="btn btn-default" style="margin-left: 30px;
       color:blue;  font-size:1.5rem;
-      font-family:Georgia, 'Times New Roman', Times, serif;
-      " href="../modificar-ordenes/index.php">Cancelar</a>
-
+      font-family:Georgia, 'Times New Roman', Times, serif; " href="../modificar-ordenes/index.php">Cancelar</a>
+      </div>
       <br>
       <br>
       <br>
@@ -99,12 +97,15 @@ if (!in_array("gestion ordenes", $roles)) {
 
 
   } else {
+    ?>
+    <h1 style="justify-content:center; text-align:center; color:brown; margin-top:12%; font-size:3rem; ">
+      "ERROR: Orden No Existe. Verifique Nuevamente !!!"</h1>
 
-    echo
-      "<script>
-  alert('Se requiere : ID para ingresar !!!');
-  window.location='index.php?page=otrapagina'
-  </script>";
+    <a class="botonModificar" style="margin-left: 10%;
+      color:blue;  font-size:1.5rem; text-decoration:none;
+      font-family:Georgia, 'Times New Roman', Times, serif;
+      " href="../modificar-ordenes/index.php">Volver</a>
+    <?php
   }
   $conn->close();
   ?>
