@@ -155,6 +155,7 @@ function deleteModalShow(products) {
 function editProduct() {
     let editProduct = getEditFormValue(); // Producto editado para escribir la tabla de productos
     saveModifications(true); // Escritura de tabla de modificación de productos
+
     const requestOptions = {
         method: "PUT",
         headers: {
@@ -203,7 +204,9 @@ function saveModifications(validator) {
         modification.sn_new = prod_new.sn;
         modification.cant_new = prod_new.cant;
         modification.motivo = prod_new.motivo;
-    } else {
+    } 
+    
+    if(!validator){
         // Registro campos nuevos en caso de borrar
         modification.id_new = 0;
         modification.name_new = "Producto eliminado";
@@ -218,7 +221,6 @@ function saveModifications(validator) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(modification),
-        action: "modproducts"
     };
 
     fetch(url, requestOptions)
