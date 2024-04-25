@@ -13,16 +13,6 @@ if (!in_array("reportes", $roles)) {
     exit(); // Asegúrate de salir después de redirigir
 }
 
-require ("../includes/config/db-config.php");
-
-$consulta = "SELECT * FROM productos";
-$resultado = $conexion->prepare($consulta);
-$resultado->execute();
-$result = $resultado->get_result();
-$stock = $result->fetch_all(MYSQLI_ASSOC);
-
-$result->free(); // Libera recursos
-$conexion->close(); // Cierra la conexión
 ?>
 
 <!DOCTYPE html>
@@ -203,59 +193,6 @@ $conexion->close(); // Cierra la conexión
     </div>
 
 
-    <script>
-        const ctx = document.getElementById('myChart');
-        let chart;
-
-        const createChart = (type, data, label) => {
-            if (chart) chart.destroy(); // Destruye el gráfico anterior
-            chart = new Chart(ctx, {
-                type: 'bar', // Tipo de gráfico (puede ser bar, line, etc.)
-                data: {
-                    labels: label, // Etiquetas para el eje X
-                    datasets: [{
-                        label: type, // Etiqueta para el gráfico
-                        data: data, // Datos para el gráfico
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
-                    }],
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                        },
-                    },
-                },
-            });
-        };
-
-        const dailyData = [3, 5, 2, 1, 4, 7, 6, 5, 3, 8]; // Datos de ejemplo
-        const dailyLabels = ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7', 'Día 8', 'Día 9', 'Día 10']; // Etiquetas de ejemplo
-
-        const monthlyData = [12, 19, 3, 5, 2, 3, 6, 2, 4, 5, 8, 23];
-        const monthlyLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
-        const annualData = [123, 140, 110, 150, 134]; // Datos de ejemplo para años
-        const annualLabels = ['2019', '2020', '2021', '2022', '2023']; // Etiquetas de ejemplo para años
-
-        createChart('Mensual', monthlyData, monthlyLabels); // Muestra el gráfico mensual por defecto
-
-        document.getElementById('daily').addEventListener('click', () => {
-            createChart('Diario', dailyData, dailyLabels); // Cambia al gráfico diario
-        });
-
-        document.getElementById('monthly').addEventListener('click', () => {
-            createChart('Mensual', monthlyData, monthlyLabels); // Cambia al gráfico mensual
-        });
-
-        document.getElementById('annual').addEventListener('click', () => {
-            createChart('Anual', annualData, annualLabels); // Cambia al gráfico anual
-        });
-
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -269,7 +206,7 @@ $conexion->close(); // Cierra la conexión
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JavaScript personalizado -->
-    <script type="text/javascript" src="ventas.js"></script>
+    <script type="text/javascript" src="grafica.js"></script>
 </body>
 
 </html>

@@ -35,16 +35,16 @@ function conectarBaseDeDatos()
   }
 
   // Crear la tabla "ventas" si no existe
-$sql = "CREATE TABLE IF NOT EXISTS ventas (
+  $sql = "CREATE TABLE IF NOT EXISTS ventas (
   id INT AUTO_INCREMENT PRIMARY KEY,
+  factura varchar(30),
   producto_id INT,
   cantidad_vendida INT,
-  fecha DATE,
-  total DECIMAL(10, 2)  
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )";
-if ($conn->query($sql) !== TRUE) {
-  die("Error al crear la tabla 'ventas': " . $conn->error);
-}
+  if ($conn->query($sql) !== TRUE) {
+    die("Error al crear la tabla 'ventas': " . $conn->error);
+  }
 
 
 
