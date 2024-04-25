@@ -40,8 +40,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ventas (
   producto_id INT,
   cantidad_vendida INT,
   fecha DATE,
-  total DECIMAL(10, 2),  
-  FOREIGN KEY (producto_id) REFERENCES productos(id) ON DELETE CASCADE  
+  total DECIMAL(10, 2)  
 )";
 if ($conn->query($sql) !== TRUE) {
   die("Error al crear la tabla 'ventas': " . $conn->error);
