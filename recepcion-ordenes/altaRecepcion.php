@@ -7,10 +7,15 @@ if ($varsession == null || $varsession == '') {
   header("Location:http://localhost/tp2/");
 }
 
-if (!in_array("alta productos", $roles)) {
+if (!in_array("recepcion ordenes", $roles)) {
   header("Location:http://localhost/tp2/inicio/");
 }
 
+$email = $varsession;
+
+
+if (isset($_POST["orden"]) > 0) {
+  $orden=$_POST['orden'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,74 +28,18 @@ if (!in_array("alta productos", $roles)) {
   <link rel="stylesheet" href="../styles/alta-productos.css">
   <link rel="stylesheet" href="../styles/navbar.css">
   <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/orden.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-<?php
-
-  require_once "../includes/config/db-config.php";
-  require "../includes/api/alarmas-reposicion-api/servAlarmas.php";
-
-if(isset($_POST['ean']) < 0) {
-  echo "INGRESE PRODUCTO";
-}
-
-if (isset($_POST['ean']) > 0) {
-
-  $ean = $_POST['ean'];
-  $prod = $_POST['prod'];
-  $cant = $_POST['cantidad'];
-
-  $validar = "SELECT * FROM productos WHERE sn = '$ean'";
-  $validando = $conexion->query($validar);
-
-  if ($validando->num_rows > 0) {
-
-    echo '<script type="text/javascript">
-          alert("Número de serie ya registrado verifique el stock.");
-          </script>';
-  }
-
-  if ($validando->num_rows == 0) {
-
-    $sql = "INSERT INTO productos (name,sn,cant) VALUE ('$prod','$ean','$cant ')";
-    $guardando = $conexion->query($sql);
-
-    // ---- Parche creación de alarma
-    $sql = "SELECT * FROM productos WHERE sn = '$ean'";
-    $verificarIngreso = $conexion->query($sql);
-
-    $alarmaCreada;
-
-    if ($verificarIngreso->num_rows > 0) {
-
-      $row = $verificarIngreso->fetch_assoc();
-      $productoFK = $row["id"];
-
-      $alarmaServ = new AlarmaService($conexion);
-      $alarmaCreada = $alarmaServ->crearAlarma($productoFK);
-    }
-
-    if ($guardando && $alarmaCreada) {
-
-      echo '<script type="text/javascript">
-            alert("Ingreso exitoso, puede seguir operando.");
-            </script>';
-
-    }
-
-  }
-
-  $conexion->close();
-
-}
-
-?>
 
 <body>
+
+
   <nav class="navbar bg-body-tertiary fixed-top" style="padding: 0;">
 
     <div class="container-fluid">
@@ -103,7 +52,8 @@ if (isset($_POST['ean']) > 0) {
         <a class="btn btn-warning m-1" href="../includes/api/auth-api/logout.php"> Cerrar session </a>
       </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -185,36 +135,70 @@ if (isset($_POST['ean']) > 0) {
 
   </nav>
 
-  <section class="cardSection">
+  <dbody class="cardSection">
 
-    <h1 class="title"> Alta de productos</h1>
+    <h1 class="title" style="margin-top: 3%;"> Carga de datos</h1>
 
-    <form class="formulario" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <h4 style="margin-left:1%"> Recepcionista : <?php echo $email ?> </h4>
 
-      <div class="mb-3">
-        <label for="ean" class="form-label">Número de serie del producto:</label>
-        <input type="text" class="form-control" name="ean" id="ean" placeholder="Ingrese el número de serie del producto" required>
+    <form class="formulario" action="../recepcion-ordenes/ingresoRecepcion.php" method="post">
+    
+      <div>
+        <label style="margin-left: 67px;" for="prov" class="form-label mt-2 mb-3"> Fecha:</label>
+        <input type="date" name="date" id="date" placeholder="" required autocomplete="off">
       </div>
-
       <div class="mb-3">
-        <label for="prod" class="form-label">Nombre del producto:</label>
-        <input type="text" class="form-control" name="prod" id="prod" placeholder="Ingrese el nombre del producto" required>
+        <br>
+        <br>
+        <label style="margin-left: 10px;" for="prov" class="form-label"> N° orden de recepción</label>
+        <input type="text" class="form-control" name="orden" id="orden" placeholder="Ingrese N° Orden"
+          value="  <?php echo $orden; ?> ">
       </div>
+      <div id='container'>
 
-      <div class="mb-3">
-        <label for="cantidad" class="form-label">Cantidad:</label>
-        <input type="number" class="form-control" name="cantidad" id="cantidad" required>
+        <div>
+          <div>
+            <span style="margin-left: 7px;">SN. recepción:</span>
+            <input type="text" name="producto" id="sn" placeholder="Ingrese sn." required autocomplete="off"
+              minlength="13" maxlength="13">
+          </div>
+          <div>
+            <span style="margin-left: 7px;">Cantidad recepción:</span>
+            <input name="cantidad" id="cant" placeholder="Ingrese unidad." required autocomplete="off" type="text"
+              min="0" step="1" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;" >
+          </div>
+        </div>
       </div>
-
-      <button type="submit" class="btn btn-success"> Ingresar producto</button>
-      <a class="btn btn-primary" href="/tp2/alta-automatica/altaAutomaticoProducto.php"> ALTA AUTOMÁTICA PRODUCTOS (solo
-        para inicializar DB.)</a>
-
+      <!-- 
+      <input class="btn btn-warning" style="background-color:dodgerblue; margin-left: 5px;" type="button"
+      value="+ SN" id="agregar" />
+      <br>
+      <br>-->
+      <input type="submit" class="btn btn-success" style="margin-left: 8px;" value="Ingresar"> </input>
+      
     </form>
-  </section>
+    <input class="btn btn-warning" style="margin-left: 8px; margin-bottom: 11px; " type="button" name="cancelar"
+      value="Cancelar" onclick="location.href='../recepcion-ordenes/index.php'">
 
+    <!--
+    <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px; "
+      href="../gestion-ordenes/baja-ordenes/index.php"> Baja
+      Orden </a>
+          -->
+  </dbody>
+
+  <script src="../recepcion-ordenes/js/codigo.js"></script>
+  <script src="../recepcion-ordenes/js/dom.js"></script>
   <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+    <?php
+}
+?>
 </body>
+
+
+
 
 </html>

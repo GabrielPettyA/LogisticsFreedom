@@ -108,6 +108,13 @@ $email = $varsession;
                             </li>';
             }
 
+            if (in_array("recepcion ordenes", $roles)) {
+              echo '<li class="nav-item">
+                                    <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                    </li>';
+            }
+
+
             ?>
 
             <li class="nav-item">
@@ -130,7 +137,6 @@ $email = $varsession;
 
     <h4 style="margin-left:3%"> Administrador : <?php echo $email ?> </h4>
 
-
     <form class="formulario" action="../gestion-ordenes/altaOrden.php" method="post">
       <div >
         <label style="margin-left: 100px;" for="prov" class="form-label"> Fecha:</label>
@@ -146,7 +152,6 @@ $email = $varsession;
           autocomplete="off">
       </div>
 
-
       <div id='container'>
 
         <div>
@@ -157,14 +162,13 @@ $email = $varsession;
 
           <div>
             <span style="margin-left: 7px;">Cantidad de prod:</span>
-            <input type="text" name="cantidad[]" id="cantidad" placeholder="Ingrese unidad." required
-              autocomplete="off">
+            <input name="cantidad[]" id="cantidad" placeholder="Ingrese unidad." required
+              autocomplete="off" type="number" min="0" step="1"
+              onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;" >
           </div>
         </div>
 
       </div>
-
-
 
 
       <input class="btn btn-warning" style="background-color:dodgerblue; margin-left: 5px;" type="button"
@@ -177,14 +181,16 @@ $email = $varsession;
 
     </form>
 
-
     <input class="btn btn-warning" style="margin-left: 11px; margin-bottom: 5px; " type="button" name="cancelar"
       value="Cancelar" onclick="location.href='../gestion-ordenes/index.php'">
+
+      <!--
     <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px; "
       href="../gestion-ordenes/baja-ordenes/index.php"> Baja
       Orden </a>
+          -->
 
-    <a class="btn btn-success" style="margin-left: 2%; margin-bottom: 5px;"
+    <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
       href="../gestion-ordenes/modificar-ordenes/index.php">
       Modificar / Eliminar</a>
   </dbody>

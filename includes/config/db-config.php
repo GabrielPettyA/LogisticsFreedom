@@ -1,7 +1,7 @@
 <?php
 function conectarBaseDeDatos()
 {
-  $servername = "localhost:3308"; // Ojo caso particular de lucas puerto 3308
+  $servername = "localhost:3306"; // Ojo caso particular de lucas puerto 3308
   $username = "root";
   $password = "";
   $dbname = "bd_stock";
@@ -76,8 +76,12 @@ if ($conn->query($sql) !== TRUE) {
       administrador VARCHAR(30) ,
       sn VARCHAR(13) ,
       cant INT,
+      fecha_recep DATE,
+      adm_recepcion VARCHAR(30),
+      cant_recep INT,
       estado_orden VARCHAR(30),
-      motivo_orden VARCHAR(255)
+      motivo_orden VARCHAR(255) 
+      
     )";
   if ($conn->query($sql) !== TRUE) {
     die("Error al crear la tabla 'orden_compra': " . $conn->error);
@@ -138,7 +142,7 @@ if ($conn->query($sql) !== TRUE) {
         VALUES ('$id', 'alta productos'), ('$id', 'contacto'), 
         ('$id', 'gestion usuarios'), ('$id', 'reportes'),
          ('$id', 'revisar contacto'), ('$id', 'stock'),
-         ('$id','gestion ordenes')";
+         ('$id','gestion ordenes'), ('$id', 'recepcion ordenes')";
     $result = $conn->query($sql);
   }
 

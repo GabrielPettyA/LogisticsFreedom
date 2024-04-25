@@ -111,6 +111,13 @@ if (isset($_POST['submit'])) {
                                         </li>';
                         }
 
+                        if (in_array("recepcion ordenes", $roles)) {
+                          echo '<li class="nav-item">
+                                                <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                                </li>';
+                        }
+          
+
 
                         ?>
 

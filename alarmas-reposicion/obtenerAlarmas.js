@@ -4,7 +4,7 @@ const urlAlarmas = "../includes/api/alarmas-reposicion-api/controller.php";
 const sinDatosAlarmas = document.getElementById("sinDatosAlarmas");
 const table_alarmas = document.getElementById("table_alarmas");
 
-// Paginación 
+// ---- Paginación 
 const lastPage = document.getElementById("lastPage");
 const pageActual = document.getElementById("pageActual");
 const btnPrevPage = document.getElementById("btnPrevPage");
@@ -23,7 +23,7 @@ function obtenerProductosAlarmas() {
             if (data.length > 0) {
 
                 alarmasData = data;
-                filterAlarmasTable();
+                filterAlarmasTable(alarmasData);
 
             }
 
@@ -37,10 +37,10 @@ function obtenerProductosAlarmas() {
         })
 }
 
-function filterAlarmasTable() {
+function filterAlarmasTable(data) {
 
     table_alarmas.innerHTML = "";
-    let filterAlarmasData = alarmasData.slice(pageNumber, pageNumber + 10);
+    let filterAlarmasData = data.slice(pageNumber, pageNumber + 10);
     pageActual.textContent = String(pageNumber + 1);
     mostrarTabla(filterAlarmasData);
 
@@ -86,14 +86,17 @@ function mostrarTabla(dataAlarmas) {
 
         // Acciones
         button_edit.className = "btn btn-warning m-1";
-        i_edit.className = "fa-solid fa-pen-to-square";
-
+        i_edit.className = "fa-solid fa-pen-to-square"; 
 
         button_info.className = "btn btn-info m-1";
         i_info.className = "fa-regular fa-lightbulb";
 
         button_edit.appendChild(i_edit);
         button_info.appendChild(i_info);
+
+        button_edit.addEventListener("click",()=>{
+            editarAlarmaModal(alarma)
+        });
 
         acciones.appendChild(button_edit);
         acciones.appendChild(button_info);

@@ -102,6 +102,12 @@ if ($varsession == null || $varsession == '') {
                                       </li>';
               }
 
+              if (in_array("recepcion ordenes", $roles)) {
+                echo '<li class="nav-item">
+                                      <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                      </li>';
+              }
+
 
               ?>
 
@@ -135,28 +141,63 @@ if ($varsession == null || $varsession == '') {
           <thead>
             <tr>
 
-              <th style="text-align: center;min-width: 15rem;">
+              <th class="align-top cuadroHeadTable15">
                 Nombre de producto
+
+                <div class="input-group my-1">
+                  <input type="text" class="form-control" oninput="filterTable()" placeholder="Buscar por producto" aria-label="Busqueda producto" aria-describedby="Busqueda producto" id="productoSearch">
+                </div>
+
               </th>
 
-              <th style="text-align: center;min-width: 15rem;">
+              <th class="align-top cuadroHeadTable15">
                 SN
+
+                <div class="input-group my-1">
+                  <input type="number" class="form-control" oninput="filterTable()" placeholder="Buscar por sn" aria-label="Busqueda sn" aria-describedby="Busqueda sn" id="snSearch">
+                </div>
+
               </th>
 
-              <th style="text-align: center;min-width: 10rem;">
+              <th class="align-top cuadroHeadTable10">
                 Cantidad
+
+                <div class="input-group my-1">
+                  <input type="number" class="form-control" oninput="filterTable()" placeholder="Buscar por cantidad" aria-label="Busqueda cantidad" aria-describedby="Busqueda cantidad" id="cantidadSearch">
+                </div>
+
               </th>
 
-              <th style="text-align: center;min-width: 10rem;">
+              <th class="align-top cuadroHeadTable10">
                 Stock de aviso
+
+                <div class="input-group my-1">
+                  <input type="number" class="form-control" oninput="filterTable()" placeholder="Buscar por aviso" aria-label="Busqueda stock aviso" aria-describedby="Busqueda stock aviso" id="stockAvisoSearch">
+                </div>
+
               </th>
 
-              <th style="text-align: center;min-width: 15rem;">
+              <th class="align-top cuadroHeadTable15">
                 Estado
+
+                <div class="input-group my-1">
+                  <select class="form-select" id="estadoSearch" onchange="filterTable()">
+                    <option value="">Todos</option>
+                    <option value="I">Inactivo</option>
+                    <option value="A">Activo</option>
+                    <option value="D">Desactivado</option>
+                  </select>
+                </div>
+
               </th>
 
-              <th style="text-align: center;min-width: 8rem;">
+              <th class="align-top" style="text-align: center;min-width: 8rem;">
                 Acciones
+
+                <button class="btn btn-warning my-1" id="resetSearch" onclick="resetBusqueda()">
+                  Resetear filtros
+                </button>
+
               </th>
 
             </tr>
@@ -182,11 +223,62 @@ if ($varsession == null || $varsession == '') {
 
   </div>
 
+
+  <!-- Modal Editar Alarma  -->
+  <div class="modal fade" id="editarAlarma" tabindex="-1" aria-labelledby="editarAlarmaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editarAlarmaLabel"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="cerrarModal()"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <form>
+
+            <div class="input-group mb-3">
+              <select class="form-select" id="editarEstado" onchange="validarEstado()">
+                <option value="" disabled>Seleccione estado</option>
+                <option value="I">Inactivo</option>
+                <option value="A">Activo</option>
+                <option value="D">Desactivado</option>
+              </select>
+            </div>
+
+            <div class="input-group mb-3">
+              <input type="number" class="form-control" placeholder="Stock de aviso" oninput="validarStockAviso()"
+              aria-label="Stock aviso" aria-describedby="Stock aviso" id="editarStockAviso">
+            </div>
+
+
+          </form>
+
+
+        </div>
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="btnEditarAlarma" onclick="editarAlarmaApi()">
+            Editar alarma
+          </button>
+
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="cerrarModal()">
+            Cerrar
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bootstrap -->
   <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <!--JS-->
   <script src="obtenerAlarmas.js"></script>
-
+  <script src="pipe-alarmas.js"></script>
+  <script src="editarAlarma.js"></script>
 </body>
 
 </html>
