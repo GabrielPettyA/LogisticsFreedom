@@ -44,11 +44,11 @@ if (!in_array("gestion ordenes", $roles)) {
     $n_orden = $fila[1];
     $fecha_orden = $fila[2];
     $proveedor = $fila[3];
-    $administrador = $fila[4];
-    $sn = $fila[5];
-    $cant = $fila[6];
-    $estado_orden = $fila[7];
-    $motivo_orden = $fila[8];
+    $administrador = $fila[5];
+    $sn = $fila[6];
+    $cant = $fila[7];
+    $estado_orden = $fila[11];
+    $motivo_orden = $fila[12];
     ?>
 
 

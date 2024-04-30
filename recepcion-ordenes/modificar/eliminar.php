@@ -40,6 +40,7 @@ if ($varsession == null || $varsession == '') {
 <body translate="no">
 
   <?php
+  // LLAMADO Y LÓGICA PARA REALIZAR LAS HABILITACIONES, SEGÚN EL ESTADO REQUERIDO, A LOS CAMBIOS EN DB.
 
   if (isset($_POST['orden']) < 0) {
     echo "Debe ingresar motivos de baja !!!";
@@ -48,48 +49,49 @@ if ($varsession == null || $varsession == '') {
     $conn = mysqli_connect("localhost", "root", "", "bd_stock");
 
     $orden = $_POST['orden'];
-    $adm = $_POST['administrador'];
+    $admRecep = $varsession;
+    $fechaRecep = $_POST['date'];
     $estadoReal = $_POST['estadoReal'];
     $mensaje = $_POST['mensaje'];
     $estadoActual = $_POST['estadoActual'];
 
     if ($estadoActual == 'Opción: Cambiar Estado' || $estadoActual == $estadoReal) {
-      header("Location:http://localhost/tp2/gestion-ordenes/modificar-ordenes");
+      header("Location:http://localhost/tp2/recepcion-ordenes");
     } else {
 
       $sql = "SELECT * FROM orden_compra WHERE n_orden = '$orden' ";
       $resultado = $conn->query($sql);
       if ($resultado->num_rows > 0) {
         if ($estadoReal == 'RECHAZADA') {
-          //header("Location:http://localhost/tp2/gestion-ordenes/modificar-ordenes");
+          
           ?>
           <h2 class="anuncio">ERROR : estado ''RECHAZADA''  N° Orden <?php echo '"' . $orden . '"' ?>(no habilitada a
             modificación).<br>
-            <a href="../modificar-ordenes/index.php"> volver </a>
+            <a href="../modificar/modificar.php"> volver </a>
           </h2>
           <?php
         }else if ($estadoReal == 'DADA DE BAJA') {
-          //header("Location:http://localhost/tp2/gestion-ordenes/modificar-ordenes");
+          
           ?>
           <h2 class="anuncio">ERROR : estado ''DADA DE BAJA''  N° Orden <?php echo '"' . $orden . '"' ?>(no habilitada a
             modificación).<br>
-            <a href="../modificar-ordenes/index.php"> volver </a>
+            <a href="../modificar/modificar.php"> volver </a>
           </h2>
           <?php
         }else if ($estadoReal == 'ENTREGADA') {
-          //header("Location:http://localhost/tp2/gestion-ordenes/modificar-ordenes");
+          
           ?>
           <h2 class="anuncio">ERROR : estado ''ENTREGADA''  N° Orden <?php echo '"' . $orden . '"' ?>(no habilitada a
             modificación).<br>
-            <a href="../modificar-ordenes/index.php"> volver </a>
+            <a href="../modificar/modificar.php"> volver </a>
           </h2>
           <?php
         }else{
-          $sql = "UPDATE  orden_compra SET administrador = '$adm' , estado_orden = '$estadoActual' , motivo_orden = '$mensaje' WHERE n_orden = '$orden' ";
+          $sql = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep' , estado_orden='$estadoActual' , motivo_orden='$mensaje' WHERE n_orden='$orden' ";
           if ($conn->query($sql) == true) {
             ?>
             <h2 class="anuncio">ALERT : Modificación en DB. Exitosa, N° orden: <?php echo '"'.$orden.'"' ?><br>
-              <a href="../modificar-ordenes/index.php"> volver </a>
+              <a href="../modificar/modificar.php "> volver </a>
             </h2>
             <?php
           } 

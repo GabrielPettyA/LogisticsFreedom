@@ -37,12 +37,12 @@ if (!in_array("recepcion ordenes", $roles)) {
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: cadetblue;
+    background-color: darkslategrey ;
     padding: 0;
   }
 
   dbody {
-    width: 100%;
+    min-width: 1200px;
     height: auto;
   }
 
@@ -51,11 +51,11 @@ if (!in_array("recepcion ordenes", $roles)) {
   }
 
   .inicio {
-    color: black;
+    color: white;
     justify-content: center;
-    text-align: center;
+    margin-left: 28.3%;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 7vh;
+    font-size: 8vh;
     border-radius: 10px;
   }
 
@@ -82,7 +82,7 @@ if (!in_array("recepcion ordenes", $roles)) {
     padding: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
-    background-color: wheat;
+    background-color: gray ;
 
   }
 </style>
@@ -124,7 +124,7 @@ if (!in_array("recepcion ordenes", $roles)) {
           </form>
           <a class="btn btn-success" style="margin-bottom: 5px; margin-top:10px; background-color:darkcyan ; width: 84px; " href="../">
             Salir</a>
-          <table class="container text-center mb-5">
+          <table style="margin-right: 6% ; margin-left: 7%; display: block; " class="container text-center mb-5">
             <thead class="">
               <tr class=""><br>
                 <th> Id </th>

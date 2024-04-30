@@ -36,6 +36,7 @@ if (!in_array("gestion ordenes", $roles)) {
     height: 100%;
     display: flex;
     background-color: cadetblue;
+    padding: 0;
   }
 
   .inicio {
@@ -51,40 +52,45 @@ if (!in_array("gestion ordenes", $roles)) {
 
   .container {
     background-color: darkcyan;
+    max-width: 2100px;
+    /*min-width: 50px;*/
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
 
   th {
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.32rem;
     color: blue;
+    max-width: 2100px;
   }
 
   td {
     text-align: center;
     color: black;
+    max-width: 2100px;
   }
 
-  table th,
-  td {
+  table 
+   {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 8px;
     padding-top: 8px;
     padding-bottom: 8px;
     background-color: seagreen;
+    max-width: 2100px;
+  }
 
+  th, td{
+    border: 1px solid #ddd;
+    background-color: seagreen;
   }
 </style>
 
 <body translate="no">
 
-  <div class="container">
-    <div class="">
+  <div style="min-width: 1100px;" class="container">
+ 
       <h2 class="inicio">Sistema Órdenes de Compra</h2>
       <h4>Buscador por fecha</h4>
       <br>
@@ -115,13 +121,16 @@ if (!in_array("gestion ordenes", $roles)) {
             </div>
           </div>
         </form>
-        <table class="container text-center mb-5">
+
+        <table style="width:100%; " class="container text-center mb-5">
+
           <thead class="">
             <tr class=""><br>
               <th> id </th>
               <th> n_orden </th>
               <th> fecha_orden </th>
               <th> proveedor</th>
+              <th> cuit r.social</th>
               <th> administrador </th>
               <th> sn_producto </th>
               <th> cant </th>
@@ -129,25 +138,29 @@ if (!in_array("gestion ordenes", $roles)) {
               <th> motivo_orden </th>
             </tr>
           </thead>
+
           <form class="id" action="../modificar-ordenes/modificar.php" method="post">
             <div class="mt-1">
-              <label for="formGroupExampleInput" class="form-label">Sección Modificar</label>
-              <input class="form-control" type="number" min="0" step="1" 
-              onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"  
-              placeholder="Ingrese id de producto  *" name="modificar"  required autocomplete="off" ><br>
+              <label for="formGroupExampleInput" class="form-label">Sección Modificar Producto</label>
+              <input class="form-control" type="number" min="0" step="1"
+                onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
+                placeholder="Ingrese id de producto  *" name="modificar" required autocomplete="off"><br>
               <button type="submit" class="btn btn-warning ">Modificar</button>
             </div>
           </form>
           <form class="id" action="../baja-ordenes/index.php" method="post">
-            <div class="mt-5">
-              <label for="formGroupExampleInput" class="form-label">Sección Eliminar</label>
-              <input class="form-control" type="text" 
-              placeholder="Ingrese N° Orden de compra  *" name="eliminar" id="eliminar" required autocomplete="off" ><br>
-              <button type="submit" class="btn btn-danger "  >Eliminar</button>
+            <div class="mt-5 ">
+              <label for="formGroupExampleInput" class="form-label">Sección Modificar Estado o Eliminar Orden</label>
+              <input class="form-control" type="text" placeholder="Ingrese N° Orden de compra  *" name="eliminar"
+                id="eliminar" required autocomplete="off"><br>
+              <button type="submit" class="btn btn-warning ">Cambiar / Eliminar</button>
+              <input class="btn btn-danger" style="margin-left: 15px; margin-bottom: 2px; " type="button"
+                name="cancelar" value="Cancelar" onclick="location.href='../modificar-ordenes/index.php'">
             </div>
 
-            <a class="volver" href="../index.php"> <button type="button" 
-            class="btn btn-primary mt-5"><h5>Volver</h5> "Alta Orden de Compra" </button>
+            <a class="volver" href="../index.php"> <button type="button" class="btn btn-primary mt-5">
+                <h5>Volver</h5> "Alta Orden de Compra"
+              </button>
             </a>
           </form>
           <br>
@@ -167,6 +180,7 @@ if (!in_array("gestion ordenes", $roles)) {
                 $fila['n_orden'];
                 $fila['fecha_orden'];
                 $fila['proveedor'];
+                $fila['cuit'];
                 $fila['administrador'];
                 $fila['sn'];
                 $fila['cant'];
@@ -191,6 +205,9 @@ if (!in_array("gestion ordenes", $roles)) {
                       </td>
                       <td class="proveedor">
                         <?php echo $fila['proveedor']; ?>
+                      </td>
+                      <td class="cuit">
+                        <?php echo $fila['cuit']; ?>
                       </td>
                       <td class="administrador">
                         <?php echo $fila['administrador']; ?>

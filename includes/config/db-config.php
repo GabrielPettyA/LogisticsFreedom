@@ -55,6 +55,7 @@ function conectarBaseDeDatos()
       n_orden VARCHAR(5),
       fecha_orden DATE,
       proveedor VARCHAR(30) ,
+      cuit VARCHAR(11),
       administrador VARCHAR(30) ,
       sn VARCHAR(13) ,
       cant INT,

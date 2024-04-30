@@ -37,114 +37,86 @@ $email = $varsession;
 
 <body>
   <nav class="navbar bg-body-tertiary fixed-top" style="padding: 0;">
-
     <div class="container-fluid">
-
       <div>
         <a class="navbar-brand" href="#">
           <img class="imageNav" src="../images/favicon.png" alt="logo">
         </a>
-
         <a class="btn btn-warning m-1" href="../includes/api/auth-api/logout.php"> Cerrar session </a>
       </div>
-
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-
         <div class="offcanvas-body">
-
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
             <?php
-
             if (in_array("alta productos", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
                             </li>';
             }
-
             if (in_array("gestion usuarios", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
                             </li>';
             }
-
             if (in_array("reportes", $roles)) {
               echo '  <li class="nav-item">
                                 <a class="nav-link" href="/tp2/reportes/">Reportes</a>
                                 </li>';
             }
-
             if (in_array("stock", $roles)) {
               echo '<li class="nav-item">
                             <a class="nav-link" href="/tp2/stock/">Stock</a>
                             </li>';
             }
-
             if (in_array("contacto", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/contacto/">Contacto</a>
                             </li>';
             }
-
             if (in_array("revisar contacto", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
                             </li>';
             }
-
             if (in_array("gestion ordenes", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
                             </li>';
             }
-
             if (in_array("recepcion ordenes", $roles)) {
               echo '<li class="nav-item">
                                     <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
                                     </li>';
             }
-
-
             ?>
-
             <li class="nav-item">
               <a class="nav-link" href="/tp2/historia/">Historia</a>
             </li>
-
           </ul>
-
         </div>
-
       </div>
-
     </div>
-
   </nav>
-
   <dbody class="cardSection">
 
     <h1 class="title" style="margin-top: 3%;"> Sistema Recepción de órdenes</h1>
-
     <h4 style="margin-left:1%"> Recepcionista : <?php echo $email ?> </h4>
 
-    <form class="formulario" action="../recepcion-ordenes/altaRecepcion.php" method="post">
-      <!-- 
-      <div >
-        <label style="margin-left: 67px;" for="prov" class="form-label mt-2 mb-5"> Fecha:</label>
-        <input type="date" name="date" id="date" placeholder="" required
-          autocomplete="off">
+    <form class="formulario" action="../recepcion-ordenes/ingresoRecepcion.php" method="post">
+
+      <div>
+        <label style="margin-left: 67px;" for="date" class="form-label mt-2 mb-1"> Fecha de Recepción:</label>
+        <input type="date" name="date" id="date" placeholder="" required autocomplete="off">
       </div>
-          -->
+
       <div class="mb-3">
         <br>
         <br>
@@ -152,8 +124,21 @@ $email = $varsession;
         <input type="text" class="form-control" name="orden" id="orden" placeholder="Ingrese N° Orden" required
           autocomplete="off">
       </div>
-         
-  <!--    
+      <br>
+      <!--
+      <div>
+        <span style="margin-left: 7px; ">SN. - recepción:</span>
+        <input style="margin-left: 8px;" type="text" name="producto" id="sn" placeholder="Ingrese sn." required
+          autocomplete="off" minlength="13" maxlength="13">
+      </div>
+      <br>
+      <div>
+        <span style="margin-left: 7px;">Cant recepción:</span>
+        <input type="text" name="cantidad" id="cant" placeholder="Ingrese unidad." required autocomplete="off" min="0"
+          step="1" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;" >
+      </div>
+          -->
+      <!--    
       <div id='container'>
 
         <div>
@@ -169,32 +154,34 @@ $email = $varsession;
               onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;" >
           </div>
         </div>
-
       </div>
-
 
       <input class="btn btn-warning" style="background-color:dodgerblue; margin-left: 5px;" type="button"
       value="+ SN" id="agregar" />
       <br>
       <br>-->
-      <input type="submit" class="btn btn-success" style="margin-left: 7px;" value="Ingresar"> </input>
-      <br>
-      <br>
+      <input type="submit" class="btn btn-success mb-3 mt-4" style="margin-left: 7px; " value="Ingresar"> </input>
 
     </form>
 
     <input class="btn btn-warning" style="margin-left: 8px; margin-bottom: 5px; " type="button" name="cancelar"
       value="Cancelar" onclick="location.href='../recepcion-ordenes/index.php'">
 
-      <!--
+    <!--
     <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px; "
       href="../gestion-ordenes/baja-ordenes/index.php"> Baja
       Orden </a>
-          -->
+          
 
     <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
       href="../recepcion-ordenes/recepcion/recepcion.php">
       Listado</a>
+      -->
+
+    <a class="btn btn-danger " style="margin-left: 2%; margin-bottom: 5px;"
+      href="../recepcion-ordenes/modificar/modificar.php">
+      Modificar Estado</a>
+
   </dbody>
 
   <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>

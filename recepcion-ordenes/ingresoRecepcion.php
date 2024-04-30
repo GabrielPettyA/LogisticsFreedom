@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
@@ -13,6 +12,8 @@ if (!in_array("recepcion ordenes", $roles)) {
 }
 
 $email = $varsession;
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,54 +34,216 @@ $email = $varsession;
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
+<?php
+// SE OBTIENEN LOS INPUT DEL FORMULARIO Y ANALISAN LAS VARIABLES JUNTO A LA EXISTENCIA EN DB.
 
-<body>
-</body>
+$conn = mysqli_connect("localhost", "root", "", "bd_stock");
+$ordenRecep = $_POST['orden'];
+$fechaRecep = $_POST['date'];
+$admRecep = $varsession;
+$prodRecep = $_POST['prod'];
+$cantRecep = $_POST['cant'];
+$estadoRecep = 'ENTREGADA';
+$terminar = $_POST['cancelar'];
 
+$conn = mysqli_connect("localhost", "root", "", "bd_stock");
 
-<?php 
+// SE OBTIENEN LOS DATOS GUARDADOS EN DB. DE LA ORDEN DE COMPRA SOLICITADA
 
+$sql = "SELECT * FROM orden_compra WHERE sn = '$prodRecep' ";
+$resultado = $conn->query($sql);
+if ($resultado->num_rows > 0) {
+  $fila = mysqli_fetch_array($resultado);
+  $id = $fila[0];
+  $n_orden = $fila[1];
+  $fecha_orden = $fila[2];
+  $proveedor = $fila[3];
+  $administrador = $fila[5];
+  $sn = $fila[6];
+  $cant = $fila[7];
+  $estado_orden = $fila[11];
+  $motivo_orden = $fila[12];
 
+  /* SE DECLARAN LAS INSTANCIAS QUE SE DEBEN CUMPLIR PARA PODER REALIZAR LA CARGA DE LO INGRESADO POR 
+     FORMULARIO ACTUALIZANDO LA ORDEN DE COMPRA Y SU "SN" CORRESPONDIENTE */
+  if ($estado_orden == 'RECHAZADA' || $estado_orden == 'DADA DE BAJA' || $estado_orden == 'ENTREGADA') {
+    ?>
+    <div style="color:white; background-color: darkred; " class="navbar-toggler"  >
+      <h4 > ALERT: Verifique estado de orden antes de seguir</h4>
+    </div>
+    <?php 
 
-if (!isset($_POST["orden"])) {
+  } else if ($cantRecep > $cant || $cantRecep < 0 || $sn != $prodRecep ) {
+    ?>
+    <div style="color:white; background-color: darkred; " class="navbar-toggler"  >
+      <h4 > ERROR: Verifique cantidad</h4>
+    </div>
+    <?php 
 
-  echo"aca no";
-  
-}else{
-  
-  
-  $orden = $_POST["orden"];
-  $fechaRecep = $_POST['date'];
-  $snRecep = $_POST["producto"];
-  $cantRecep = $_POST["cantidad"];
-
-  require_once("../includes/config/db-config.php");
-
-  /* ESTO NO ESTA FUNCIONANDO !!!
-  $buscar = "SELECT * FROM productos WHERE sn = '$snRecep' ";
-  $resultado = $conexion->query($buscar);
-  if (mysqli_num_rows($resultado) > 0) {
-    foreach ($query_run as $fila) {
-      $snPedido= $fila['sn'];
-      if ($snPedido <= $snRecep){*/
-
-        $valor = "UPDATE orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$varsession', cant_recep='$cantRecep' WHERE sn='$snRecep'";
-        if ($conexion->query($valor)){
-          echo "acaaa vamosssosos !!!";
-        }
-      /*}else{
-        echo "ERROR: Cantidad superior a solicitada, ".$snPedido;
+  } else {
+    $sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenRecep'";
+    $resultado = $conn->query($sql);
+    if ($resultado->num_rows > 0) {
+      $dato = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
+      if ($conn->query($dato) === true) {
+        ?>
+          <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
+          <?php
       }
+      
+
+    } else {
+      echo "Error...proceso fallido, Intente nuevamente más tarde.";
     }
-  }else{
-    echo "ERROR: no se encuentra registro de SN solicitado.";
-  }*/
-  
+
 
   }
+}
 
-  $conexion->close();
-
+$conn->close();
 ?>
 
-</html>
+<?php
+// SE OBTIENEN LOS DATOS INGRESADOS POR FORMULARIO DE ARCHIVO INDEX.PHP DE SECTOR RECEPCION-ORDENES
+
+if (isset($_POST["orden"]) < 0) {
+  echo "Verifique Orden de compra";
+} else {
+  $orden = $_POST['orden'];
+  $fechaRecep = $_POST['date'];
+  $recep = $varsession;
+
+
+  ?>
+  <!-- SE REALIZA FORMULARIO PARA MOSTRAR DATOS OBTENIDOS Y DERIVARLOS AL ACTUAL ARCHIVO
+       UTILIZANDO "($_SERVER['PHP_SELF']);" -->
+  <body>
+    <nav class="navbar bg-body-tertiary fixed-top" style="padding: 0;">
+      <div class="container-fluid">
+        <div>
+          <a class="navbar-brand" href="#">
+            <img class="imageNav" src="../images/favicon.png" alt="logo">
+          </a>
+          <a class="btn btn-warning m-1" href="../includes/api/auth-api/logout.php"> Cerrar session </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <?php
+              if (in_array("alta productos", $roles)) {
+                echo '<li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+                            </li>';
+              }
+              if (in_array("gestion usuarios", $roles)) {
+                echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                            </li>';
+              }
+              if (in_array("reportes", $roles)) {
+                echo '  <li class="nav-item">
+                                <a class="nav-link" href="/tp2/reportes/">Reportes</a>
+                                </li>';
+              }
+              if (in_array("stock", $roles)) {
+                echo '<li class="nav-item">
+                            <a class="nav-link" href="/tp2/stock/">Stock</a>
+                            </li>';
+              }
+              if (in_array("contacto", $roles)) {
+                echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/contacto/">Contacto</a>
+                            </li>';
+              }
+              if (in_array("revisar contacto", $roles)) {
+                echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
+                            </li>';
+              }
+              if (in_array("gestion ordenes", $roles)) {
+                echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
+                            </li>';
+              }
+              if (in_array("recepcion ordenes", $roles)) {
+                echo '<li class="nav-item">
+                                    <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                    </li>';
+              }
+              ?>
+              <li class="nav-item">
+                <a class="nav-link" href="/tp2/historia/">Historia</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <dbody class="cardSection">
+
+      <h1 class="title" style="margin-top: 3%;"> Sistema Recepción de órdenes</h1>
+      <h4 style="margin-left:1%"> Recepcionista : <?php echo $email ?> </h4>
+
+      <form class="formulario" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+
+        <div>
+          <label style="margin-left: 67px; width:100px; " for="date" class="form-label mt-2 mb-1"> Fecha de
+            Recepción:</label>
+          <input type="text" name="date" id="date" placeholder="" readonly value="<?php echo $fechaRecep ?>">
+        </div>
+
+        <div class="mb-3">
+          <br>
+          <br>
+          <label style="margin-left: 10px;" for="prov" class="form-label"> N° orden de recepción</label>
+          <input type="text" class="form-control" name="orden" id="orden" placeholder="" readonly
+            value="<?php echo $orden ?>">
+        </div>
+        <br>
+
+        <div>
+          <span style="margin-left: 7px; ">SN. - recepción:</span>
+          <input style="margin-left: 8px;" type="text" name="prod" id="sn" placeholder="Ingrese sn." required
+            autocomplete="off" minlength="13" maxlength="13">
+        </div>
+        <br>
+        <div>
+          <span style="margin-left: 7px;">Cant recepción:</span>
+          <input type="text" name="cant" id="cant" placeholder="Ingrese unidad." required autocomplete="off" min="0"
+            step="1" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;">
+        </div>
+
+        <input type="submit" class="btn btn-success mb-3 mt-4" style="margin-left: 7px; " value="Cargar"> </input>
+
+
+      </form>
+
+      <input class="btn btn-warning" style="margin-left: 8px; margin-bottom: 5px; " type="button" name="cancelar"
+        value="TERMINAR" onclick="location.href='../recepcion-ordenes/index.php'">
+
+
+      <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
+        href="../recepcion-ordenes/recepcion/recepcion.php">
+        Listado</a>
+    </dbody>
+
+
+
+    <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script>
+  </body>
+
+  </html>
+  <?php
+}
+?>

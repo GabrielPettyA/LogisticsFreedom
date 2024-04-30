@@ -79,29 +79,30 @@ $email = $varsession;
   <h1 id="notificacion">SN - Ingresos"</h1>
 
   <?php
-  require ("../gestion-ordenes/generate.php");
-  //echo $ordenCompra;
+  require ("../gestion-ordenes/generate.php");//genera orden de compra de manera automática
   
+  // Lista los datos encontrados en la DB. para posteriormente ser insertados
   require ("../includes/config/db-config.php");
   if (isset($_POST["producto"])) {
     foreach ($_POST['producto'] as $indice => $prod) {
       $cantidad = $_POST['cantidad'][$indice];
       $prov = $_POST['prov'];
+      $cuit = require("../gestion-ordenes/validarCuit.php");
       $adm = $email;
-      $estado = 'Alta';
-      $motivo = 'Compra';
+      $estado = 'SOLICITADA';
+      $motivo = 'SOLICITADA';
       $fecha = $_POST['date'];
       $orden = $ordenCompra;
       $fechaRecep = 0;
       $admRecep = 'pendiente';
       $cantRecep = 0;
 
-      if ($prod == true) {
+      if ($cuit == true) {
         $validar = "SELECT * FROM productos WHERE sn = $prod";
         $validando = $conexion->query($validar);
         if ($validando->num_rows > 0) {
           
-          $sql = "INSERT INTO orden_compra (n_orden,fecha_orden,proveedor,administrador,sn,cant,fecha_recep,adm_recepcion,cant_recep,estado_orden,motivo_orden) VALUE ('$orden','$fecha','$prov','$adm','$prod','$cantidad','$fechaRecep','$admRecep','$cantRecep','$estado','$motivo')";
+          $sql = "INSERT INTO orden_compra (n_orden,fecha_orden,proveedor,cuit,administrador,sn,cant,fecha_recep,adm_recepcion,cant_recep,estado_orden,motivo_orden) VALUE ('$orden','$fecha','$prov','$cuit','$adm','$prod','$cantidad','$fechaRecep','$admRecep','$cantRecep','$estado','$motivo')";
           $guardando = $conexion->query($sql);
           $prodok=$prod;
 
@@ -151,6 +152,8 @@ $email = $varsession;
     <br>
   <?php
   }
+
+  
   ?>
 
   <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>

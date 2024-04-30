@@ -7,7 +7,7 @@ if ($varsession == null || $varsession == '') {
   header("Location:http://localhost/tp2/");
 }
 
-if (!in_array("gestion ordenes", $roles)) {
+if (!in_array("recepcion ordenes", $roles)) {
   header("Location:http://localhost/tp2/inicio/");
 }
 
@@ -33,9 +33,12 @@ if (!in_array("gestion ordenes", $roles)) {
 <body translate="no" class="text-bg-success">
   <h1 style="margin-left:30%; margin-top:2%; margin-bottom:3%;" class="tituloMod"> SISTEMA BAJA DE ÓRDENES</h1>
   <?php
+/* OBTENCIÓN DE LOS DATOS ENVIADOS POR FORMULARIO Y LLAMADO A DB. PARA LISTAR LA INFORMACIÓN QUE POSEE Y PODER
+   UTILIZARLA PARA LUEGO HACER LOS CAMBIOS REQUERIDOS VISUALIZÁNDOLOS EN TIEMPO REAL */
 
   $conn = mysqli_connect("localhost", "root", "", "bd_stock");
   $registro = $_POST['eliminar'];
+  $fechaRecep = $_POST['date'];
   $sql = "SELECT * FROM orden_compra WHERE n_orden = '$registro' ";
   $resultado = $conn->query($sql);
   if ($resultado->num_rows > 0) {
@@ -52,7 +55,14 @@ if (!in_array("gestion ordenes", $roles)) {
     $motivo_orden = $fila[12];
     //$baja = 'DADA DE BAJA';
     ?>
-    <form style="margin-left:26%" class="formModificar" action="../baja-ordenes/eliminar.php" method="post">
+    <!-- FORMULARIO ARMADO PARA MODIFICAR LOS ESTADOS Y AGREGAR MENSAJE DE MOTIVO DE MODIFICACIÓN -->
+
+    <form style="margin-left:26%" class="formModificar" action="../modificar/eliminar.php" method="post">
+      <div>
+        <label style="margin-left:10px;" for="date" class="form-label mt-5 mb-3"> Fecha Actual:</label>
+        <input type="text" name="date" id="date" placeholder="" required autocomplete="off"
+        value="<?php echo $fechaRecep?> ">
+      </div>
 
       <label for="disabledTextInput" class="form-label">N° Orden afectada</label>
       <input class="form-control" style="width: 300px; margin-bottom:3%;" type="text" readonly name="orden"
@@ -79,13 +89,15 @@ if (!in_array("gestion ordenes", $roles)) {
 
       <br>
       <br>
-      <script>
 
+      <!-- LÓGICA PARA VALIDAR LOS "VALUE" PERMITIDOS A REALIZAR CAMBIOS EN LA VENTANA DE MENSAJE, PERMITIENDO 
+           O NO EL ACCESO A LA MISMA, SEGÚN SU 'ESTADO' -->
+      <script>
         function habilitar(obj) {
           var hab;
           frm = obj.form;
           num = obj.selectedIndex;
-          if (num == -1 || num == 1 || num == 2 || num == 4 ) hab = true;
+          if (num == -1 || num == 1 || num == 2 || num == 4) hab = true;
           else if (num == 3 || num == 5) hab = false;
           frm.mensaje.disabled = hab;
         }
@@ -117,7 +129,7 @@ if (!in_array("gestion ordenes", $roles)) {
 
         <a class="btn btn-default" style="margin-left: 30px;
       color:blue;  font-size:1.5rem;
-      font-family:Georgia, 'Times New Roman', Times, serif; " href="../modificar-ordenes/index.php">Cancelar</a>
+      font-family:Georgia, 'Times New Roman', Times, serif; " href="../modificar/modificar.php ">Cancelar</a>
       </div>
       <br>
       <br>

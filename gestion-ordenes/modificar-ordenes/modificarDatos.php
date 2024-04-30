@@ -63,11 +63,10 @@ $email = $varsession;
   $proveedor = $_POST['prov'];
   $cant = $_POST['cantidad'];
   $sn = $_POST['sn'];
-  //$detalle = $_POST['detalle'];
 
   $sql = "SELECT * FROM orden_compra WHERE n_orden = '$n_orden'";
   $resultado = $conn->query($sql);
-  if ($resultado->num_rows > 0) {
+  if ($resultado->num_rows > 0 ) {
     $sql = "UPDATE  orden_compra SET proveedor='$proveedor' WHERE n_orden = '$n_orden' ";
     if ($conn->query($sql) === true) {
     }
@@ -91,9 +90,11 @@ $email = $varsession;
 
   $conn->close();
   ?>
+  <!--
   <br><br>
   <a class="modificarDatos" href="../2c2023-main">╚► Página Principal...</a><br><br>
   <a class="modificarDatos2" href="../modificar-ordenes/index.php">╚► Registro Administrativo DB...</a>
+-->
 </body>
 
 </html>

@@ -61,94 +61,80 @@ $email = $varsession;
         </div>
 
         <div class="offcanvas-body">
-
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
             <?php
-
             if (in_array("alta productos", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
                             </li>';
             }
-
             if (in_array("gestion usuarios", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
                             </li>';
             }
-
             if (in_array("reportes", $roles)) {
               echo '  <li class="nav-item">
                                 <a class="nav-link" href="/tp2/reportes/">Reportes</a>
                                 </li>';
             }
-
             if (in_array("stock", $roles)) {
               echo '<li class="nav-item">
                             <a class="nav-link" href="/tp2/stock/">Stock</a>
                             </li>';
             }
-
             if (in_array("contacto", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/contacto/">Contacto</a>
                             </li>';
             }
-
             if (in_array("revisar contacto", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
                             </li>';
             }
-
             if (in_array("gestion ordenes", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
                             </li>';
             }
-
             if (in_array("recepcion ordenes", $roles)) {
               echo '<li class="nav-item">
                                     <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
                                     </li>';
             }
-
-
             ?>
-
             <li class="nav-item">
               <a class="nav-link" href="/tp2/historia/">Historia</a>
             </li>
-
           </ul>
-
         </div>
-
       </div>
-
     </div>
-
   </nav>
 
   <dbody class="cardSection">
 
     <h1 class="title" style="margin-top: 3%;"> Alta Orden de Compra</h1>
 
-    <h4 style="margin-left:3%"> Administrador : <?php echo $email ?> </h4>
+    <h4 style="margin-left:3%; "> Administrador : <?php echo $email ?> </h4>
 
-    <form class="formulario" action="../gestion-ordenes/altaOrden.php" method="post">
-      <div >
-        <label style="margin-left: 100px;" for="prov" class="form-label"> Fecha:</label>
-        <input type="date" name="date" id="date" placeholder="aaaa/mm/dd" required
-          autocomplete="off">
+    <form class="formulario " action="../gestion-ordenes/altaOrden.php" method="post">
+      <div>
+        <label style="margin-left: 100px;" for="date" class="form-label"> Fecha:</label>
+        <input type="date" name="date" id="date" placeholder=" aaaa/mm/dd" required autocomplete="off">
+      </div>
+
+      <div class="mb-1">
+        <label style="margin-left: 100px;" for="cuit" class="form-label mt-3 mb-2"> CUIT:</label>
+        <input type="text" class="form-label" name="cuit" id="cuit" placeholder=" CUIT Razón Social." required
+          autocomplete="off" minlength="11" maxlength="11" >
       </div>
 
       <div class="mb-3">
         <br>
-        <br>
-        <label style="margin-left: 10px;" for="prov" class="form-label"> Nombre proveedor:</label>
-        <input type="text" class="form-control" name="prov" id="prov" placeholder="Ingrese proveedor." required
+        <label style="margin-left: 10px;" for="prov" class="form-label "> Nombre proveedor:</label>
+        <input type="text" class="form-control mb-4" name="prov" id="prov" placeholder=" Ingrese proveedor." required
           autocomplete="off">
       </div>
 
@@ -157,15 +143,17 @@ $email = $varsession;
         <div>
           <div>
             <span style="margin-left: 7px;">SN. del producto:</span>
-            <input type="text" name="producto[]" id="producto" placeholder="Ingrese sn." required autocomplete="off" minlength="13" maxlength="13">
+            <input type="number" name="producto[]" id="producto" placeholder=" Ingrese sn." required autocomplete="off"
+              minlength="13" maxlength="13">
           </div>
 
           <div>
             <span style="margin-left: 7px;">Cantidad de prod:</span>
-            <input name="cantidad[]" id="cantidad" placeholder="Ingrese unidad." required
-              autocomplete="off" type="number" min="0" step="1"
-              onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;" >
+            <input name="cantidad[]" id="cantidad" placeholder=" Ingrese unidad." required autocomplete="off"
+              type="number" min="0" step="1"
+              onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;">
           </div>
+
         </div>
 
       </div>
@@ -174,23 +162,21 @@ $email = $varsession;
       <input class="btn btn-warning" style="background-color:dodgerblue; margin-left: 5px;" type="button"
         value="agregar prod." id="agregar" />
       <br>
-      <br>
-      <input type="submit" class="btn btn-success" style="margin-left: 7px;" value="Crear Orden"> </input>
-      <br>
+      <input type="submit" class="btn btn-success mt-3" style="margin-left: 7px;" value="Crear Orden"> </input>
       <br>
 
     </form>
 
-    <input class="btn btn-warning" style="margin-left: 11px; margin-bottom: 5px; " type="button" name="cancelar"
+    <input class="btn btn-warning mt-2" style="margin-left: 11px; margin-bottom: 10px; " type="button" name="cancelar"
       value="Cancelar" onclick="location.href='../gestion-ordenes/index.php'">
 
-      <!--
+    <!--
     <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px; "
       href="../gestion-ordenes/baja-ordenes/index.php"> Baja
       Orden </a>
           -->
 
-    <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
+    <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 3px;"
       href="../gestion-ordenes/modificar-ordenes/index.php">
       Modificar / Eliminar</a>
   </dbody>
