@@ -24,12 +24,29 @@ function conectarBaseDeDatos()
   $sql = "CREATE TABLE IF NOT EXISTS productos (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(30),
-        sn VARCHAR(30),
+        sn VARCHAR(30) UNIQUE, 
         cant INT
     )";
   if ($conn->query($sql) !== TRUE) {
     die("Error al crear la tabla 'productos': " . $conn->error);
   }
+  if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+  }
+
+  // Crear la tabla "ventas" si no existe
+  $sql = "CREATE TABLE IF NOT EXISTS ventas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  factura varchar(30),
+  producto_id INT,
+  cantidad_vendida INT,
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)";
+  if ($conn->query($sql) !== TRUE) {
+    die("Error al crear la tabla 'ventas': " . $conn->error);
+  }
+
+
 
   // Crear la tabla "mod_stock" si no existe
   $sql = "CREATE TABLE IF NOT EXISTS mod_stock (
