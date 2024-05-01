@@ -79,15 +79,16 @@ $email = $varsession;
   <h1 id="notificacion">SN - Ingresos"</h1>
 
   <?php
-  require ("../gestion-ordenes/generate.php");//genera orden de compra de manera automática
-  
+//genera orden de compra de manera automática
+  require ("../gestion-ordenes/generate.php");
+   
   // Lista los datos encontrados en la DB. para posteriormente ser insertados
   require ("../includes/config/db-config.php");
+  
   if (isset($_POST["producto"])) {
-    foreach ($_POST['producto'] as $indice => $prod) {
-      $cantidad = $_POST['cantidad'][$indice];
-      $prov = $_POST['prov'];
+    $prov = $_POST['prov'];
       $cuit = require("../gestion-ordenes/validarCuit.php");
+      
       $adm = $email;
       $estado = 'SOLICITADA';
       $motivo = 'SOLICITADA';
@@ -96,6 +97,9 @@ $email = $varsession;
       $fechaRecep = 0;
       $admRecep = 'pendiente';
       $cantRecep = 0;
+    foreach ($_POST['producto'] as $indice => $prod) {
+      $cantidad = $_POST['cantidad'][$indice];
+      
 
       if ($cuit == true) {
         $validar = "SELECT * FROM productos WHERE sn = $prod";
@@ -111,7 +115,6 @@ $email = $varsession;
           $validando = $conexion->query($validar);
           if ($validando->num_rows != $_POST['producto']) {
             $prodNo=$prod;
-
             ?>
             <h4 style="margin-left:20px;">SN no encontrado en BD. regístrelo en 'Alta de productos':</h4>
             <br>
@@ -154,8 +157,8 @@ $email = $varsession;
   }
 
   
-  ?>
 
+  ?>
   <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
@@ -163,5 +166,6 @@ $email = $varsession;
   <script src="obtenerAlarmas.js"></script>
 
 </body>
+
 
 </html>

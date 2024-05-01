@@ -171,12 +171,12 @@ $email = $varsession;
     <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px; "
       href="../gestion-ordenes/baja-ordenes/index.php"> Baja
       Orden </a>
-          
+          -->
 
     <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
       href="../recepcion-ordenes/recepcion/recepcion.php">
       Listado</a>
-      -->
+      
 
     <a class="btn btn-danger " style="margin-left: 2%; margin-bottom: 5px;"
       href="../recepcion-ordenes/modificar/modificar.php">

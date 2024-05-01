@@ -104,16 +104,16 @@ if ($varsession == null || $varsession == '') {
 
 
   $sql = "INSERT INTO productos (name,sn,cant) VALUES 
-  ('Computadora acrílica zxl 520','7799123456789','25'),
-  ('Torre de computos xL','7799789456123','30'),
-  ('Monitor Samsung 475RD3','7799147258369','15'),
-  ('Router SeGeMCOM','7799321654987','63'),
-  ('Placa para ventilación tz1025','7799987654321','54'),
-  ('Fuente de poder 600hz','7799741852963','33'),
-  ('Reproductor de señal AXR 1000/TR','7799852963741','19'),
-  ('Estabilizador MACO x6efe','7799159123456','45'),
-  ('Fuente mather xscoria REmado','7799111456332','78'),
-  ('Gabinete acrílico R70pro','7799753464221','45')";
+  ('Computadora acrílica zxl 520','7799123456789','10'),
+  ('Torre de computos xL','7799789456123','10'),
+  ('Monitor Samsung 475RD3','7799147258369','10'),
+  ('Router SeGeMCOM','7799321654987','10'),
+  ('Placa para ventilación tz1025','7799987654321','10'),
+  ('Fuente de poder 600hz','7799741852963','10'),
+  ('Reproductor de señal AXR 1000/TR','7799852963741','10'),
+  ('Estabilizador MACO x6efe','7799159123456','10'),
+  ('Fuente mather xscoria REmado','7799111456332','10'),
+  ('Gabinete acrílico R70pro','7799753464221','10')";
 
   $consulta = "SELECT * FROM productos";
   $resultado = $conexion->query($consulta);

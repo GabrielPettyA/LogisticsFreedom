@@ -143,8 +143,8 @@ $email = $varsession;
         <div>
           <div>
             <span style="margin-left: 7px;">SN. del producto:</span>
-            <input type="number" name="producto[]" id="producto" placeholder=" Ingrese sn." required autocomplete="off"
-              minlength="13" maxlength="13">
+            <input type="text" name="producto[]" id="producto" placeholder=" Ingrese sn." required autocomplete="off"
+            minlength="13" maxlength="13">
           </div>
 
           <div>

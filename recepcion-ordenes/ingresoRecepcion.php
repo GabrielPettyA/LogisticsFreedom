@@ -46,12 +46,16 @@ $cantRecep = $_POST['cant'];
 $estadoRecep = 'ENTREGADA';
 $terminar = $_POST['cancelar'];
 
+
 $conn = mysqli_connect("localhost", "root", "", "bd_stock");
+
+require ("../includes/api/stock-api/servModStock.php");
 
 // SE OBTIENEN LOS DATOS GUARDADOS EN DB. DE LA ORDEN DE COMPRA SOLICITADA
 
 $sql = "SELECT * FROM orden_compra WHERE sn = '$prodRecep' ";
 $resultado = $conn->query($sql);
+
 if ($resultado->num_rows > 0) {
   $fila = mysqli_fetch_array($resultado);
   $id = $fila[0];
@@ -68,17 +72,17 @@ if ($resultado->num_rows > 0) {
      FORMULARIO ACTUALIZANDO LA ORDEN DE COMPRA Y SU "SN" CORRESPONDIENTE */
   if ($estado_orden == 'RECHAZADA' || $estado_orden == 'DADA DE BAJA' || $estado_orden == 'ENTREGADA') {
     ?>
-    <div style="color:white; background-color: darkred; " class="navbar-toggler"  >
-      <h4 > ALERT: Verifique estado de orden antes de seguir</h4>
+    <div style="color:white; background-color: darkred; " class="navbar-toggler">
+      <h4> ALERT: Verifique estado de orden antes de seguir</h4>
     </div>
-    <?php 
+    <?php
 
-  } else if ($cantRecep > $cant || $cantRecep < 0 || $sn != $prodRecep ) {
+  } else if ($cantRecep > $cant || $cantRecep < 0 /*|| $sn != $prodRecep*/) {
     ?>
-    <div style="color:white; background-color: darkred; " class="navbar-toggler"  >
-      <h4 > ERROR: Verifique cantidad</h4>
-    </div>
-    <?php 
+      <div style="color:white; background-color: darkred; " class="navbar-toggler">
+        <h4> ERROR: Verifique cantidad</h4>
+      </div>
+    <?php
 
   } else {
     $sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenRecep'";
@@ -86,18 +90,25 @@ if ($resultado->num_rows > 0) {
     if ($resultado->num_rows > 0) {
       $dato = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
       if ($conn->query($dato) === true) {
+        
         ?>
           <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
-          <?php
-      }
-      
+        <?php
 
+      }
     } else {
       echo "Error...proceso fallido, Intente nuevamente más tarde.";
     }
 
 
   }
+  if ($dato === true) {
+    $modificacionStock = new modificarStock($conn);
+    $modificar = $modificacionStock->modi_recepcion_ordenes($prodRecep, $cantRecep, $fechaRecep);
+    $modificacionStock->cerrarConexion();
+  }
+
+
 }
 
 $conn->close();
@@ -117,6 +128,7 @@ if (isset($_POST["orden"]) < 0) {
   ?>
   <!-- SE REALIZA FORMULARIO PARA MOSTRAR DATOS OBTENIDOS Y DERIVARLOS AL ACTUAL ARCHIVO
        UTILIZANDO "($_SERVER['PHP_SELF']);" -->
+
   <body>
     <nav class="navbar bg-body-tertiary fixed-top" style="padding: 0;">
       <div class="container-fluid">
@@ -229,18 +241,18 @@ if (isset($_POST["orden"]) < 0) {
       <input class="btn btn-warning" style="margin-left: 8px; margin-bottom: 5px; " type="button" name="cancelar"
         value="TERMINAR" onclick="location.href='../recepcion-ordenes/index.php'">
 
-
+      <!--
       <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
         href="../recepcion-ordenes/recepcion/recepcion.php">
         Listado</a>
     </dbody>
+            -->
 
 
-
-    <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"></script>
+      <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
   </body>
 
   </html>

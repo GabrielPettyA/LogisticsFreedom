@@ -1,6 +1,4 @@
 
-?>
-
 <?php
 
 // Función para validar la entrada (limpia caracteres especiales)
@@ -31,7 +29,7 @@ if (
 } else {
   echo
     "<script>
-alert('ERROR: Los dos primeros dígitos no cumplen con el criterio del control fiscal, Verifique...');
+alert('ERROR: El CUIT/CUIL no cumplen la norma fiscal, Verifique...');
 window.location='index.php?page=otrapagina'
 </script>";
   return false;

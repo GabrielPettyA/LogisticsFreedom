@@ -20,4 +20,3 @@ function generate_int()
 $ordenCompra = generate_int();
 
 
-?>
