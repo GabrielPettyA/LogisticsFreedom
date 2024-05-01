@@ -91,7 +91,7 @@ $email = $varsession;
       
       $adm = $email;
       $estado = 'SOLICITADA';
-      $motivo = 'SOLICITADA';
+      $motivo = '';
       $fecha = $_POST['date'];
       $orden = $ordenCompra;
       $fechaRecep = 0;
