@@ -34,6 +34,7 @@ $email = $varsession;
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
+
 <?php
 // SE OBTIENEN LOS INPUT DEL FORMULARIO Y ANALISAN LAS VARIABLES JUNTO A LA EXISTENCIA EN DB.
 
@@ -85,27 +86,64 @@ if ($resultado->num_rows > 0) {
     <?php
 
   } else {
-    $sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenRecep'";
+
+    $sql = "SELECT * FROM productos WHERE sn = '$prodRecep' ";
     $resultado = $conn->query($sql);
     if ($resultado->num_rows > 0) {
-      $dato = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
-      if ($conn->query($dato) === true) {
-        
-        ?>
-          <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
-        <?php
+      $fila = mysqli_fetch_array($resultado);
+      $idOld = $fila[0];
+      $nameOld = $fila[1];
+      $snOld = $fila[2];
+      $cantOld = $fila[3];
+      $cantTotal = $cantOld + $cantRecep;
+      $motivoRecep = "RECEPCION ORDEN DE COMPRA";
 
+      $mod = "INSERT INTO mod_stock (id_old,name_old,sn_old,cant_old) VALUE ('$idOld','$nameOld','$snOld','$cantOld')  ";
+      if ($conn->query($mod) == TRUE) {
+        $resul = "UPDATE mod_stock SET id_new='$id', name_new='$nameOld', sn_new='$prodRecep', cant_new='$cantTotal', fecha='$fechaRecep', motivo='$motivoRecep' WHERE sn_old = '$prodRecep' ";
+        if ($conn->query($resul) === true) {
+          $dato = "UPDATE  productos SET cant='$cantTotal' WHERE sn= '$prodRecep' ";
+          if ($conn->query($dato) === true) {
+            $dato3 = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
+            if ($conn->query($dato3) === true) {
+              /*
+              $modificacionStock = new modificarStock($conn);
+              $modificar = $modificacionStock->modi_recepcion_ordenes($prodRecep, $cantRecep, $fechaRecep);
+              $modificacionStock->cerrarConexion();
+              */
+              ?>
+                <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
+              <?php
+              //}
+            }
+          }
+        }
       }
+      /*
+      $sql = "SELECT * FROM 'mod_stock' ";
+      $resultado = $conn->query($sql);
+      if ($resultado->num_rows < 0) {
+        $sql = "INSERT INTO mod_stock (id_old ,name_old ,sn_old ,cant_old) VALUES ('$idOld','$nameOld',$snOld','$cantOld')";
+        $datos2 = $conn->query($sql);
+        if ($conn->query($datos2) === true) {
+        } else {
+          $sql = "SELECT * FROM mod_stock WHERE sn_old = '$prodRecep' ";
+          $date2 = "UPDATE mod_stock SET id_old='$idOld', name_old='$nameOld', sn_old='$snOld', cant_old='$cantOld', id_new='$id', name_new='$nameOld', sn_new='$prodRecep', cant_new='$cantTotal', fecha='$fechaRecep', motivo='$motivoRecep'   ";
+        }
+
+
+            $sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenRecep'";
+            $resultado = $conn->query($sql);
+            if ($resultado->num_rows > 0) {*/
+
+
+      //} 
+      //}
     } else {
       echo "Error...proceso fallido, Intente nuevamente más tarde.";
+
     }
 
-
-  }
-  if ($dato === true) {
-    $modificacionStock = new modificarStock($conn);
-    $modificar = $modificacionStock->modi_recepcion_ordenes($prodRecep, $cantRecep, $fechaRecep);
-    $modificacionStock->cerrarConexion();
   }
 
 
@@ -233,20 +271,22 @@ if (isset($_POST["orden"]) < 0) {
             step="1" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;">
         </div>
 
-        <input type="submit" class="btn btn-success mb-3 mt-4" style="margin-left: 7px; " value="Cargar"> </input>
+        <input type="submit" class="btn btn-success mb-3 mt-4" style="margin-left: 7px; " id="Cargar" value="INGRESAR">
+        </input>
 
 
       </form>
 
-      <input class="btn btn-warning" style="margin-left: 8px; margin-bottom: 5px; " type="button" name="cancelar"
-        value="TERMINAR" onclick="location.href='../recepcion-ordenes/index.php'">
+      <input class="btn btn-primary" style="margin-left: 8px; margin-bottom: 5px; " type="button" name="cancelar"
+        value="FINALIZAR" onclick="location.href='../recepcion-ordenes/index.php'">
 
       <!--
-      <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
-        href="../recepcion-ordenes/recepcion/recepcion.php">
-        Listado</a>
+      <a class="btn btn-primary" style="margin-left: 10%; margin-bottom: 5px;" id="IngresarRecepcion"
+        href="../recepcion-ordenes/actualizarDatos.php">
+        Ingresar Recepción</a>
     </dbody>
             -->
+
 
 
       <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>

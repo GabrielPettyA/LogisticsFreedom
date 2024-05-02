@@ -160,7 +160,7 @@ $email = $varsession;
       value="+ SN" id="agregar" />
       <br>
       <br>-->
-      <input type="submit" class="btn btn-success mb-3 mt-4" style="margin-left: 7px; " value="Ingresar"> </input>
+      <input type="submit" class="btn btn-success mb-3 mt-4" style="margin-left: 7px; " value="Aceptar"> </input>
 
     </form>
 
@@ -173,7 +173,7 @@ $email = $varsession;
       Orden </a>
           -->
 
-    <a class="btn btn-success" style="margin-left: 10%; margin-bottom: 5px;"
+    <a class="btn btn-primary" style="margin-left: 10%; margin-bottom: 5px;"
       href="../recepcion-ordenes/recepcion/recepcion.php">
       Listado</a>
       
