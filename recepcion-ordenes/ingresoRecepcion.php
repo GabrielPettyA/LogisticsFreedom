@@ -106,7 +106,12 @@ if ($resultado->num_rows > 0) {
           if ($conn->query($dato) === true) {
             $dato3 = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
             if ($conn->query($dato3) === true) {
+              
+
               /*
+              $ordenes = "UPDATE orden_compra SET estado_orden ='$estadoRecep' WHERE n_orden = '$ordenRecep' ";
+              if ($conn->query($ordenes) === true) {
+              
               $modificacionStock = new modificarStock($conn);
               $modificar = $modificacionStock->modi_recepcion_ordenes($prodRecep, $cantRecep, $fechaRecep);
               $modificacionStock->cerrarConexion();

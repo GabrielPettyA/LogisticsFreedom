@@ -22,7 +22,8 @@ if (!in_array("recepcion ordenes", $roles)) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Logistic freedom</title>
   <link rel="icon" type="image/x-icon" href="../images/favicon.png">
-  <link rel="stylesheet" href="/styles/main.css ">
+  <link rel="stylesheet" href="../styles/recepcion.css"  >
+  <link rel="stylesheet" href="../styles/main.css ">
   <link rel="stylesheet" href="../styles/navbar.css">
   <link rel="stylesheet" href="../styles/main.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
