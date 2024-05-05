@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     } else {
 
         $servicioStock = new Stock($conexion);
-        $eliminar = $servicioStock->eliminarProducto($data);
+        $eliminar = $servicioStock->eliminarProducto($data->id);
         $servicioStock->cerrarConexion();
 
         // Devolver los resultados en formato JSON

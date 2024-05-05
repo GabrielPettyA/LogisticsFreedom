@@ -120,7 +120,24 @@ function resetBusqueda() {
     cantidadSearch.value = "";
     stockAvisoSearch.value = "";
     estadoSearch.value = "";
+    pageNumber = 0;
 
     filterTable();
+
+}
+
+function nextPage(){
+
+    pageNumber += 10;
+    filterTable();
+
+}
+
+function prevPage(){
+
+    if(pageNumber >= 10){
+        pageNumber -= 10;
+        filterTable();
+    }
 
 }

@@ -3,6 +3,7 @@ session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
 $roles = $_SESSION['roles'];
+
 if ($varsession == null || $varsession == '') {
   header("Location:http://localhost/tp2/");
 }
@@ -11,6 +12,27 @@ if (!in_array("gestion usuarios", $roles)) {
   header("Location:http://localhost/tp2/inicio/");
 }
 
+// ---- Roles dinamicos
+require_once "../includes/config/db-config.php";
+$sql = "SELECT * FROM usuarios WHERE email= '$varsession'";
+$result = $conexion->query($sql);
+$id;
+
+while ($row = $result->fetch_assoc()) {
+
+  $id = $row["id"];
+
+}
+
+$sql = "SELECT acceso FROM roles WHERE id_usuario = '$id'";
+$result = $conexion->query($sql);
+
+$roles = array();
+while ($row = $result->fetch_assoc()) {
+    $roles[] = $row['acceso'];
+}
+
+// --- Fin roles dinamicos
 ?>
 
 <!DOCTYPE html>
@@ -97,6 +119,12 @@ if (!in_array("gestion usuarios", $roles)) {
               echo '<li class="nav-item">
                                         <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
                                     </li>';
+            }
+
+            if (in_array("gestion alarmas", $roles)) {
+              echo '<li class="nav-item">
+                                            <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestion de alarmas</a>
+                                        </li>';
             }
 
             if (in_array("gestion ordenes", $roles)) {
@@ -228,6 +256,14 @@ if (!in_array("gestion usuarios", $roles)) {
           </label>
         </div>
 
+        <div class="form-check">
+          <input class="form-check-input editUserAccessCheck" name="check9" id="check9" type="checkbox"
+            value="gestion alarmas">
+          <label class="form-check-label" for="check9">
+            Gestión de alarmas
+          </label>
+        </div>
+
       </form>
 
       <form id="formEditUser" style="display: none;">
@@ -239,65 +275,73 @@ if (!in_array("gestion usuarios", $roles)) {
         <label for="exampleFormControlInput1" class="form-label">Permisos</label>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check9" id="check9" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check10" id="check10" type="checkbox"
             value="alta productos">
-          <label class="form-check-label" for="check9">
+          <label class="form-check-label" for="check10">
             Alta de productos
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check10" id="check10" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check11" id="check11" type="checkbox"
             value="gestion usuarios">
-          <label class="form-check-label" for="check10">
+          <label class="form-check-label" for="check11">
             Gestion de usuarios
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check11" id="check11" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check12" id="check12" type="checkbox"
             value="reportes">
-          <label class="form-check-label" for="check11">
+          <label class="form-check-label" for="check12">
             Reportes
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check12" id="check12 type="checkbox" value="stock">
-          <label class="form-check-label" for="check12">
+          <input class="form-check-input editUserAccessCheck" name="check13" id="check13" type="checkbox" value="stock">
+          <label class="form-check-label" for="check13">
             Stock
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check13" id="check13" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check14" id="check14" type="checkbox"
             value="contacto">
-          <label class="form-check-label" for="check13">
+          <label class="form-check-label" for="check14">
             Contacto
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check14" id="check14" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check15" id="check15" type="checkbox"
             value="revisar contacto">
-          <label class="form-check-label" for="check14">
+          <label class="form-check-label" for="check15">
             Revisar contacto
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check15" id="check15" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check16" id="check16" type="checkbox"
             value="gestion ordenes">
-          <label class="form-check-label" for="check15">
+          <label class="form-check-label" for="check16">
             Gestión órdenes
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check16" id="check16" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check17" id="check17" type="checkbox"
             value="recepcion ordenes">
-          <label class="form-check-label" for="check16">
+          <label class="form-check-label" for="check17">
             Recepción órdenes
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input editUserAccessCheck" name="check18" id="check18" type="checkbox"
+            value="gestion alarmas">
+          <label class="form-check-label" for="check18">
+            Gestión de alarmas
           </label>
         </div>
 

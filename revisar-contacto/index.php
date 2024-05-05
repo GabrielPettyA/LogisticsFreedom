@@ -3,14 +3,36 @@ session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
 $roles = $_SESSION['roles'];
+
 if ($varsession == null || $varsession == '') {
   header("Location:http://localhost/tp2/");
 }
 
-if (!in_array("revisar contacto", $roles)) {
+if (!in_array("gestion usuarios", $roles)) {
   header("Location:http://localhost/tp2/inicio/");
 }
 
+// ---- Roles dinamicos
+require_once "../includes/config/db-config.php";
+$sql = "SELECT * FROM usuarios WHERE email= '$varsession'";
+$result = $conexion->query($sql);
+$id;
+
+while ($row = $result->fetch_assoc()) {
+
+  $id = $row["id"];
+
+}
+
+$sql = "SELECT acceso FROM roles WHERE id_usuario = '$id'";
+$result = $conexion->query($sql);
+
+$roles = array();
+while ($row = $result->fetch_assoc()) {
+    $roles[] = $row['acceso'];
+}
+
+// --- Fin roles dinamicos
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +49,7 @@ if (!in_array("revisar contacto", $roles)) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
@@ -45,8 +66,7 @@ if (!in_array("revisar contacto", $roles)) {
         <a class="btn btn-warning m-1" href="../includes/api/auth-api/logout.php"> Cerrar session </a>
       </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -65,52 +85,57 @@ if (!in_array("revisar contacto", $roles)) {
 
             if (in_array("alta productos", $roles)) {
               echo '<li class="nav-item">
-                          <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
-                          </li>';
+                                    <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+                                </li>';
             }
 
             if (in_array("gestion usuarios", $roles)) {
               echo '<li class="nav-item">
-                          <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
-                          </li>';
+                                    <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                </li>';
             }
 
             if (in_array("reportes", $roles)) {
               echo '  <li class="nav-item">
-                            <a class="nav-link" href="/tp2/reportes/">Reportes</a>
-                            </li>';
+                                    <a class="nav-link" href="/tp2/reportes/">Reportes</a>
+                                    </li>';
             }
 
             if (in_array("stock", $roles)) {
               echo '<li class="nav-item">
-                          <a class="nav-link" href="/tp2/stock/">Stock</a>
-                          </li>';
+                                <a class="nav-link" href="/tp2/stock/">Stock</a>
+                                </li>';
             }
 
             if (in_array("contacto", $roles)) {
               echo '<li class="nav-item">
-                          <a class="nav-link" href="/tp2/contacto/">Contacto</a>
-                          </li>';
+                                    <a class="nav-link" href="/tp2/contacto/">Contacto</a>
+                                </li>';
             }
 
             if (in_array("revisar contacto", $roles)) {
               echo '<li class="nav-item">
-                          <a class="nav-link active" href="/tp2/revisar-contacto/">Revisar contacto</a>
-                          </li>';
+                                    <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
+                                </li>';
+            }
+
+            if (in_array("gestion alarmas", $roles)) {
+              echo '<li class="nav-item">
+                                        <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestion de alarmas</a>
+                                    </li>';
             }
 
             if (in_array("gestion ordenes", $roles)) {
               echo '<li class="nav-item">
-                                            <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
-                                        </li>';
+                                        <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
+                                    </li>';
             }
 
             if (in_array("recepcion ordenes", $roles)) {
               echo '<li class="nav-item">
-                                    <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
-                                    </li>';
+                                <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                </li>';
             }
-
 
 
             ?>
@@ -131,8 +156,6 @@ if (!in_array("revisar contacto", $roles)) {
 
 
   <?php
-
-  require ("../includes/config/db-config.php");
 
   $consulta = "SELECT * FROM contacto";
   $resultado = $conexion->query($consulta);
@@ -171,12 +194,8 @@ if (!in_array("revisar contacto", $roles)) {
 
   ?>
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
   <script src="usuarios.js"></script>
 </body>
 

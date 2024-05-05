@@ -41,7 +41,21 @@ function filterAlarmasTable(data) {
 
     table_alarmas.innerHTML = "";
     let filterAlarmasData = data.slice(pageNumber, pageNumber + 10);
-    pageActual.textContent = String(pageNumber + 1);
+    pageActual.textContent = String(pageNumber / 10 + 1);
+
+    if (filterAlarmasData.length == 0) {
+        btnNextPage.disabled = true;
+        sinDatosAlarmas.style.display = "flex";
+    }
+
+    if (filterAlarmasData.length > 0) {
+        sinDatosAlarmas.style.display = "none";
+        btnNextPage.disabled = false;
+    }
+
+    lastPage.textContent = Math.ceil(data.length / 12) + 2;
+
+
     mostrarTabla(filterAlarmasData);
 
 }
@@ -76,7 +90,7 @@ function mostrarTabla(dataAlarmas) {
         cantidad.style.verticalAlign = "middle";
         stockAviso.style.verticalAlign = "middle";
         estado.style.verticalAlign = "middle";
-        
+
 
         // Acciones
         let button_edit = document.createElement("button");
@@ -86,7 +100,7 @@ function mostrarTabla(dataAlarmas) {
 
         // Acciones
         button_edit.className = "btn btn-warning m-1";
-        i_edit.className = "fa-solid fa-pen-to-square"; 
+        i_edit.className = "fa-solid fa-pen-to-square";
 
         button_info.className = "btn btn-info m-1";
         i_info.className = "fa-regular fa-lightbulb";
@@ -94,9 +108,13 @@ function mostrarTabla(dataAlarmas) {
         button_edit.appendChild(i_edit);
         button_info.appendChild(i_info);
 
-        button_edit.addEventListener("click",()=>{
+        button_edit.addEventListener("click", () => {
             editarAlarmaModal(alarma)
         });
+
+        button_info.addEventListener("click", ()=>{
+            obtenerModAlarmas(alarma.id)
+        })
 
         acciones.appendChild(button_edit);
         acciones.appendChild(button_info);

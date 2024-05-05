@@ -4,7 +4,16 @@ const table_body = document.getElementById("table_body");
 // Edit modal
 const edit_name = document.getElementById("edit_name");
 const errorEditName = document.getElementById("editName_error");
+const edit_sn = document.getElementById("edit_sn");
+const editSn_error = document.getElementById("editSn_error");
+const edit_cant = document.getElementById("edit_cant");
+const editCant_error = document.getElementById("editCant_error");
+const edit_mot = document.getElementById("edit_mot");
+const editMot_error = document.getElementById("editMot_error");
+const btnEditarProducto = document.getElementById("btnEditarProducto");
 const botones = document.getElementById("botones");
+
+let editarValid = [true, true, true, false];
 
 // Paginación 
 const lastPage = document.getElementById("lastPage");
@@ -153,6 +162,15 @@ function deleteModalShow(products) {
 
 
 function editProduct() {
+
+    let isValid = editarValid.filter(element => element == true);
+
+    if (isValid.length != 4) {
+
+        alert("El formulario es inválido.")
+        return;
+    }
+
     let editProduct = getEditFormValue(); // Producto editado para escribir la tabla de productos
     saveModifications(true); // Escritura de tabla de modificación de productos
 
@@ -204,9 +222,9 @@ function saveModifications(validator) {
         modification.sn_new = prod_new.sn;
         modification.cant_new = prod_new.cant;
         modification.motivo = prod_new.motivo;
-    } 
-    
-    if(!validator){
+    }
+
+    if (!validator) {
         // Registro campos nuevos en caso de borrar
         modification.id_new = 0;
         modification.name_new = "Producto eliminado";
@@ -270,14 +288,147 @@ function deleteProduct() {
 
 /* ---------------Validaciones de campos modal eliminar editar */
 
-function prueba() {
+function validarEditarNombre() {
 
     let editName = edit_name.value;
+
     if (editName.length > 20 || editName < 3) {
+
         errorEditName.style.display = "block";
+        editarValid[0] = false;
+        edit_name.classList.add('is-invalid');
+        edit_name.classList.remove('is-valid');
+
     } else {
+
         errorEditName.style.display = "none";
+        editarValid[0] = true;
+        edit_name.classList.add('is-valid');
+        edit_name.classList.remove('is-invalid');
+
     }
+
+    habilitarEdicion();
+
+}
+
+function validarSn() {
+
+    let editSn = edit_sn.value;
+
+    if (editSn.length != 13) {
+
+        editSn_error.style.display = "block";
+        editarValid[1] = false;
+        edit_sn.classList.add('is-invalid');
+        edit_sn.classList.remove('is-valid');
+
+    }
+
+    if (editSn.length == 13) {
+
+        editSn_error.style.display = "none";
+        editarValid[1] = true;
+        edit_sn.classList.add('is-valid');
+        edit_sn.classList.remove('is-invalid');
+
+    }
+
+    habilitarEdicion();
+
+}
+
+function validarCant() {
+
+    let editCant = edit_cant.value;
+
+    if (editCant == "" || 0 > editCant || editCant > 1000) {
+
+        editCant_error.style.display = "block";
+        editarValid[2] = false;
+        edit_cant.classList.add('is-invalid');
+        edit_cant.classList.remove('is-valid');
+
+    }
+
+    if (editCant >= 0 && editCant < 1001 && editCant != "") {
+
+        editCant_error.style.display = "none";
+        editarValid[2] = true;
+        edit_cant.classList.add('is-valid');
+        edit_cant.classList.remove('is-invalid');
+
+    }
+
+    habilitarEdicion();
+
+}
+
+function validarMotivo() {
+
+    let editmotivo = edit_mot.value;
+
+    if (editmotivo == "") {
+
+        editMot_error.style.display = "block";
+        editarValid[3] = false;
+        edit_mot.classList.add('is-invalid');
+        edit_mot.classList.remove('is-valid');
+
+    }
+
+    if (editmotivo != "") {
+
+        editMot_error.style.display = "none";
+        editarValid[3] = true;
+        edit_mot.classList.add('is-valid');
+        edit_mot.classList.remove('is-invalid');
+
+    }
+
+    habilitarEdicion();
+
+}
+
+function habilitarEdicion() {
+
+    let isValid = editarValid.filter(element => element == true);
+
+    if (isValid?.length == 4) {
+
+        btnEditarProducto.disabled = false;
+
+    }
+
+    if (isValid?.length != 4) {
+
+        btnEditarProducto.disabled = true;
+
+    }
+
+
+}
+
+function cerrarModalEditar() {
+
+    editarValid = [true, true, true, false];
+
+    errorEditName.style.display = "none";
+    editSn_error.style.display = "none";
+    editCant_error.style.display = "none";
+    editMot_error.style.display = "none";
+
+    edit_name.classList.remove('is-valid');
+    edit_name.classList.remove('is-invalid');
+    edit_sn.classList.remove('is-valid');
+    edit_sn.classList.remove('is-invalid');
+    edit_cant.classList.remove('is-valid');
+    edit_cant.classList.remove('is-invalid');
+    edit_mot.classList.remove('is-valid');
+    edit_mot.classList.remove('is-invalid');
+
+    btnEditarProducto.disabled = true;
+
 }
 
 

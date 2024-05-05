@@ -2,6 +2,7 @@
 const editarAlarma = document.getElementById("editarAlarma");
 const editarAlarmaLabel = document.getElementById("editarAlarmaLabel");
 
+
 // ---- Form Editar Alarma
 const editarEstado = document.getElementById("editarEstado");
 const editarStockAviso = document.getElementById("editarStockAviso");
@@ -99,7 +100,7 @@ function habilitarEdicion(){
 }
 
 
-function editarAlarmaApi(){
+function editarAlarmaApi(usuario){
 
     const isValid = isValidEditar.filter(element => element == true);
 
@@ -121,6 +122,8 @@ function editarAlarmaApi(){
 
     alarmaEditada.stockAviso = editarStockAviso.value;
     alarmaEditada.estado = editarEstado.value;
+    alarmaEditada.motivo = "CONFIG MANUAL";
+    alarmaEditada.modificadaPor = usuario;
 
 
     const requestOptions = {
@@ -137,6 +140,8 @@ function editarAlarmaApi(){
 
         if(resp){
 
+            alert("Se ha editado la alarma seleccionada.");
+            resetBusqueda();
             obtenerProductosAlarmas();
             cerrarModal();
 

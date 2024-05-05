@@ -31,10 +31,10 @@ if (!in_array("alta productos", $roles)) {
 
 <?php
 
-  require_once "../includes/config/db-config.php";
-  require "../includes/api/alarmas-reposicion-api/servAlarmas.php";
+require_once "../includes/config/db-config.php";
+require_once "../includes/api/alarmas-reposicion-api/servAlarmas.php";
 
-if(isset($_POST['ean']) < 0) {
+if (isset($_POST['ean']) < 0) {
   echo "INGRESE PRODUCTO";
 }
 
@@ -56,7 +56,7 @@ if (isset($_POST['ean']) > 0) {
 
   if ($validando->num_rows == 0) {
 
-    $sql = "INSERT INTO productos (name,sn,cant) VALUE ('$prod','$ean','$cant ')";
+    $sql = "INSERT INTO productos (name,sn,cant) VALUE ('$prod','$ean','$cant')";
     $guardando = $conexion->query($sql);
 
     // ---- Parche creación de alarma
@@ -79,13 +79,10 @@ if (isset($_POST['ean']) > 0) {
       echo '<script type="text/javascript">
             alert("Ingreso exitoso, puede seguir operando.");
             </script>';
-
     }
-
   }
 
   $conexion->close();
-
 }
 
 ?>
