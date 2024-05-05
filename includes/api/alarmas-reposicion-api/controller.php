@@ -30,4 +30,5 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
     header("Content-Type: application/json; charset=utf-8");
     echo json_encode($editarAlarma);
+
 }

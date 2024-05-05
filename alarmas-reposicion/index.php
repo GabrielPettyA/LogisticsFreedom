@@ -12,8 +12,21 @@ if (!in_array("gestion usuarios", $roles)) {
   header("Location:http://localhost/tp2/inicio/");
 }
 
-// ---- Roles dinamicos
+// ---- Alarmas activas
 require_once "../includes/config/db-config.php";
+
+$sqlAlarmas = "SELECT COUNT(*) AS total_alarmas FROM alarmas WHERE estado = 'A'";
+$resultAlarmas = $conexion->query($sqlAlarmas);
+
+$totalAlarmas;
+
+if ($resultAlarmas) {
+  $row = $resultAlarmas->fetch_assoc();
+  $totalAlarmas = $row['total_alarmas'];
+}
+
+// ---- Roles dinamicos
+
 $sql = "SELECT * FROM usuarios WHERE email= '$varsession'";
 $result = $conexion->query($sql);
 $id;
@@ -124,7 +137,14 @@ while ($row = $result->fetch_assoc()) {
 
               if (in_array("gestion alarmas", $roles)) {
                 echo '<li class="nav-item">
-                                            <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
+                                            <a class="nav-link" href="/tp2/alarmas-reposicion/">
+                                            Gestión de alarmas
+                                            <span class="badge rounded-pill bg-danger">
+                                            ' . $totalAlarmas . '+
+                                            <span class="visually-hidden">unread messages</span>
+                                            </span>
+
+                                            </a>
                                         </li>';
               }
 

@@ -138,21 +138,23 @@ function editarAlarmaApi(usuario){
     .then(response => response.json())
     .then(resp => {
 
+        console.log(resp)
+
         if(resp){
 
             alert("Se ha editado la alarma seleccionada.");
             resetBusqueda();
             obtenerProductosAlarmas();
             cerrarModal();
+            alarmaAeditar = {};
 
         }
 
         if(!resp){
 
-            alert("Ha ocurrido un error en la solicitud.")
+            alert("No se pueden setear alarmas con stock de aviso en '0'. Puede utilizar el estado inactivo.")
 
         }
-
 
     })
 

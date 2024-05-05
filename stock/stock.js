@@ -187,6 +187,7 @@ function editProduct() {
         .then(result => {
             console.log(result);
             obtenerDatos();
+            cerrarModalEditar();
         })
         .catch(error => {
             console.error("Error:", error);
