@@ -3,15 +3,37 @@ session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
 $roles = $_SESSION['roles'];
+
 if ($varsession == null || $varsession == '') {
   header("Location:http://localhost/tp2/");
 }
 
-if (!in_array("alta productos", $roles)) {
+if (!in_array("gestion usuarios", $roles)) {
   header("Location:http://localhost/tp2/inicio/");
 }
 
+// ---- Roles dinamicos
+require_once "../includes/config/db-config.php";
+$sql = "SELECT * FROM usuarios WHERE email= '$varsession'";
+$result = $conexion->query($sql);
+$id;
+
+while ($row = $result->fetch_assoc()) {
+
+  $id = $row["id"];
+}
+
+$sql = "SELECT acceso FROM roles WHERE id_usuario = '$id'";
+$result = $conexion->query($sql);
+
+$roles = array();
+while ($row = $result->fetch_assoc()) {
+  $roles[] = $row['acceso'];
+}
+
+// --- Fin roles dinamicos
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -31,7 +53,6 @@ if (!in_array("alta productos", $roles)) {
 
 <?php
 
-require_once "../includes/config/db-config.php";
 require_once "../includes/api/alarmas-reposicion-api/servAlarmas.php";
 
 if (isset($_POST['ean']) < 0) {
@@ -88,6 +109,7 @@ if (isset($_POST['ean']) > 0) {
 ?>
 
 <body>
+
   <nav class="navbar bg-body-tertiary fixed-top" style="padding: 0;">
 
     <div class="container-fluid">
@@ -119,44 +141,50 @@ if (isset($_POST['ean']) > 0) {
 
             if (in_array("alta productos", $roles)) {
               echo '<li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
-                            </li>';
+                                        <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+                                    </li>';
             }
 
             if (in_array("gestion usuarios", $roles)) {
               echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
-                            </li>';
+                                        <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                    </li>';
             }
 
             if (in_array("reportes", $roles)) {
               echo '  <li class="nav-item">
-                                <a class="nav-link" href="/tp2/reportes/">Reportes</a>
-                                </li>';
+                                        <a class="nav-link" href="/tp2/reportes/">Reportes</a>
+                                        </li>';
             }
 
             if (in_array("stock", $roles)) {
               echo '<li class="nav-item">
-                            <a class="nav-link" href="/tp2/stock/">Stock</a>
-                            </li>';
+                                    <a class="nav-link" href="/tp2/stock/">Stock</a>
+                                    </li>';
             }
 
             if (in_array("contacto", $roles)) {
               echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/contacto/">Contacto</a>
-                            </li>';
+                                        <a class="nav-link" href="/tp2/contacto/">Contacto</a>
+                                    </li>';
             }
 
             if (in_array("revisar contacto", $roles)) {
               echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
-                            </li>';
+                                        <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
+                                    </li>';
+            }
+
+            if (in_array("gestion alarmas", $roles)) {
+              echo '<li class="nav-item">
+                                            <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
+                                        </li>';
             }
 
             if (in_array("gestion ordenes", $roles)) {
               echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
-                            </li>';
+                                            <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
+                                        </li>';
             }
 
             if (in_array("recepcion ordenes", $roles)) {

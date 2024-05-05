@@ -145,7 +145,7 @@ $conexion->close();
 
                         if (in_array("gestion alarmas", $roles)) {
                             echo '<li class="nav-item">
-                                        <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestion de alarmas</a>
+                                        <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
                                     </li>';
                         }
 
