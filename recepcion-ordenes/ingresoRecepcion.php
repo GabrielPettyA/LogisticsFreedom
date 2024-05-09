@@ -107,55 +107,28 @@ if ($resultado->num_rows > 0) {
             $dato3 = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
             if ($conn->query($dato3) === true) {
               
-
-              /*
-              $ordenes = "UPDATE orden_compra SET estado_orden ='$estadoRecep' WHERE n_orden = '$ordenRecep' ";
-              if ($conn->query($ordenes) === true) {
-              
-              $modificacionStock = new modificarStock($conn);
-              $modificar = $modificacionStock->modi_recepcion_ordenes($prodRecep, $cantRecep, $fechaRecep);
-              $modificacionStock->cerrarConexion();
-              */
               ?>
                 <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
               <?php
-              //}
+             
             }
           }
         }
       }
-      /*
-      $sql = "SELECT * FROM 'mod_stock' ";
-      $resultado = $conn->query($sql);
-      if ($resultado->num_rows < 0) {
-        $sql = "INSERT INTO mod_stock (id_old ,name_old ,sn_old ,cant_old) VALUES ('$idOld','$nameOld',$snOld','$cantOld')";
-        $datos2 = $conn->query($sql);
-        if ($conn->query($datos2) === true) {
-        } else {
-          $sql = "SELECT * FROM mod_stock WHERE sn_old = '$prodRecep' ";
-          $date2 = "UPDATE mod_stock SET id_old='$idOld', name_old='$nameOld', sn_old='$snOld', cant_old='$cantOld', id_new='$id', name_new='$nameOld', sn_new='$prodRecep', cant_new='$cantTotal', fecha='$fechaRecep', motivo='$motivoRecep'   ";
-        }
-
-
-            $sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenRecep'";
-            $resultado = $conn->query($sql);
-            if ($resultado->num_rows > 0) {*/
-
-
-      //} 
-      //}
     } else {
       echo "Error...proceso fallido, Intente nuevamente más tarde.";
-
     }
-
   }
-
-
 }
-
 $conn->close();
 ?>
+
+
+<?php 
+// ACA VA EL NUEVO CÓDIGO CON EL BOTÓN FINALIZAR
+?>
+
+
 
 <?php
 // SE OBTIENEN LOS DATOS INGRESADOS POR FORMULARIO DE ARCHIVO INDEX.PHP DE SECTOR RECEPCION-ORDENES
@@ -280,19 +253,12 @@ if (isset($_POST["orden"]) < 0) {
         </input>
 
 
+<!-- ESTE INPUT ES AGREGADO PARA VER SI SE PUEDE REGISTRAR TODOS LOS SN EN 0 ANUNCIANDOLO AL USUARIO, CASO CONTRARIO IRÍA EL INPUT DE ABAJO -->
+        <input class="btn btn-primary mb-3 mt-4  " style="margin-left: 8px; " type="submit" name="finalizar"
+        id="finalizar" value="FINALIZAR" >
+
+
       </form>
-
-      <input class="btn btn-primary" style="margin-left: 8px; margin-bottom: 5px; " type="button" name="cancelar"
-        value="FINALIZAR" onclick="location.href='../recepcion-ordenes/index.php'">
-
-      <!--
-      <a class="btn btn-primary" style="margin-left: 10%; margin-bottom: 5px;" id="IngresarRecepcion"
-        href="../recepcion-ordenes/actualizarDatos.php">
-        Ingresar Recepción</a>
-    </dbody>
-            -->
-
-
 
       <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
