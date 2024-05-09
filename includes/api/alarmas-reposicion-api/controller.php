@@ -26,7 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
     $alarmaServ = new AlarmaService($conexion);
     $editarAlarma = $alarmaServ->editarAlarma($data);
+    $alarmaServ->cerrarConexion();
 
     header("Content-Type: application/json; charset=utf-8");
     echo json_encode($editarAlarma);
+
 }

@@ -21,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["productos"])) {
 // Endpoint editar productos
 if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
+    require_once "../alarmas-reposicion-api/servAlarmas.php";
+
     $data = json_decode(file_get_contents("php://input"));
 
     // Verificar si el JSON se decodificó correctamente
@@ -30,11 +32,16 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
         $servicioStock = new Stock($conexion);
         $modificar = $servicioStock->modificarStock($data);
+
+        $alarmasServ = new AlarmaService($conexion);
+        $configEstadoAlarma = $alarmasServ->cambioDeEstadoDeAlarma($data->id);
+
+        $alarmasServ->cerrarConexion();
         $servicioStock->cerrarConexion();
 
         // Devolver los resultados en formato JSON
         header("Content-Type: application/json");
-        echo json_encode($modificar);
+        echo json_encode($modificar && $configEstadoAlarma);
     }
 }
 
@@ -62,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     } else {
 
         $servicioStock = new Stock($conexion);
-        $eliminar = $servicioStock->eliminarProducto($data);
+        $eliminar = $servicioStock->eliminarProducto($data->id);
         $servicioStock->cerrarConexion();
 
         // Devolver los resultados en formato JSON

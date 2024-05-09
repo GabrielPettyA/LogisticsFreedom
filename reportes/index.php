@@ -3,15 +3,33 @@ session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
 $roles = $_SESSION['roles'];
+
 if ($varsession == null || $varsession == '') {
     header("Location:http://localhost/tp2/");
 }
 
-if (!in_array("reportes", $roles)) {
+if (!in_array("gestion usuarios", $roles)) {
     header("Location:http://localhost/tp2/inicio/");
 }
 
-require("../includes/config/db-config.php");
+// ---- Roles dinamicos
+require_once "../includes/config/db-config.php";
+$sql = "SELECT * FROM usuarios WHERE email= '$varsession'";
+$result = $conexion->query($sql);
+$id;
+
+while ($row = $result->fetch_assoc()) {
+
+    $id = $row["id"];
+}
+
+$sql = "SELECT acceso FROM roles WHERE id_usuario = '$id'";
+$result = $conexion->query($sql);
+
+$roles = array();
+while ($row = $result->fetch_assoc()) {
+    $roles[] = $row['acceso'];
+}
 
 $consulta = "SELECT * FROM mod_stock";
 $resultado = $conexion->prepare($consulta);
@@ -91,52 +109,58 @@ $conexion->close();
 
                         if (in_array("alta productos", $roles)) {
                             echo '<li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
-                          </li>';
+                                    <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+                                </li>';
                         }
 
                         if (in_array("gestion usuarios", $roles)) {
                             echo '<li class="nav-item">
-                            <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
-                          </li>';
+                                    <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                </li>';
                         }
 
                         if (in_array("reportes", $roles)) {
                             echo '  <li class="nav-item">
-                            <a class="nav-link active" href="/tp2/reportes/">Reportes</a>
-                            </li>';
+                                    <a class="nav-link" href="/tp2/reportes/">Reportes</a>
+                                    </li>';
                         }
 
                         if (in_array("stock", $roles)) {
                             echo '<li class="nav-item">
-                          <a class="nav-link" href="/tp2/stock/">Stock</a>
-                          </li>';
+                                <a class="nav-link" href="/tp2/stock/">Stock</a>
+                                </li>';
                         }
 
                         if (in_array("contacto", $roles)) {
                             echo '<li class="nav-item">
-                            <a class="nav-link" href="/tp2/contacto/">Contacto</a>
-                          </li>';
+                                    <a class="nav-link" href="/tp2/contacto/">Contacto</a>
+                                </li>';
                         }
 
                         if (in_array("revisar contacto", $roles)) {
                             echo '<li class="nav-item">
-                            <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
-                          </li>';
+                                    <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
+                                </li>';
+                        }
+
+                        if (in_array("gestion alarmas", $roles)) {
+                            echo '<li class="nav-item">
+                                        <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
+                                    </li>';
                         }
 
                         if (in_array("gestion ordenes", $roles)) {
-                          echo '<li class="nav-item">
-                                            <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
-                                        </li>';
+                            echo '<li class="nav-item">
+                                        <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
+                                    </li>';
                         }
 
                         if (in_array("recepcion ordenes", $roles)) {
-                          echo '<li class="nav-item">
-                                                <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
-                                                </li>';
+                            echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                </li>';
                         }
-          
+
 
                         ?>
 
@@ -159,52 +183,52 @@ $conexion->close();
 
 
 
-        <div id="fondo" class="row">
-            <h1> Reportes modificados de Stock </h1>
+    <div id="fondo" class="row">
+        <h1> Reportes de Modificaciones de Stock </h1>
 
-            <hr style="color: gray;margin: 0.4rem auto 2rem auto; width: 95%">
-            <div class="col-12">
-                <div class="table-responsive">
-                    <table id="tablaMod" class="table table-striped table-bordered" style="width:100%">
-                        <thead class="text-center">
-                            <tr>
-                                <th class="pp">ID</th>
-                                <th class="pp">ID OLD</th>
-                                <th class="pp">NOMBRE OLD</th>
-                                <th class="pp">SN OLD</th>
-                                <th class="pp">CANTIDAD OLD</th>
-                                <th class="pp">ID NEW</th>
-                                <th class="pp">NOMBRE NEW</th>
-                                <th class="pp">SN NEW</th>
-                                <th class="pp">CANTIDAD NEW</th>
-                                <th class="pp">FECHA</th>
-                                <th class="pp">MOTIVO</th>
-                            </tr>
-                        </thead>
+        <hr style="color: gray;margin: 0.4rem auto 2rem auto; width: 95%">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table id="tablaMod" class="table table-striped table-bordered" style="width:100%">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="pp">ID</th>
+                            <th class="pp">ID OLD</th>
+                            <th class="pp">NOMBRE OLD</th>
+                            <th class="pp">SN OLD</th>
+                            <th class="pp">CANTIDAD OLD</th>
+                            <th class="pp">ID NEW</th>
+                            <th class="pp">NOMBRE NEW</th>
+                            <th class="pp">SN NEW</th>
+                            <th class="pp">CANTIDAD NEW</th>
+                            <th class="pp">FECHA</th>
+                            <th class="pp">MOTIVO</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            <?php
-                            foreach ($modificaciones as $modi) {
-                                echo "<tr>";
-                                echo "<td>{$modi['id']}</td>";
-                                echo "<td>{$modi['id_old']}</td>";
-                                echo "<td>{$modi['name_old']}</td>";
-                                echo "<td>{$modi['sn_old']}</td>";
-                                echo "<td>{$modi['cant_old']}</td>";
-                                echo "<td>{$modi['id_new']}</td>";
-                                echo "<td>{$modi['name_new']}</td>";
-                                echo "<td>{$modi['sn_new']}</td>";
-                                echo "<td>{$modi['cant_new']}</td>";
-                                echo "<td>{$modi['fecha']}</td>";
-                                echo "<td>{$modi['motivo']}</td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                    <tbody>
+                        <?php
+                        foreach ($modificaciones as $modi) {
+                            echo "<tr>";
+                            echo "<td>{$modi['id']}</td>";
+                            echo "<td>{$modi['id_old']}</td>";
+                            echo "<td>{$modi['name_old']}</td>";
+                            echo "<td>{$modi['sn_old']}</td>";
+                            echo "<td>{$modi['cant_old']}</td>";
+                            echo "<td>{$modi['id_new']}</td>";
+                            echo "<td>{$modi['name_new']}</td>";
+                            echo "<td>{$modi['sn_new']}</td>";
+                            echo "<td>{$modi['cant_new']}</td>";
+                            echo "<td>{$modi['fecha']}</td>";
+                            echo "<td>{$modi['motivo']}</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 
 
     <!-- jQuery, Popper.js, Bootstrap JS -->

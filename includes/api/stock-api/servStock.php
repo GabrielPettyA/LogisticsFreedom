@@ -50,14 +50,21 @@ class Stock
 
     public function eliminarProducto($id)
     {
-
-        $id = $id;
+        require_once "../alarmas-reposicion-api/servAlarmas.php";
+    
+        $alarmaServ = new AlarmaService($this->conexion);
+        $eliminarAlarma = $alarmaServ->eliminarAlarma($id);
+        
+    
         $sql = "DELETE FROM productos WHERE id=?";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("i", $id);
+        $eliminarProducto = $stmt->execute();
 
-        return $stmt->execute();
 
+        $stmt->close();
+
+        return $eliminarAlarma && $eliminarProducto;
     }
 
     public function cerrarConexion()

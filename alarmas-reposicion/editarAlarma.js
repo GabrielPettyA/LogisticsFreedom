@@ -2,6 +2,7 @@
 const editarAlarma = document.getElementById("editarAlarma");
 const editarAlarmaLabel = document.getElementById("editarAlarmaLabel");
 
+
 // ---- Form Editar Alarma
 const editarEstado = document.getElementById("editarEstado");
 const editarStockAviso = document.getElementById("editarStockAviso");
@@ -99,7 +100,7 @@ function habilitarEdicion(){
 }
 
 
-function editarAlarmaApi(){
+function editarAlarmaApi(usuario){
 
     const isValid = isValidEditar.filter(element => element == true);
 
@@ -121,6 +122,8 @@ function editarAlarmaApi(){
 
     alarmaEditada.stockAviso = editarStockAviso.value;
     alarmaEditada.estado = editarEstado.value;
+    alarmaEditada.motivo = "CONFIG MANUAL";
+    alarmaEditada.modificadaPor = usuario;
 
 
     const requestOptions = {
@@ -135,19 +138,23 @@ function editarAlarmaApi(){
     .then(response => response.json())
     .then(resp => {
 
+        console.log(resp)
+
         if(resp){
 
+            alert("Se ha editado la alarma seleccionada.");
+            resetBusqueda();
             obtenerProductosAlarmas();
             cerrarModal();
+            alarmaAeditar = {};
 
         }
 
         if(!resp){
 
-            alert("Ha ocurrido un error en la solicitud.")
+            alert("No se pueden setear alarmas con stock de aviso en '0'. Puede utilizar el estado inactivo.")
 
         }
-
 
     })
 

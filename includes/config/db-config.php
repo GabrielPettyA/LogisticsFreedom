@@ -167,7 +167,8 @@ function conectarBaseDeDatos()
       alarmaFK INT,
       modificadaPor VARCHAR(50),
       motivo VARCHAR(500),
-      password VARCHAR(255),
+      cant_old INT,
+      cant_new INT,
       estadoAnterior VARCHAR(15),
       fechaMod TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   )";

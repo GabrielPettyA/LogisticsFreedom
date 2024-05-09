@@ -3,10 +3,49 @@ session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
 $roles = $_SESSION['roles'];
+
 if ($varsession == null || $varsession == '') {
   header("Location:http://localhost/tp2/");
 }
 
+if (!in_array("gestion usuarios", $roles)) {
+  header("Location:http://localhost/tp2/inicio/");
+}
+
+// ---- Alarmas activas
+require_once "../includes/config/db-config.php";
+
+$sqlAlarmas = "SELECT COUNT(*) AS total_alarmas FROM alarmas WHERE estado = 'A'";
+$resultAlarmas = $conexion->query($sqlAlarmas);
+
+$totalAlarmas;
+
+if ($resultAlarmas) {
+  $row = $resultAlarmas->fetch_assoc();
+  $totalAlarmas = $row['total_alarmas'];
+}
+
+// ---- Roles dinamicos
+
+$sql = "SELECT * FROM usuarios WHERE email= '$varsession'";
+$result = $conexion->query($sql);
+$id;
+
+while ($row = $result->fetch_assoc()) {
+
+  $id = $row["id"];
+
+}
+
+$sql = "SELECT acceso FROM roles WHERE id_usuario = '$id'";
+$result = $conexion->query($sql);
+
+$roles = array();
+while ($row = $result->fetch_assoc()) {
+    $roles[] = $row['acceso'];
+}
+
+// --- Fin roles dinamicos
 ?>
 
 
@@ -62,14 +101,14 @@ if ($varsession == null || $varsession == '') {
 
               if (in_array("alta productos", $roles)) {
                 echo '<li class="nav-item">
-                                      <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
-                                      </li>';
+                                        <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+                                    </li>';
               }
 
               if (in_array("gestion usuarios", $roles)) {
                 echo '<li class="nav-item">
-                                      <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
-                                      </li>';
+                                        <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                    </li>';
               }
 
               if (in_array("reportes", $roles)) {
@@ -80,32 +119,45 @@ if ($varsession == null || $varsession == '') {
 
               if (in_array("stock", $roles)) {
                 echo '<li class="nav-item">
-                                      <a class="nav-link" href="/tp2/stock/">Stock</a>
-                                      </li>';
+                                    <a class="nav-link" href="/tp2/stock/">Stock</a>
+                                    </li>';
               }
 
               if (in_array("contacto", $roles)) {
                 echo '<li class="nav-item">
-                                      <a class="nav-link" href="/tp2/contacto/">Contacto</a>
-                                      </li>';
+                                        <a class="nav-link" href="/tp2/contacto/">Contacto</a>
+                                    </li>';
               }
 
               if (in_array("revisar contacto", $roles)) {
                 echo '<li class="nav-item">
-                                      <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
-                                      </li>';
+                                        <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
+                                    </li>';
+              }
+
+              if (in_array("gestion alarmas", $roles)) {
+                echo '<li class="nav-item">
+                                            <a class="nav-link" href="/tp2/alarmas-reposicion/">
+                                            Gestión de alarmas
+                                            <span class="badge rounded-pill bg-danger">
+                                            ' . $totalAlarmas . '+
+                                            <span class="visually-hidden">unread messages</span>
+                                            </span>
+
+                                            </a>
+                                        </li>';
               }
 
               if (in_array("gestion ordenes", $roles)) {
                 echo '<li class="nav-item">
-                                      <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
-                                      </li>';
+                                            <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
+                                        </li>';
               }
 
               if (in_array("recepcion ordenes", $roles)) {
                 echo '<li class="nav-item">
-                                      <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
-                                      </li>';
+                                    <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                    </li>';
               }
 
 
@@ -203,16 +255,12 @@ if ($varsession == null || $varsession == '') {
             </tr>
           </thead>
 
-          <tbody id="table_alarmas">
-
-
-
-          </tbody>
+          <tbody id="table_alarmas"></tbody>
 
         </table>
       </div>
 
-
+      <!-- Sin resultados -->
       <div class="contenedorAvisos" id="sinDatosAlarmas" style="display:none;">
         <h1>
           No existen datos para mostrar.
@@ -247,8 +295,7 @@ if ($varsession == null || $varsession == '') {
             </div>
 
             <div class="input-group mb-3">
-              <input type="number" class="form-control" placeholder="Stock de aviso" oninput="validarStockAviso()"
-              aria-label="Stock aviso" aria-describedby="Stock aviso" id="editarStockAviso">
+              <input type="number" class="form-control" placeholder="Stock de aviso" oninput="validarStockAviso()" aria-label="Stock aviso" aria-describedby="Stock aviso" id="editarStockAviso">
             </div>
 
 
@@ -259,11 +306,37 @@ if ($varsession == null || $varsession == '') {
 
         <div class="modal-footer">
 
-          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="btnEditarAlarma" onclick="editarAlarmaApi()">
-            Editar alarma
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="btnEditarAlarma" onclick='editarAlarmaApi(<?php echo json_encode($varsession); ?>)'>
+            Editar Alarma
           </button>
 
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="cerrarModal()">
+            Cerrar
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal ver mod Alarma  -->
+  <div class="modal fade" id="verModAlarmas" tabindex="-1" aria-labelledby="verModAlarmasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="verModAlarmasLabel"> Información de modificaciones </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body" id="modalInfoMod">
+
+
+
+        </div>
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
             Cerrar
           </button>
 
@@ -279,6 +352,7 @@ if ($varsession == null || $varsession == '') {
   <script src="obtenerAlarmas.js"></script>
   <script src="pipe-alarmas.js"></script>
   <script src="editarAlarma.js"></script>
+  <script src="modAlarmas.js"></script>
 </body>
 
 </html>
