@@ -33,9 +33,7 @@ $email = $varsession;
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-
-
-<body>
+<body translate="no" >
   <nav class="navbar bg-body-tertiary fixed-top" style="padding: 0;">
     <div class="container-fluid">
       <div>
@@ -107,8 +105,8 @@ $email = $varsession;
   </nav>
   <dbody class="cardSection">
 
-    <h1 class="title" style="margin-top: 3%;"> Sistema Recepción de órdenes</h1>
-    <h4 style="margin-left:1%"> Recepcionista : <?php echo $email ?> </h4>
+    <h1 class="title" style="margin-top: 2%; text-shadow: 5px 6px 6px gray; box-shadow: 4px 5px 20px 11px darkgray; border-radius:10px; "> Sistema Recepción de órdenes</h1>
+    <h4 style="margin-left:6px; margin-top:30px;"> Recepcionista : <?php echo $email ?> </h4>
 
     <form class="formulario" action="../recepcion-ordenes/ingresoRecepcion.php" method="post">
 

@@ -1,4 +1,4 @@
-<?php
+        <?php
 session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
@@ -74,14 +74,14 @@ if ($resultado->num_rows > 0) {
   if ($estado_orden == 'RECHAZADA' || $estado_orden == 'DADA DE BAJA' || $estado_orden == 'ENTREGADA') {
     ?>
     <div style="color:white; background-color: darkred; " class="navbar-toggler">
-      <h4> ALERT: Verifique estado de orden antes de seguir</h4>
+      <h4> ALERT: dato incorrecto, Verifique ''orden'' o ''sn''.</h4>
     </div>
     <?php
 
   } else if ($cantRecep > $cant || $cantRecep < 0 /*|| $sn != $prodRecep*/) {
     ?>
       <div style="color:white; background-color: darkred; " class="navbar-toggler">
-        <h4> ERROR: Verifique cantidad</h4>
+        <h4> ERROR: Cantidad de ''sn'' incorrecta.</h4>
       </div>
     <?php
 
@@ -103,13 +103,14 @@ if ($resultado->num_rows > 0) {
         $resul = "UPDATE mod_stock SET id_new='$id', name_new='$nameOld', sn_new='$prodRecep', cant_new='$cantTotal', fecha='$fechaRecep', motivo='$motivoRecep' WHERE sn_old = '$prodRecep' ";
         if ($conn->query($resul) === true) {
           $dato = "UPDATE  productos SET cant='$cantTotal' WHERE sn= '$prodRecep' ";
-          if ($conn->query($dato) === true) {
+          if ($conn->query($dato) === true ) {
             $dato3 = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
             if ($conn->query($dato3) === true) {
-              
+
               ?>
                 <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
               <?php
+             
              
             }
           }
@@ -120,11 +121,12 @@ if ($resultado->num_rows > 0) {
     }
   }
 }
+
 $conn->close();
 ?>
 
 
-<?php 
+<?php
 // ACA VA EL NUEVO CÓDIGO CON EL BOTÓN FINALIZAR
 ?>
 
@@ -217,8 +219,8 @@ if (isset($_POST["orden"]) < 0) {
     </nav>
     <dbody class="cardSection">
 
-      <h1 class="title" style="margin-top: 3%;"> Sistema Recepción de órdenes</h1>
-      <h4 style="margin-left:1%"> Recepcionista : <?php echo $email ?> </h4>
+      <h1 class="title" style="margin-top: 2%;  text-shadow: 4px 5px 5px black; "> Sistema Recepción de órdenes</h1>
+      <h4 style="margin-left:8px; margin-top:40px; "> Recepcionista : <?php echo $email ?> </h4>
 
       <form class="formulario" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
 
@@ -249,13 +251,13 @@ if (isset($_POST["orden"]) < 0) {
             step="1" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;">
         </div>
 
-        <input type="submit" class="btn btn-success mb-3 mt-4" style="margin-left: 7px; " id="Cargar" value="INGRESAR">
+        <input type="submit" class="btn btn-success mb-3 mt-5" style="margin-left: 7px; " id="Cargar" value="INGRESAR">
         </input>
 
 
 <!-- ESTE INPUT ES AGREGADO PARA VER SI SE PUEDE REGISTRAR TODOS LOS SN EN 0 ANUNCIANDOLO AL USUARIO, CASO CONTRARIO IRÍA EL INPUT DE ABAJO -->
-        <input class="btn btn-primary mb-3 mt-4  " style="margin-left: 8px; " type="submit" name="finalizar"
-        id="finalizar" value="FINALIZAR" >
+        <input class="btn btn-primary  mb-3 mt-5" style="margin-left: 15px;" type="button" name="cancelar"
+        value="FINALIZAR" onclick="location.href='../recepcion-ordenes/index.php'">
 
 
       </form>

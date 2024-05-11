@@ -31,7 +31,8 @@ if (!in_array("recepcion ordenes", $roles)) {
 </head>
 
 <body translate="no" class="text-bg-success">
-  <h1 style="margin-left:30%; margin-top:2%; margin-bottom:3%;" class="tituloMod"> SISTEMA BAJA DE ÓRDENES</h1>
+  <h1 style="margin-left:30%; margin-top:2%; margin-bottom:3%; box-shadow: 4px 4px 10px 7px darkgreen; width: 32%; border-radius: 15px; " 
+  class="tituloMod"> SISTEMA BAJA DE ÓRDENES</h1>
   <?php
 /* OBTENCIÓN DE LOS DATOS ENVIADOS POR FORMULARIO Y LLAMADO A DB. PARA LISTAR LA INFORMACIÓN QUE POSEE Y PODER
    UTILIZARLA PARA LUEGO HACER LOS CAMBIOS REQUERIDOS VISUALIZÁNDOLOS EN TIEMPO REAL */
@@ -74,7 +75,8 @@ if (!in_array("recepcion ordenes", $roles)) {
 
       <label for="Select" class="form-label">Cambiar Estado</label>
 
-      <select onchange="habilitar(this)" style="width: 300px;" class="form-select" name="estadoActual" id="camEstado ">
+      <select onchange="habilitar(this)" style="width: 300px; box-shadow:4px 4px 35px 5px black; " 
+      class="form-select" name="estadoActual" id="camEstado ">
         <option disable selected="">Opción: Cambiar Estado</option>
         <optgroup label="Gestión de Orden">
           <option value='SOLICITADA'>SOLICITADA</option>
@@ -114,9 +116,9 @@ if (!in_array("recepcion ordenes", $roles)) {
       </div><br>
 
       <div class="mb-1">
-        <label for="exampleFormControlTextarea1" class="form-label">Motivo de 'BAJA' o 'RECHAZO'</label><br>
-        <textarea style="border-radius: 10px; padding:10px;" name="mensaje" id="mensaje" rows="2" cols="61"
-          placeholder="Escriba motivos en caso de orden RECHAZADA y/o DADA DE BAJA." disabled require></textarea>
+        <label for="exampleFormControlTextarea1" class="form-label">Motivo de ''BAJA'' o ''RECHAZO''</label><br>
+        <textarea style="border-radius: 10px; padding:10px; box-shadow:4px 4px 35px 5px black; " name="mensaje" id="mensaje" rows="2" cols="61"
+          placeholder="Escriba motivos solo en caso de orden ''RECHAZADA'' o ''DADA DE BAJA''." disabled require></textarea>
       </div>
 
       <?php
@@ -124,12 +126,12 @@ if (!in_array("recepcion ordenes", $roles)) {
 
 
       <div class="form-group mt-5">
-        <input type="submit" class="botonEliminar" value="Aceptar" style="border-radius: 10px; background-color:darkred; color: white; 
-      font-size:1.2rem; width: 100px; height: 40px; ">
+        <input type="submit" class="botonEliminar" value="Aceptar" style="border-radius: 10px; background-color:darkgray; color: darkblue; 
+      font-size:1.5rem; width: 120px; height: 54px; box-shadow: 4px 4px 14px darkblue; font-family:'Times New Roman', Times, serif; " ">
 
-        <a class="btn btn-default" style="margin-left: 30px;
-      color:blue;  font-size:1.5rem;
-      font-family:Georgia, 'Times New Roman', Times, serif; " href="../modificar/modificar.php ">Cancelar</a>
+        <a class="btn btn-default mb-1 " style="margin-left: 30px; box-shadow: 4px 4px 14px darkred;
+      color: darkred ;  font-size:1.5rem;  background-color:darkgray; border-radius: 10px;
+      font-family:'Times New Roman', Times, serif; " href="../modificar/modificar.php ">Cancelar</a>
       </div>
       <br>
       <br>
