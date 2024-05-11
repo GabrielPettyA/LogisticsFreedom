@@ -20,7 +20,7 @@ if (!in_array("recepcion ordenes", $roles)) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+  <link rel="icon" type="image/x-icon" href="../../images/favicon.png">
   <title>Logistics freedom</title>
   <link rel="stylesheet" href="/styles/main.css ">
   <link rel="preconnect" href="https://fonts.googleapis.com">
