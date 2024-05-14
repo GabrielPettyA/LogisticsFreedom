@@ -93,6 +93,12 @@ $email = $varsession;
                                 <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
                             </li>';
             }
+              if (in_array("gestion alarmas", $roles)) {
+              echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
+                            </li>';
+              
+            }
             if (in_array("gestion ordenes", $roles)) {
               echo '<li class="nav-item">
                                 <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
@@ -128,7 +134,7 @@ $email = $varsession;
       <div class="mb-1">
         <label style="margin-left: 100px;" for="cuit" class="form-label mt-3 mb-2"> CUIT:</label>
         <input type="text" class="form-label" name="cuit" id="cuit" placeholder=" CUIT Razón Social." required
-          autocomplete="off" minlength="11" maxlength="11" >
+          autocomplete="off" minlength="11" maxlength="11">
       </div>
 
       <div class="mb-3">
@@ -144,7 +150,7 @@ $email = $varsession;
           <div>
             <span style="margin-left: 7px;">SN. del producto:</span>
             <input type="text" name="producto[]" id="producto" placeholder=" Ingrese sn." required autocomplete="off"
-            minlength="13" maxlength="13">
+              minlength="13" maxlength="13">
           </div>
 
           <div>

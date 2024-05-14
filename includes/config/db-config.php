@@ -141,7 +141,7 @@ function conectarBaseDeDatos()
     $sql = "INSERT INTO roles (id_usuario,acceso)
         VALUES ('$id', 'alta productos'), ('$id', 'contacto'), 
         ('$id', 'gestion usuarios'), ('$id', 'reportes'),
-         ('$id', 'revisar contacto'), ('$id', 'stock'),
+         ('$id', 'revisar contacto'), ('$id', 'stock'), ('$id', 'gestion alarmas'),
          ('$id','gestion ordenes'), ('$id', 'recepcion ordenes')";
     $result = $conn->query($sql);
   }
