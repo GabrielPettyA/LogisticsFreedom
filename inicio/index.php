@@ -98,6 +98,13 @@ if ($varsession == null || $varsession == '') {
                                       </li>';
               }
 
+              if (in_array("gestion alarmas", $roles)) {
+                echo '<li class="nav-item">
+                                  <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
+                              </li>';
+                
+              }
+
               if (in_array("gestion ordenes", $roles)) {
                 echo '<li class="nav-item">
                                       <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
