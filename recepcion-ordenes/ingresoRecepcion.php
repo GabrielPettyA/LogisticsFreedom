@@ -12,7 +12,39 @@ if (!in_array("recepcion ordenes", $roles)) {
 }
 
 $email = $varsession;
+// ---- Alarmas activas
+require_once "../includes/config/db-config.php";
 
+$sqlAlarmas = "SELECT COUNT(*) AS total_alarmas FROM alarmas WHERE estado = 'A'";
+$resultAlarmas = $conexion->query($sqlAlarmas);
+
+$totalAlarmas;
+
+if ($resultAlarmas) {
+  $row = $resultAlarmas->fetch_assoc();
+  $totalAlarmas = $row['total_alarmas'];
+}
+
+// ---- Roles dinamicos
+
+$sql = "SELECT * FROM usuarios WHERE email= '$varsession'";
+$result = $conexion->query($sql);
+$id;
+
+while ($row = $result->fetch_assoc()) {
+
+  $id = $row["id"];
+}
+
+$sql = "SELECT acceso FROM roles WHERE id_usuario = '$id'";
+$result = $conexion->query($sql);
+
+$roles = array();
+while ($row = $result->fetch_assoc()) {
+  $roles[] = $row['acceso'];
+}
+
+// --- Fin roles dinamicos
 
 ?>
 <!DOCTYPE html>
@@ -90,7 +122,7 @@ if ($resultado->num_rows > 0) {
       <?php
 
     } else {
-// OBTENCIÓN DE DATOS DE LA TABLA 'productos'
+      // OBTENCIÓN DE DATOS DE LA TABLA 'productos'
       $sql = "SELECT * FROM productos WHERE sn = '$prodRecep' ";
       $resultado = $conn->query($sql);
       if ($resultado->num_rows > 0) {
@@ -101,8 +133,10 @@ if ($resultado->num_rows > 0) {
         $cantOld = $fila[3];
         $cantTotal = $cantOld + $cantRecep;
         $motivoRecep = "RECEPCION ORDEN DE COMPRA";
-// INICIO DE SECCIÓN PARA CARGAR LOS DATOS DE MERCADERÍA INGRESANTE A LA TABLA DE 'mod_stock'
-        $mod = "INSERT INTO mod_stock (id_old,name_old,sn_old,cant_old) VALUE ('$idOld','$nameOld','$snOld','$cantOld')  ";
+        // INICIO DE SECCIÓN PARA CARGAR LOS DATOS DE MERCADERÍA INGRESANTE A LA TABLA DE 'mod_stock'
+
+        
+        $mod = "INSERT INTO mod_stock  (id_old,name_old,sn_old,cant_old,id_new,name_new,sn_new,cant_new,fecha,motivo) VALUE ('$idOld','$nameOld','$snOld','$cantOld','$id','$nameOld','$prodRecep','$cantTotal','$fechaRecep','$motivoRecep')  ";
         if ($conn->query($mod) == TRUE) {
 
           $sql = "SELECT * FROM mod_stock WHERE sn_old = '$snOld' ";
@@ -115,8 +149,9 @@ if ($resultado->num_rows > 0) {
             if ($conn->query($resul) === true) {
               $dato = "UPDATE  productos SET cant='$cantTotal' WHERE sn= '$prodRecep' ";
               if ($conn->query($dato) === true) {
-// FIN DE SECCIÓN PARA CARGAR LOS DATOS DE MERCADERÍA INGRESANTE A LA TABLA DE 'mod_stock'
-// INICIO DE SECCIÓN PARA DESACTIVAR LA ALARMA DE STOCK
+                // FIN DE SECCIÓN PARA CARGAR LOS DATOS DE MERCADERÍA INGRESANTE A LA TABLA DE 'mod_stock'
+
+                // INICIO DE SECCIÓN PARA DESACTIVAR LA ALARMA DE STOCK
                 $estadoNuevoAlarma = 'D';
                 $resultadoAlarmas = "SELECT * FROM alarmas WHERE productoFK = '$idOld' ";
                 $resultadoAlarmaActiva = $conn->query($resultadoAlarmas);
@@ -124,8 +159,9 @@ if ($resultado->num_rows > 0) {
                   $alarmas = "UPDATE alarmas SET estado = '$estadoNuevoAlarma' WHERE productoFK = '$idOld' ";
                   if ($conn->query($alarmas) === true) {
 
-// FIN DE SECCIÓN PARA DESACTIVAR LA ALARMA DE STOCK
-// INICIO DE SECCIÓN PARA CARGAR ARTÍCULOS DE ORDEN DE COMPRA EN EL ÁREA DE RECEPCIÓN
+                    // FIN DE SECCIÓN PARA DESACTIVAR LA ALARMA DE STOCK
+
+                    // INICIO DE SECCIÓN PARA CARGAR ARTÍCULOS DE ORDEN DE COMPRA EN EL ÁREA DE RECEPCIÓN
                     $dato3 = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE n_orden= '$ordenRecep' && sn = '$snOld' ";
                     if ($conn->query($dato3) === true) {
                       ?>
@@ -208,46 +244,95 @@ if ($resultado->num_rows > 0) {
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <?php
+
               if (in_array("alta productos", $roles)) {
                 echo '<li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
-                            </li>';
+<a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+</li>';
               }
+
               if (in_array("gestion usuarios", $roles)) {
                 echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
-                            </li>';
+<a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+</li>';
               }
+
               if (in_array("reportes", $roles)) {
                 echo '  <li class="nav-item">
-                                <a class="nav-link" href="/tp2/reportes/">Reportes</a>
-                                </li>';
+<a class="nav-link" href="/tp2/reportes/">Reportes</a>
+</li>';
               }
+
               if (in_array("stock", $roles)) {
                 echo '<li class="nav-item">
-                            <a class="nav-link" href="/tp2/stock/">Stock</a>
-                            </li>';
+<a class="nav-link" href="/tp2/stock/">Stock</a>
+</li>';
               }
+
               if (in_array("contacto", $roles)) {
                 echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/contacto/">Contacto</a>
-                            </li>';
+<a class="nav-link" href="/tp2/contacto/">Contacto</a>
+</li>';
               }
+
               if (in_array("revisar contacto", $roles)) {
                 echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
-                            </li>';
+<a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
+</li>';
               }
+
+              if (in_array("gestion alarmas", $roles) && $totalAlarmas == 0) {
+                echo '<li class="nav-item">
+<a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
+</li>';
+              }
+
+              if (in_array("gestion alarmas", $roles) && $totalAlarmas > 0) {
+                echo '<li class="nav-item">
+<a class="nav-link" href="/tp2/alarmas-reposicion/">
+Gestión de alarmas
+<span class="badge rounded-pill bg-danger">
+' . $totalAlarmas . '+
+<span class="visually-hidden">unread messages</span>
+</span>
+
+</a>
+</li>';
+              }
+
+
+              if (in_array("visualizar alarmas", $roles) && $totalAlarmas == 0) {
+                echo '<li class="nav-item">
+<a class="nav-link" href="/tp2/visualizar-alarmas/">Visualizar alarmas</a>
+</li>';
+              }
+
+              if (in_array("visualizar alarmas", $roles) && $totalAlarmas > 0) {
+                echo '<li class="nav-item">
+<a class="nav-link" href="/tp2/visualizar-alarmas/">
+Visualizar de alarmas
+<span class="badge rounded-pill bg-danger">
+' . $totalAlarmas . '+
+<span class="visually-hidden">unread messages</span>
+</span>
+
+</a>
+</li>';
+              }
+
               if (in_array("gestion ordenes", $roles)) {
                 echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
-                            </li>';
+  <a class="nav-link active" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
+</li>';
               }
+
               if (in_array("recepcion ordenes", $roles)) {
                 echo '<li class="nav-item">
-                                    <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
-                                    </li>';
+<a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+</li>';
               }
+
+
               ?>
               <li class="nav-item">
                 <a class="nav-link" href="/tp2/historia/">Historia</a>

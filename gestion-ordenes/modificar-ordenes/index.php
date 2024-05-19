@@ -13,6 +13,7 @@ if (!in_array("gestion ordenes", $roles)) {
 
 //$email = $varsession;
 
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
