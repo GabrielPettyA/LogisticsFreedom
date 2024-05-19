@@ -21,7 +21,7 @@ if (!in_array("reportes", $roles)) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Logistic freedom</title>
+    <title>Logistics freedom</title>
     <link rel="icon" type="image/x-icon" href="../images/favicon.png">
 
 
@@ -52,7 +52,7 @@ if (!in_array("reportes", $roles)) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Logistic Freedom</title>
+    <title>Logistics Freedom</title>
     <link rel="icon" type="image/x-icon" href="../images/favicon.png">
 
     <link rel="stylesheet" href="../styles/reportes.css">

@@ -189,7 +189,7 @@ $conexion->close();
                 <td><?php echo $modi['sn']; ?></td>
                 <td>
                   <input type="number" name="cantidad_ventas[<?php echo $modi['id']; ?>]" value="0" min="0"
-                    max="<?php echo $modi['cant']; ?>" disabled>
+                    max="<?php echo $modi['cant']; ?>">
                 </td>
               </tr>
             <?php endforeach; ?>
