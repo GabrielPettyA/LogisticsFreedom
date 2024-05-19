@@ -14,7 +14,7 @@ class Stock
     {
 
         $sql = "SELECT * FROM productos";
-        $result =  $this->conexion->query($sql);
+        $result = $this->conexion->query($sql);
         $productos = array();
 
         if ($result->num_rows > 0) {
@@ -92,7 +92,7 @@ class Stock
                     $productoOld->name = $row["name"];
                     $productoOld->sn = $row["sn"];
                     $productoOld->cant = $row["cant"];
-                    
+
                 }
 
             }
@@ -104,7 +104,7 @@ class Stock
             $productoNew = $productoOld->cant - $cantidadVendida;
             $modificacion = $this->modificarStock($productoNew);
 
-            if(!$modificacion){
+            if (!$modificacion) {
                 $response = false;
             }
 
@@ -112,7 +112,7 @@ class Stock
             $productoModificado = new stdClass;
 
             $productoModificado->id_old = $productoOld->id;
-            $productoModificado->name_old = $productoOld ->name;
+            $productoModificado->name_old = $productoOld->name;
             $productoModificado->sn_old = $productoOld->sn;
             $productoModificado->cant_old = $productoOld->cant;
             $productoModificado->id_new = $productoOld->id;
@@ -122,26 +122,26 @@ class Stock
             $productoModificado->fecha = date("Y-d-m", strtotime("today"));
             $productoModificado->motivo = "VENTA";
 
-            $modiServ = new modificarStock($conexion);
+            $modiServ = new modificarStock($this->conexion);
             $generarModifi = $modiServ->modificarStock($productoModificado);
 
-            if(!$generarModifi){
+            if (!$generarModifi) {
                 $response = false;
             }
 
-            $modiServ->cerrarConexion();
 
 
-            $alarmaServ = new AlarmaService($conexion);
+
+            $alarmaServ = new AlarmaService($this->conexion);
             $modiAlarmas = $alarmaServ->cambioDeEstadoDeAlarma($productoOld->id);
 
-            
-            if(!$modiAlarmas){
+
+            if (!$modiAlarmas) {
                 $response = false;
             }
 
             $alarmaServ->cerrarConexion()();
-
+            $modiServ->cerrarConexion();
         }
 
         return $response;

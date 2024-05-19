@@ -13,7 +13,7 @@ if (!in_array("reportes", $roles)) {
 
 require ("../includes/config/db-config.php");
 
-$consulta = "SELECT * FROM productos";
+$consulta = "SELECT * FROM productos WHERE cant > 0" ;
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $result = $resultado->get_result();
@@ -166,74 +166,91 @@ $conexion->close();
 
       <div class="table-responsive">
 
-
-        <table id="productos" class="table table-striped table-bordered" style="width:100%">
-          <thead class="text-center">
-            <tr>
-              <th class="pp"></th>
-              <th class="pp">NOMBRE</th>
-              <th class="pp">Cantidad de Stock</th>
-              <th class="pp">SN</th>
-              <th class="pp">Seleccionar Cantidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($stock as $modi): ?>
+        <form action="../../ventas-api/ventas.php" method="post">
+          <table id="productos" class="table table-striped table-bordered" style="width:100%">
+            <thead class="text-center">
               <tr>
-                <td>
-                  <input onchange="habilitarCantidad(this)" name="productos_seleccionados[]" type="checkbox"
-                    value="<?php echo $modi['id']; ?>">
-                </td>
-                <td><?php echo $modi['name']; ?></td>
-                <td><?php echo $modi['cant']; ?></td>
-                <td><?php echo $modi['sn']; ?></td>
-                <td>
-                  <input type="number" name="cantidad_ventas[<?php echo $modi['id']; ?>]" value="0" min="0"
-                    max="<?php echo $modi['cant']; ?>" disabled>
-                </td>
+                <th class="pp"></th>
+                <th class="pp">NOMBRE</th>
+                <th class="pp">Cantidad de Stock</th>
+                <th class="pp">SN</th>
+                <th class="pp">Seleccionar Cantidad</th>
               </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
 
-        <!-- Agregar el área del carrito de compras -->
-        <div class="text-end">
-          <!-- Botón que abre la ventana modal -->
-          <button id="realizarCompraBtn" class="btn btn-success" data-bs-toggle="modal"
-            data-bs-target="#confirmPurchaseModal">
-            <i class="fas fa-shopping-cart"></i> Realizar compra
-          </button>
-        </div>
+              <?php foreach ($stock as $modi): ?>
+                <tr>
+                  <td>
+                    <input onchange="habilitarCantidad(this)" name="productos_seleccionados[]" type="checkbox"
+                      value="<?php echo $modi['id']; ?>">
+                  </td>
+                  <td class="nombreVentas"><?php echo $modi['name']; ?></td>
 
-        <!-- Ventana Modal de Confirmación -->
-        <div class="modal fade" id="confirmPurchaseModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmar Compra</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                ¿Está seguro de que desea realizar esta compra?
-                <!-- Puedes agregar más detalles aquí, como el total a pagar o los productos seleccionados -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-success" href="-">Sí, quiero comprar</button>
-              </div>
+
+                  <td><?php echo $modi['cant']; ?></td>
+                  <td><?php echo $modi['sn']; ?></td>
+                  <td>
+                    <input type="number" class="cantventas" name="cantidad_ventas[<?php echo $modi['id']; ?>]" value="0"
+                      min="0" max="<?php echo $modi['cant']; ?>" disabled>
+
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+      </div>
+      </tbody>
+      </table>
+      </form>
+      <!-- Agregar el área del carrito de compras -->
+      <div class="text-end">
+        <!-- Botón que abre la ventana modal -->
+        <button onclick="btnenviarcant()" class="btn btn-success" data-bs-toggle="modal"
+          data-bs-target="#confirmPurchaseModal">
+          <i class="fas fa-shopping-cart"></i> Realizar compra
+        </button>
+      </div>
+
+      <!-- Ventana Modal de Confirmación -->
+      <div class="modal fade" id="confirmPurchaseModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmar Compra</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ¿Está seguro de que desea realizar esta compra?
+              <table class="table table-bordered" style="border-color: white;">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                  </tr>
+                </thead>
+                <tbody id="confirmarventastabla">
+
+                </tbody>
+              </table> 
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+              <button type="button" class="btn btn-success" onclick="vender()">Sí, quiero comprar</button>
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
       </div>
+
+
+
+
+
+
+
     </div>
+  </div>
   </div>
 
 
