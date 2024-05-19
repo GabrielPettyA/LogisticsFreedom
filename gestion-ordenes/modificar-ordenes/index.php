@@ -20,8 +20,8 @@ if (!in_array("gestion ordenes", $roles)) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="../../images/favicon.png">
   <title>Logistic freedom</title>
-  <link rel="icon" type="image/x-icon" href="../images/favicon.png">
   <link rel="stylesheet" href="/styles/main.css ">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -253,6 +253,9 @@ if (!in_array("gestion ordenes", $roles)) {
 
         </table>
       </div>
+      <br>
+      <br>
+      <br>
       <!-- Bootstrap -->
       <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

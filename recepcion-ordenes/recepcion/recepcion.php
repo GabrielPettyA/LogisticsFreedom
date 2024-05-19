@@ -20,12 +20,8 @@ if (!in_array("recepcion ordenes", $roles)) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logistic freedom</title>
-  <link rel="icon" type="image/x-icon" href="../images/favicon.png">
-  <link rel="stylesheet" href="../styles/recepcion.css"  >
-  <link rel="stylesheet" href="../styles/main.css ">
-  <link rel="stylesheet" href="../styles/navbar.css">
-  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="icon" type="image/x-icon" href="../../images/favicon.png ">
+  <title>Logistics freedom</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
@@ -54,10 +50,11 @@ if (!in_array("recepcion ordenes", $roles)) {
   .inicio {
     color: white;
     justify-content: center;
-    margin-left: 28.3%;
+    margin-left: 28.5%;
     font-family: 'Times New Roman', Times, serif;
     font-size: 8vh;
     border-radius: 10px;
+    box-shadow: 5px 6px 8px black;
   }
 
   table {
@@ -68,7 +65,7 @@ if (!in_array("recepcion ordenes", $roles)) {
   th {
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: blue;
   }
 
@@ -105,6 +102,7 @@ if (!in_array("recepcion ordenes", $roles)) {
                     echo $_GET['from_date'];
                   } ?>" class="form-control">
                 </div>
+                <br>
               </div>
               <div style="width: 300px;" class="#">
                 <div class="form-group">
@@ -118,14 +116,14 @@ if (!in_array("recepcion ordenes", $roles)) {
               <div class="#">
                 <div class="form-group">
                   <b></b> <br>
-                  <button type="submit" class=" btn btn-success">Aceptar</button>
+                  <button type="submit" class=" btn btn-success mt-3" style=" box-shadow: 4px 4px 5px black; " >Aceptar</button>
                 </div>
               </div>
             </div>
           </form>
-          <a class="btn btn-success" style="margin-bottom: 5px; margin-top:10px; background-color:darkcyan ; width: 84px; " href="../">
+          <a class="btn btn-success mt-3" style="margin-bottom: 5px; margin-top:10px; background-color:darkcyan ; width: 84px; box-shadow: 4px 4px 5px black; " href="../">
             Salir</a>
-          <table style="margin-right: 6% ; margin-left: 7%; display: block; " class="container text-center mb-5">
+          <table style="margin-left: 20%; display: block; text-shadow: 5px 10px 14px black;  " class="container text-center mb-5">
             <thead class="">
               <tr class=""><br>
                 <th> Id </th>
@@ -217,8 +215,8 @@ if (!in_array("recepcion ordenes", $roles)) {
                       <?php
                       echo "
                     <script>
-                      alert('ERROR: no se encuentra información requerida, intente nuevamente');
-                      window.location = 'index.php?page=otrapagina'
+                      alert('ERROR: no se encuentra la información requerida...');
+                      window.location = '/tp2/recepcion-ordenes?page=otrapagina'
                     </script>";
                       ?>
                     </td>
