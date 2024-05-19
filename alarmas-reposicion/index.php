@@ -107,7 +107,7 @@ while ($row = $result->fetch_assoc()) {
 
               if (in_array("gestion usuarios", $roles)) {
                 echo '<li class="nav-item">
-                                        <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                        <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
                                     </li>';
               }
 
@@ -137,7 +137,7 @@ while ($row = $result->fetch_assoc()) {
 
               if (in_array("gestion alarmas", $roles)) {
                 echo '<li class="nav-item">
-                                            <a class="nav-link" href="/tp2/alarmas-reposicion/">
+                                            <a class="nav-link active" href="/tp2/alarmas-reposicion/">
                                             Gestión de alarmas
                                             <span class="badge rounded-pill bg-danger">
                                             ' . $totalAlarmas . '+

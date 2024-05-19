@@ -141,13 +141,13 @@ if (isset($_POST['ean']) > 0) {
 
             if (in_array("alta productos", $roles)) {
               echo '<li class="nav-item">
-                                        <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+                                        <a class="nav-link active" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
                                     </li>';
             }
 
             if (in_array("gestion usuarios", $roles)) {
               echo '<li class="nav-item">
-                                        <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                        <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
                                     </li>';
             }
 

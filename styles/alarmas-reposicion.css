@@ -10,7 +10,7 @@
 }
 
 .principal {
-    min-height: 80vh;
+    min-height: 40vh;
     width: 95%;
     background-color: var(--lgray);
     border-radius: 1rem;

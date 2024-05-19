@@ -92,7 +92,7 @@ while ($row = $result->fetch_assoc()) {
 
             if (in_array("gestion usuarios", $roles)) {
               echo '<li class="nav-item">
-                                    <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                    <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
                                 </li>';
             }
 
@@ -104,7 +104,7 @@ while ($row = $result->fetch_assoc()) {
 
             if (in_array("stock", $roles)) {
               echo '<li class="nav-item">
-                                <a class="nav-link" href="/tp2/stock/">Stock</a>
+                                <a class="nav-link active" href="/tp2/stock/">Stock</a>
                                 </li>';
             }
 

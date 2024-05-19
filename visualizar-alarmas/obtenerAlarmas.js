@@ -1,4 +1,4 @@
-const urlAlarmas = "../includes/api/alarmas-reposicion-api/controller.php";
+const urlAlarmas = "../includes/api/visualizar-alarmas/controller.php";
 
 /* HTML Calls*/
 const sinDatosAlarmas = document.getElementById("sinDatosAlarmas");
@@ -92,39 +92,11 @@ function mostrarTabla(dataAlarmas) {
         estado.style.verticalAlign = "middle";
 
 
-        // Acciones
-        let button_edit = document.createElement("button");
-        let i_edit = document.createElement("i");
-        let button_info = document.createElement("button");
-        let i_info = document.createElement("i");
-
-        // Acciones
-        button_edit.className = "btn btn-warning m-1";
-        i_edit.className = "fa-solid fa-pen-to-square";
-
-        button_info.className = "btn btn-info m-1";
-        i_info.className = "fa-regular fa-lightbulb";
-
-        button_edit.appendChild(i_edit);
-        button_info.appendChild(i_info);
-
-        button_edit.addEventListener("click", () => {
-            editarAlarmaModal(alarma)
-        });
-
-        button_info.addEventListener("click", ()=>{
-            obtenerModAlarmas(alarma.id)
-        })
-
-        acciones.appendChild(button_edit);
-        acciones.appendChild(button_info);
-
         fila.appendChild(producto);
         fila.appendChild(sn);
         fila.appendChild(cantidad);
         fila.appendChild(stockAviso);
         fila.appendChild(estado);
-        fila.appendChild(acciones);
 
         table_alarmas.appendChild(fila);
 

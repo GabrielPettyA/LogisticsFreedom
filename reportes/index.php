@@ -115,13 +115,13 @@ $conexion->close();
 
                         if (in_array("gestion usuarios", $roles)) {
                             echo '<li class="nav-item">
-                                    <a class="nav-link active" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                    <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
                                 </li>';
                         }
 
                         if (in_array("reportes", $roles)) {
                             echo '  <li class="nav-item">
-                                    <a class="nav-link" href="/tp2/reportes/">Reportes</a>
+                                    <a class="nav-link active" href="/tp2/reportes/">Reportes</a>
                                     </li>';
                         }
 
