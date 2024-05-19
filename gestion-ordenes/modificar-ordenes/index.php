@@ -253,6 +253,9 @@ if (!in_array("gestion ordenes", $roles)) {
 
         </table>
       </div>
+      <br>
+      <br>
+      <br>
       <!-- Bootstrap -->
       <script src="https://kit.fontawesome.com/ce1f10009b.js" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

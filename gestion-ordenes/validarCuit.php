@@ -29,7 +29,7 @@ if (
 } else {
   echo
     "<script>
-alert('ERROR: El CUIT/CUIL no cumplen la norma fiscal, Verifique...');
+alert('ERROR: El CUIT/CUIL no cumple la norma fiscal, Verifique...');
 window.location='index.php?page=otrapagina'
 </script>";
   return false;

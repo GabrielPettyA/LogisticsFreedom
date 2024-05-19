@@ -1,4 +1,4 @@
-        <?php
+<?php
 session_start();
 error_reporting(0);
 $varsession = $_SESSION['email'];
@@ -54,74 +54,106 @@ require ("../includes/api/stock-api/servModStock.php");
 
 // SE OBTIENEN LOS DATOS GUARDADOS EN DB. DE LA ORDEN DE COMPRA SOLICITADA
 
-$sql = "SELECT * FROM orden_compra WHERE sn = '$prodRecep' ";
+$sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenRecep'";
 $resultado = $conn->query($sql);
 
 if ($resultado->num_rows > 0) {
-  $fila = mysqli_fetch_array($resultado);
-  $id = $fila[0];
-  $n_orden = $fila[1];
-  $fecha_orden = $fila[2];
-  $proveedor = $fila[3];
-  $administrador = $fila[5];
-  $sn = $fila[6];
-  $cant = $fila[7];
-  $estado_orden = $fila[11];
-  $motivo_orden = $fila[12];
 
-  /* SE DECLARAN LAS INSTANCIAS QUE SE DEBEN CUMPLIR PARA PODER REALIZAR LA CARGA DE LO INGRESADO POR 
-     FORMULARIO ACTUALIZANDO LA ORDEN DE COMPRA Y SU "SN" CORRESPONDIENTE */
-  if ($estado_orden == 'RECHAZADA' || $estado_orden == 'DADA DE BAJA' || $estado_orden == 'ENTREGADA') {
-    ?>
-    <div style="color:white; background-color: darkred; " class="navbar-toggler">
-      <h4> ALERT: dato incorrecto, Verifique ''orden'' o ''sn''.</h4>
-    </div>
-    <?php
+  $sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenRecep' && sn = '$prodRecep' ";
+  $resultado = $conn->query($sql);
+  if ($resultado->num_rows > 0) {
+    $fila = mysqli_fetch_array($resultado);
+    $id = $fila[0];
+    $n_orden = $fila[1];
+    $fecha_orden = $fila[2];
+    $proveedor = $fila[3];
+    $administrador = $fila[5];
+    $sn = $fila[6];
+    $cant = $fila[7];
+    $estado_orden = $fila[11];
+    $motivo_orden = $fila[12];
 
-  } else if ($cantRecep > $cant || $cantRecep < 0 /*|| $sn != $prodRecep*/) {
-    ?>
+    /* SE DECLARAN LAS INSTANCIAS QUE SE DEBEN CUMPLIR PARA PODER REALIZAR LA CARGA DE LO INGRESADO POR 
+       FORMULARIO ACTUALIZANDO LA ORDEN DE COMPRA Y SU "SN" CORRESPONDIENTE */
+    if ($estado_orden == 'RECHAZADA' || $estado_orden == 'DADA DE BAJA' || $estado_orden == 'ENTREGADA') {
+      ?>
       <div style="color:white; background-color: darkred; " class="navbar-toggler">
-        <h4> ERROR: Cantidad de ''sn'' incorrecta.</h4>
+        <h4> ALERT: Verifique estado de ''orden'' o ''sn''.</h4>
       </div>
-    <?php
+      <?php
 
-  } else {
+    } else if ($cantRecep > $cant || $cantRecep < 0) {
+      ?>
+        <div style="color:white; background-color: darkred; " class="navbar-toggler">
+          <h4> ERROR: Cantidad de ''sn'' incorrecta.</h4>
+        </div>
+      <?php
 
-    $sql = "SELECT * FROM productos WHERE sn = '$prodRecep' ";
-    $resultado = $conn->query($sql);
-    if ($resultado->num_rows > 0) {
-      $fila = mysqli_fetch_array($resultado);
-      $idOld = $fila[0];
-      $nameOld = $fila[1];
-      $snOld = $fila[2];
-      $cantOld = $fila[3];
-      $cantTotal = $cantOld + $cantRecep;
-      $motivoRecep = "RECEPCION ORDEN DE COMPRA";
+    } else {
+// OBTENCIÓN DE DATOS DE LA TABLA 'productos'
+      $sql = "SELECT * FROM productos WHERE sn = '$prodRecep' ";
+      $resultado = $conn->query($sql);
+      if ($resultado->num_rows > 0) {
+        $fila = mysqli_fetch_array($resultado);
+        $idOld = $fila[0];
+        $nameOld = $fila[1];
+        $snOld = $fila[2];
+        $cantOld = $fila[3];
+        $cantTotal = $cantOld + $cantRecep;
+        $motivoRecep = "RECEPCION ORDEN DE COMPRA";
+// INICIO DE SECCIÓN PARA CARGAR LOS DATOS DE MERCADERÍA INGRESANTE A LA TABLA DE 'mod_stock'
+        $mod = "INSERT INTO mod_stock (id_old,name_old,sn_old,cant_old) VALUE ('$idOld','$nameOld','$snOld','$cantOld')  ";
+        if ($conn->query($mod) == TRUE) {
 
-      $mod = "INSERT INTO mod_stock (id_old,name_old,sn_old,cant_old) VALUE ('$idOld','$nameOld','$snOld','$cantOld')  ";
-      if ($conn->query($mod) == TRUE) {
-        $resul = "UPDATE mod_stock SET id_new='$id', name_new='$nameOld', sn_new='$prodRecep', cant_new='$cantTotal', fecha='$fechaRecep', motivo='$motivoRecep' WHERE sn_old = '$prodRecep' ";
-        if ($conn->query($resul) === true) {
-          $dato = "UPDATE  productos SET cant='$cantTotal' WHERE sn= '$prodRecep' ";
-          if ($conn->query($dato) === true ) {
-            $dato3 = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE sn= '$prodRecep' ";
-            if ($conn->query($dato3) === true) {
+          $sql = "SELECT * FROM mod_stock WHERE sn_old = '$snOld' ";
+          $resultado = $conn->query($sql);
+          if ($resultado->num_rows > 0) {
+            $fila = mysqli_fetch_array($resultado);
+            $idReport = $fila[0];
+            echo $idReport;
+            $resul = "UPDATE mod_stock SET id_new='$id', name_new='$nameOld', sn_new='$prodRecep', cant_new='$cantTotal', fecha='$fechaRecep', motivo='$motivoRecep' WHERE id = '$idReport' ";
+            if ($conn->query($resul) === true) {
+              $dato = "UPDATE  productos SET cant='$cantTotal' WHERE sn= '$prodRecep' ";
+              if ($conn->query($dato) === true) {
+// FIN DE SECCIÓN PARA CARGAR LOS DATOS DE MERCADERÍA INGRESANTE A LA TABLA DE 'mod_stock'
+// INICIO DE SECCIÓN PARA DESACTIVAR LA ALARMA DE STOCK
+                $estadoNuevoAlarma = 'D';
+                $resultadoAlarmas = "SELECT * FROM alarmas WHERE productoFK = '$idOld' ";
+                $resultadoAlarmaActiva = $conn->query($resultadoAlarmas);
+                if ($resultadoAlarmaActiva->num_rows > 0) {
+                  $alarmas = "UPDATE alarmas SET estado = '$estadoNuevoAlarma' WHERE productoFK = '$idOld' ";
+                  if ($conn->query($alarmas) === true) {
 
-              ?>
-                <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
-              <?php
-             
-             
+// FIN DE SECCIÓN PARA DESACTIVAR LA ALARMA DE STOCK
+// INICIO DE SECCIÓN PARA CARGAR ARTÍCULOS DE ORDEN DE COMPRA EN EL ÁREA DE RECEPCIÓN
+                    $dato3 = "UPDATE  orden_compra SET fecha_recep='$fechaRecep', adm_recepcion='$admRecep', cant_recep='$cantRecep', estado_orden='$estadoRecep' WHERE n_orden= '$ordenRecep' && sn = '$snOld' ";
+                    if ($conn->query($dato3) === true) {
+                      ?>
+                        <h3><strong>Cargando correctamente, CONTINUE...</strong></h3>
+                      <?php
+                    }
+                  }
+                }// FIN DE SECCIÓN PARA CARGAR ARTÍCULOS DE ORDEN DE COMPRA EN EL ÁREA DE RECEPCIÓN
+              }
             }
           }
         }
+      } else {
+        echo "ERROR: proceso fallido, Intente nuevamente más tarde.";
       }
-    } else {
-      echo "Error...proceso fallido, Intente nuevamente más tarde.";
     }
-  }
+  }// SECTOR DE RECHAZO SI LA ORDEN INGRESADA NO EXISTE
+} elseif ($ordenRecep != $n_orden) {
+  ?>
+  <h4>
+    <br>
+    <p>ERROR: ingreso invalido...</p>
+    <p>Verifique orden en Listado</p>
+    <a style="text-decoration:none; border-style:double;
+    color:darkred;" href="../recepcion-ordenes/index.php">Volver</a>
+  </h4>
+  <?php
 }
-
 $conn->close();
 ?>
 
@@ -133,16 +165,24 @@ $conn->close();
 
 
 <?php
-// SE OBTIENEN LOS DATOS INGRESADOS POR FORMULARIO DE ARCHIVO INDEX.PHP DE SECTOR RECEPCION-ORDENES
+// -------------------- SE OBTIENEN LOS DATOS INGRESADOS POR FORMULARIO DE ARCHIVO INDEX.PHP DE SECTOR RECEPCION-ORDENES -----------------
 
-if (isset($_POST["orden"]) < 0) {
-  echo "Verifique Orden de compra";
-} else {
+
+$conn = mysqli_connect("localhost", "root", "", "bd_stock");
+
+// SE OBTIENEN LA ORDENES DE COMPRA EXISTENTE EN DB. PARA CORROBORAR LO INGRESADO EN 'INDEX.PHP'
+
+$ordenIngreso = $_POST['orden'];
+
+$sql = "SELECT * FROM orden_compra WHERE n_orden = '$ordenIngreso'";
+$resultado = $conn->query($sql);
+if ($resultado->num_rows > 0) {
+  //echo "Verifique Orden de compra";
+/*} else  {*/
   $orden = $_POST['orden'];
   $fechaRecep = $_POST['date'];
   $recep = $varsession;
-
-
+  //FIN DE CORROBORACIÓN DE ORDEN DE COMPRA EN DB. CON RESPECTO A SU EXISTENCIA, ESTA SECCIÓN ES SI EXISTE LA ORDEN INGRESADA CON RESPECTO A DB.
   ?>
   <!-- SE REALIZA FORMULARIO PARA MOSTRAR DATOS OBTENIDOS Y DERIVARLOS AL ACTUAL ARCHIVO
        UTILIZANDO "($_SERVER['PHP_SELF']);" -->
@@ -255,9 +295,9 @@ if (isset($_POST["orden"]) < 0) {
         </input>
 
 
-<!-- ESTE INPUT ES AGREGADO PARA VER SI SE PUEDE REGISTRAR TODOS LOS SN EN 0 ANUNCIANDOLO AL USUARIO, CASO CONTRARIO IRÍA EL INPUT DE ABAJO -->
+        <!-- ESTE INPUT ES AGREGADO PARA VER SI SE PUEDE REGISTRAR TODOS LOS SN EN 0 ANUNCIANDOLO AL USUARIO, CASO CONTRARIO IRÍA EL INPUT DE ABAJO -->
         <input class="btn btn-primary  mb-3 mt-5" style="margin-left: 15px;" type="button" name="cancelar"
-        value="FINALIZAR" onclick="location.href='../recepcion-ordenes/index.php'">
+          value="FINALIZAR" onclick="location.href='../recepcion-ordenes/index.php'">
 
 
       </form>
@@ -271,4 +311,5 @@ if (isset($_POST["orden"]) < 0) {
   </html>
   <?php
 }
+$conn->close();
 ?>

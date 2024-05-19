@@ -123,7 +123,7 @@ if (!in_array("recepcion ordenes", $roles)) {
           </form>
           <a class="btn btn-success mt-3" style="margin-bottom: 5px; margin-top:10px; background-color:darkcyan ; width: 84px; box-shadow: 4px 4px 5px black; " href="../">
             Salir</a>
-          <table style="margin-left: 20%; display: block; text-shadow: 5px 10px 8px black;  " class="container text-center mb-5">
+          <table style="margin-left: 20%; display: block; text-shadow: 5px 10px 14px black;  " class="container text-center mb-5">
             <thead class="">
               <tr class=""><br>
                 <th> Id </th>
