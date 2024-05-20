@@ -74,5 +74,5 @@ document.getElementById('monthly').addEventListener('click', () => {
 });
 
 document.getElementById('annual').addEventListener('click', () => {
-    createChart('Anual', annualData, annualLabels); // Cambia al gráfico anual
+    createChart('Anual', annualData, annualLabels); // Cambia al gráfico anual
 });

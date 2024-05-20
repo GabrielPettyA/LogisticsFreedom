@@ -31,6 +31,19 @@ while ($row = $result->fetch_assoc()) {
     $roles[] = $row['acceso'];
 }
 
+// --- Fin roles dinamicos
+//---- Alarmas activas
+$sqlAlarmas = "SELECT COUNT(*) AS total_alarmas FROM alarmas WHERE estado = 'A'";
+$resultAlarmas = $conexion->query($sqlAlarmas);
+
+$totalAlarmas;
+
+if ($resultAlarmas) {
+  $row = $resultAlarmas->fetch_assoc();
+  $totalAlarmas = $row['total_alarmas'];
+}
+// ---- Fin alarmas
+
 $consulta = "SELECT * FROM mod_stock";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
@@ -107,6 +120,7 @@ $conexion->close();
 
                     <?php
 
+<<<<<<< HEAD
 if (in_array("alta productos", $roles)) {
   echo '<li class="nav-item">
 <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
@@ -202,6 +216,95 @@ if (in_array("recepcion ordenes", $roles)) {
 }
 
 
+=======
+                        if (in_array("alta productos", $roles)) {
+                        echo '<li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/tp2/alta-productos">Alta de productos</a>
+                            </li>';
+                        }
+
+                        if (in_array("gestion usuarios", $roles)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/gestion-usuarios/">Gestión de usuarios</a>
+                                </li>';
+                        }
+
+                        if (in_array("reportes", $roles)) {
+                        echo '  <li class="nav-item">
+                                <a class="nav-link active" href="/tp2/reportes/">Reportes</a>
+                                </li>';
+                        }
+
+                        if (in_array("stock", $roles)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/stock/">Stock</a>
+                                </li>';
+                        }
+
+                        if (in_array("contacto", $roles)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/contacto/">Contacto</a>
+                                </li>';
+                        }
+
+                        if (in_array("revisar contacto", $roles)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/revisar-contacto/">Revisar contacto</a>
+                                </li>';
+                        }
+
+                        if (in_array("gestion alarmas", $roles) && $totalAlarmas == 0) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/alarmas-reposicion/">Gestión de alarmas</a>
+                            </li>';
+                        }
+
+                        if (in_array("gestion alarmas", $roles) && $totalAlarmas > 0) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/alarmas-reposicion/">
+                                Gestión de alarmas
+                                <span class="badge rounded-pill bg-danger">
+                                ' . $totalAlarmas . '+
+                                <span class="visually-hidden">unread messages</span>
+                                </span>
+
+                                </a>
+                            </li>';
+                        }
+
+                        if (in_array("visualizar alarmas", $roles) && $totalAlarmas == 0) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/visualizar-alarmas/">Visualizar alarmas</a>
+                            </li>';
+                        }
+
+                        if (in_array("visualizar alarmas", $roles) && $totalAlarmas > 0) {
+                        echo '<li class="nav-item">
+                            <a class="nav-link" href="/tp2/visualizar-alarmas/">
+                            Visualizar de alarmas
+                            <span class="badge rounded-pill bg-danger">
+                            ' . $totalAlarmas . '+
+                            <span class="visually-hidden">unread messages</span>
+                            </span>
+
+                            </a>
+                            </li>';
+                        }
+
+                        if (in_array("gestion ordenes", $roles)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/gestion-ordenes/">Gestión de órdenes</a>
+                            </li>';
+                        }
+
+                        if (in_array("recepcion ordenes", $roles)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="/tp2/recepcion-ordenes/">Recepción de órdenes</a>
+                                </li>';
+                        }
+
+
+>>>>>>> 4eefae96b6973f0f33ed0db89cee6c3d7a698778
 ?>
 
                         <li class="nav-item">

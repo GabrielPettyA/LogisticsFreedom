@@ -1,7 +1,7 @@
 <?php
 function conectarBaseDeDatos()
 {
-  $servername = "localhost:3306"; // Ojo caso particular de lucas puerto 3308
+  $servername = "localhost:3308"; // Ojo caso particular de lucas puerto 3308
   $username = "root";
   $password = "";
   $dbname = "bd_stock";
@@ -37,7 +37,6 @@ function conectarBaseDeDatos()
   // Crear la tabla "ventas" si no existe
   $sql = "CREATE TABLE IF NOT EXISTS ventas (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  factura varchar(30),
   producto_id INT,
   cantidad_vendida INT,
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
