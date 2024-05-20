@@ -13,7 +13,7 @@ if (!in_array("reportes", $roles)) {
 
 require ("../includes/config/db-config.php");
 
-$consulta = "SELECT * FROM productos WHERE cant > 0" ;
+$consulta = "SELECT * FROM productos WHERE cant > 0";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $result = $resultado->get_result();
@@ -170,25 +170,11 @@ $conexion->close();
           <table id="productos" class="table table-striped table-bordered" style="width:100%">
             <thead class="text-center">
               <tr>
-<<<<<<< HEAD
-                <td>
-                  <input onchange="habilitarCantidad(this)" name="productos_seleccionados[]" type="checkbox"
-                    value="<?php echo $modi['id']; ?>">
-                </td>
-                <td><?php echo $modi['name']; ?></td>
-                <td><?php echo $modi['cant']; ?></td>
-                <td><?php echo $modi['sn']; ?></td>
-                <td>
-                  <input type="number" name="cantidad_ventas[<?php echo $modi['id']; ?>]" value="0" min="0"
-                    max="<?php echo $modi['cant']; ?>">
-                </td>
-=======
                 <th class="pp"></th>
                 <th class="pp">NOMBRE</th>
                 <th class="pp">Cantidad de Stock</th>
                 <th class="pp">SN</th>
                 <th class="pp">Seleccionar Cantidad</th>
->>>>>>> 4eefae96b6973f0f33ed0db89cee6c3d7a698778
               </tr>
             </thead>
             <tbody>
@@ -245,13 +231,13 @@ $conexion->close();
                 <tbody id="confirmarventastabla">
 
                 </tbody>
-              </table> 
+              </table>
 
 
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-              <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="vender()">Sí, quiero comprar</button>
+              <button type="button" class="btn btn-success" onclick="vender()">Sí, quiero comprar</button>
             </div>
           </div>
         </div>
