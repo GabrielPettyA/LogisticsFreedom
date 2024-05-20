@@ -170,11 +170,25 @@ $conexion->close();
           <table id="productos" class="table table-striped table-bordered" style="width:100%">
             <thead class="text-center">
               <tr>
+<<<<<<< HEAD
+                <td>
+                  <input onchange="habilitarCantidad(this)" name="productos_seleccionados[]" type="checkbox"
+                    value="<?php echo $modi['id']; ?>">
+                </td>
+                <td><?php echo $modi['name']; ?></td>
+                <td><?php echo $modi['cant']; ?></td>
+                <td><?php echo $modi['sn']; ?></td>
+                <td>
+                  <input type="number" name="cantidad_ventas[<?php echo $modi['id']; ?>]" value="0" min="0"
+                    max="<?php echo $modi['cant']; ?>">
+                </td>
+=======
                 <th class="pp"></th>
                 <th class="pp">NOMBRE</th>
                 <th class="pp">Cantidad de Stock</th>
                 <th class="pp">SN</th>
                 <th class="pp">Seleccionar Cantidad</th>
+>>>>>>> 4eefae96b6973f0f33ed0db89cee6c3d7a698778
               </tr>
             </thead>
             <tbody>
