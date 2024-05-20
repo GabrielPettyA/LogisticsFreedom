@@ -74,11 +74,8 @@ class AlarmaService
         $smtp = $this->conexion->prepare($sql);
         $smtp->bind_param("isi", $alarma->stockAviso, $alarma->estado, $alarma->id);
 
-        $servModStock->cerrarConexion();
-        $smtp->close();
-
         return $smtp->execute() && $modificacionAlarma;
-  
+        
     }
 
     public function eliminarAlarma($productoFK)
