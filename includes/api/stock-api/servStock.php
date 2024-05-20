@@ -130,6 +130,15 @@ class Stock
             if (!$modiAlarmas) {
                 $response = false;
             }
+
+            $sql2 = "INSERT INTO ventas (producto_id, cantidad_vendida )VALUE ('$productoOld->id', '$cantidadVendida')";
+            $result = $this->conexion->query($sql2);
+           
+            if (!$result) {
+                $response = false;
+            }
+
+
         }
     
         return $response;

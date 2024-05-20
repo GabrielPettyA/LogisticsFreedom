@@ -4,28 +4,32 @@ require_once '../../config/db-config.php';
 
 //endpoint para obtener ventas
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $sql = "SELECT * FROM ventas";
+
+
+    $sql = "SELECT ventas.cantidad_vendida, ventas.fecha, productos.name
+    FROM productos
+    INNER JOIN ventas ON productos.id = ventas.producto_id;";
     $result = $conexion->query($sql);
-    $ventas = array();
+    $ventasData = array();
 
     if ($result->num_rows > 0) {
+
         while ($row = $result->fetch_assoc()) {
-            $venta = array(
-                "id" => $row["id"],
-                "producto_id" => $row["producto_id"],
-                "cantidad_vendida" => $row["cantidad_vendida"],
-                "fecha" => $row["fecha"]
+
+            $datos = array(
+                "cantidad" => $row["cantidad_vendida"],
+                "fecha" => $row["fecha"],
+                "name" => $row["name"],
+
             );
-            $ventas[] = $venta;
+
+            $ventasData[] = $datos;
         }
     }
 
-    // Cerrar la conexión
-    $conexion->close();
-
     // Devolver los resultados en formato JSON
     header("Content-Type: application/json");
-    echo json_encode($ventas);
+    echo json_encode($ventasData);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

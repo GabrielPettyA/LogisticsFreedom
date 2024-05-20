@@ -1,7 +1,20 @@
 const url = "../includes/api/ventas-api/ventas.php";
+const urlProd = "../includes/api/stock-api/stock.php";
+
+//---- HTML REF
+const datalistOptions = document.getElementById("datalistOptions");
+const datalistProd = document.getElementById("datalistProd");
+const desdeFecha = document.getElementById("desdeFecha");
+const hastaFecha = document.getElementById("hastaFecha");
+const graficaVentas = document.getElementById("graficaVentas");
+
 
 // Data variables 
 let listadeventas = [];
+let listaProductos = [];
+let productoSeleccionado = "";
+let cantidad = [];
+let fechas = [];
 
 const dailyData = [];
 const dailyLabels = [];
@@ -13,18 +26,77 @@ function verventas() {
 
 
             listadeventas = data;
-            //console.log(listadeventas)
-            data.forEach(element => {
-                dailyData.push(element.cantidad_vendida)
-                dailyLabels.push(element.fecha)
-            });
+
         })
 
 
 }
-verventas()
+
+function verProductos() {
+
+    fetch(urlProd + "?productos=valor")
+        .then(response => response.json())
+        .then(data => {
+
+            listaProductos = data;
+
+            data.forEach(producto => {
+
+                let option = document.createElement("option");
+                option.value = producto.name;
+
+                datalistOptions.appendChild(option);
+
+            })
+
+        })
 
 
+}
+
+verProductos();
+verventas();
+
+function realizarBusqueda() {
+
+    cantidad = [];
+    fechas = [];
+
+    producto = datalistProd.value;
+    desde = desdeFecha.value + " 00:00:00";
+    hasta = hastaFecha.value + " 23:59:59";
+
+    const result = listadeventas.filter(dato => dato.name == producto);
+    const filtradodesde = result.filter(dato => dato.fecha >= desde);
+    const filtradohasta = filtradodesde.filter(dato => dato.fecha <= hasta);
+
+    if(filtradohasta.length == 0){
+
+        alert("No hay resultados para la busqueda.");
+        cantidad = [];
+        fechas = [];
+        graficaVentas.style.display = "none";
+        return;
+
+    }
+
+    productoSeleccionado = producto;
+
+    filtradohasta.forEach(element=>{
+
+        cantidad.push(element.cantidad);
+        fechas.push(element.fecha);
+
+    })
+
+    createChart(productoSeleccionado, cantidad, fechas);
+    graficaVentas.style.display = "block";
+
+    console.log(cantidad, fechas)
+
+
+
+}
 
 
 const ctx = document.getElementById('myChart');
@@ -53,26 +125,3 @@ const createChart = (type, data, label) => {
         },
     });
 };
-
-// const dailyData = [3, 5, 2, 1, 4, 7, 6, 5, 3, 8]; // Datos de ejemplo
-// const dailyLabels = ['Día 1', 'Día 2', 'Día 3', 'Día 4', 'Día 5', 'Día 6', 'Día 7', 'Día 8', 'Día 9', 'Día 10']; // Etiquetas de ejemplo
-
-const monthlyData = [12, 19, 3, 5, 2, 3, 6, 2, 4, 5, 8, 23];
-const monthlyLabels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
-const annualData = [123, 140, 110, 150, 134]; // Datos de ejemplo para años
-const annualLabels = ['2019', '2020', '2021', '2022', '2023']; // Etiquetas de ejemplo para años
-
-createChart('Mensual', monthlyData, monthlyLabels); // Muestra el gráfico mensual por defecto
-
-document.getElementById('daily').addEventListener('click', () => {
-    createChart('nombredelproducto', dailyData, dailyLabels); // Cambia al gráfico diario
-});
-
-document.getElementById('monthly').addEventListener('click', () => {
-    createChart('Mensual', monthlyData, monthlyLabels); // Cambia al gráfico mensual
-});
-
-document.getElementById('annual').addEventListener('click', () => {
-    createChart('Anual', annualData, annualLabels); // Cambia al gráfico anual
-});
