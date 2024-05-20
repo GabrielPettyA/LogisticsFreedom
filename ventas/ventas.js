@@ -1,14 +1,5 @@
 const url = "../includes/api/ventas-api/ventas.php";
-
-
 const confirmarventastabla = document.getElementById("confirmarventastabla")
-
-
-
-
-
-
-
 
 $(document).ready(function () {
     $('#ventas').DataTable({
@@ -97,7 +88,17 @@ function vender(){
     };
     fetch(url , requestOptions)
     .then(response=>response.text()).then(result=>{
-        console.log(result);
+        if(result){
+
+            alert("Se ha registrado la venta exitosamente.");
+            window.location.reload();
+        }
+
+        if(!result){
+
+            alert("No se ha podido ejecutar el registro de venta.")
+
+        }
 
     }).catch(error=>{
         console.log(error);

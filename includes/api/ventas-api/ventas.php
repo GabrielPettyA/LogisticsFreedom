@@ -1,6 +1,6 @@
 <?php
 
-require '../../config/db-config.php';
+require_once '../../config/db-config.php';
 
 //endpoint para obtener ventas
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -27,18 +27,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     header("Content-Type: application/json");
     echo json_encode($ventas);
 }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $data = json_decode(file_get_contents("php://input"));
     if ($data == null || empty($data)) {
         echo json_encode(false);
         return;
 
     }
-    require_once "../stock-api/stock.php";
+    require_once "../stock-api/servStock.php";
+
     $stockserv = new Stock($conexion);
     $vender = $stockserv->venderProducto($data);
     $stockserv->cerrarConexion(); 
     echo json_encode($vender);
-    return;
+    return true;
+
 }
 

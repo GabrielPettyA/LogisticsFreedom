@@ -92,6 +92,8 @@ class AlarmaService
     public function cambioDeEstadoDeAlarma($productoFK)
     {
 
+        $response = true;
+
         $sql = "SELECT * FROM productos WHERE id = ?";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bind_param("i", $productoFK);
@@ -117,7 +119,11 @@ class AlarmaService
             $smtp = $this->conexion->prepare($sql3);
             $new_estado = "A";
             $smtp->bind_param("si", $new_estado, $alarma['id']);
-            $smtp->execute();
+
+            if(!$smtp->execute()){
+                $response = false;
+            }
+
         }
 
         if ($alarma['stockAviso'] < $producto['cant']) {
@@ -126,11 +132,15 @@ class AlarmaService
             $smtp = $this->conexion->prepare($sql3);
             $new_estado = "D";
             $smtp->bind_param("si", $new_estado, $alarma['id']);
-            $smtp->execute();
+            
+            if(!$smtp->execute()){
+                $response = false;
+            }
+
         }
 
         // ---- No se devuelve nada hasta el final
-        return false;
+        return $response;
     }
 
     public function cerrarConexion()

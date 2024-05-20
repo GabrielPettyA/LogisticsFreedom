@@ -67,50 +67,47 @@ class Stock
 
     public function venderProducto($data)
     {
-        require_once "./servModStock.php";
+        require_once "servModStock.php";
         require_once "../alarmas-reposicion-api/servAlarmas.php";
-
+    
         $response = true;
-
+        $modiServ = new modificarStock($this->conexion);
+        $alarmaServ = new AlarmaService($this->conexion);
+    
         foreach ($data as $venta) {
-
-
             $nombreProducto = $venta->producto;
             $cantidadVendida = $venta->cant;
-
+    
             $sql = "SELECT * FROM productos WHERE name='$nombreProducto'";
             $resultado = $this->conexion->query($sql);
-
+    
             $productoOld = new stdClass;
-
+    
             if ($resultado->num_rows > 0) {
-
                 // Setteamos el producto en el estado viejo
                 while ($row = $resultado->fetch_assoc()) {
-
                     $productoOld->id = $row["id"];
                     $productoOld->name = $row["name"];
                     $productoOld->sn = $row["sn"];
                     $productoOld->cant = $row["cant"];
-
                 }
-
             }
-
-            $productoNew = $productoOld->id;
-            $productoNew = $productoOld->name;
-            $productoNew = $productoOld->sn;
-            // --- El nuevo estado tiene la cantidad vieja menos la vendida
-            $productoNew = $productoOld->cant - $cantidadVendida;
+    
+            // Creamos el nuevo estado del producto
+            $productoNew = new stdClass;
+            $productoNew->id = $productoOld->id;
+            $productoNew->name = $productoOld->name;
+            $productoNew->sn = $productoOld->sn;
+            $productoNew->cant = $productoOld->cant - $cantidadVendida;
+    
             $modificacion = $this->modificarStock($productoNew);
-
+    
             if (!$modificacion) {
                 $response = false;
             }
-
-            // ----- Registrar modificación de stock 
+    
+            // Registrar modificación de stock 
             $productoModificado = new stdClass;
-
             $productoModificado->id_old = $productoOld->id;
             $productoModificado->name_old = $productoOld->name;
             $productoModificado->sn_old = $productoOld->sn;
@@ -119,34 +116,25 @@ class Stock
             $productoModificado->name_new = $productoOld->name;
             $productoModificado->sn_new = $productoOld->sn;
             $productoModificado->cant_new = $productoOld->cant - $cantidadVendida;
-            $productoModificado->fecha = date("Y-d-m", strtotime("today"));
+            $productoModificado->fecha = date("Y-m-d", strtotime("today"));
             $productoModificado->motivo = "VENTA";
-
-            $modiServ = new modificarStock($this->conexion);
+    
             $generarModifi = $modiServ->modificarStock($productoModificado);
-
+    
             if (!$generarModifi) {
                 $response = false;
             }
-
-
-
-
-            $alarmaServ = new AlarmaService($this->conexion);
+    
             $modiAlarmas = $alarmaServ->cambioDeEstadoDeAlarma($productoOld->id);
-
-
+    
             if (!$modiAlarmas) {
                 $response = false;
             }
-
-            $alarmaServ->cerrarConexion()();
-            $modiServ->cerrarConexion();
         }
-
+    
         return $response;
-
     }
+    
 
     public function cerrarConexion()
     {

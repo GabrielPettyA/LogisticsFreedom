@@ -237,7 +237,7 @@ $conexion->close();
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-              <button type="button" class="btn btn-success" onclick="vender()">Sí, quiero comprar</button>
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="vender()">Sí, quiero comprar</button>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 <?php
 function conectarBaseDeDatos()
 {
-  $servername = "localhost:3308"; // Ojo caso particular de lucas puerto 3308
+  $servername = "localhost:3306"; // Ojo caso particular de lucas puerto 3308
   $username = "root";
   $password = "";
   $dbname = "bd_stock";
