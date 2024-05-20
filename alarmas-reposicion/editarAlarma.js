@@ -74,7 +74,7 @@ function validarStockAviso() {
 
     }
 
-    if (stockAviso > 0 && stockAviso < 10000) {
+    if (stockAviso >= 0 && stockAviso < 10000) {
 
         editarStockAviso.classList.remove("is-invalid");
         editarStockAviso.classList.add("is-valid");
@@ -125,6 +125,7 @@ function editarAlarmaApi(usuario){
     alarmaEditada.motivo = "CONFIG MANUAL";
     alarmaEditada.modificadaPor = usuario;
 
+    console.log(alarmaEditada)
 
     const requestOptions = {
         method: "PUT",
@@ -152,7 +153,7 @@ function editarAlarmaApi(usuario){
 
         if(!resp){
 
-            alert("No se pueden setear alarmas con stock de aviso en '0'. Puede utilizar el estado inactivo.")
+            alert("No se pueden setear alarmas con stock de aviso menor a '0'.");
 
         }
 

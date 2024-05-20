@@ -17,7 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
     $data = json_decode(file_get_contents("php://input"));
 
-    if ($data == null || empty($data->id) || empty($data->stockAviso) || empty($data->estado)) {
+    if ($data == null || empty($data->id) || empty($data->estado)) {
+
+        header("Content-Type: application/json; charset=utf-8");
+        echo json_encode(false);
+        return;
+    }
+
+    if($data->stockAviso < 0){
 
         header("Content-Type: application/json; charset=utf-8");
         echo json_encode(false);
