@@ -125,8 +125,6 @@ function editarAlarmaApi(usuario){
     alarmaEditada.motivo = "CONFIG MANUAL";
     alarmaEditada.modificadaPor = usuario;
 
-    console.log(alarmaEditada)
-
     const requestOptions = {
         method: "PUT",
         headers: {
@@ -138,8 +136,6 @@ function editarAlarmaApi(usuario){
     fetch(urlAlarmas,requestOptions)
     .then(response => response.json())
     .then(resp => {
-
-        console.log(resp)
 
         if(resp){
 
