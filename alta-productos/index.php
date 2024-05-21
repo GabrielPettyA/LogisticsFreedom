@@ -236,6 +236,12 @@ if (isset($_POST['ean']) > 0) {
                     </li>';
             }
 
+            if (in_array("ventas", $roles)) {
+              echo '<li class="nav-item">
+                    <a class="nav-link" href="/tp2/ventas/ventas.php"> Ventas </a>
+                    </li>';
+            }
+
 
             ?>
 

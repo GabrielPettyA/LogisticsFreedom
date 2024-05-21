@@ -182,6 +182,12 @@ if ($resultAlarmas) {
                       </li>';
               }
 
+              if (in_array("ventas", $roles)) {
+                echo '<li class="nav-item">
+                      <a class="nav-link" href="/tp2/ventas/ventas.php"> Ventas </a>
+                      </li>';
+              }
+
 
 ?>
 
@@ -316,6 +322,14 @@ if ($resultAlarmas) {
           </label>
         </div>
 
+        <div class="form-check">
+          <input class="form-check-input editUserAccessCheck" name="check11" id="check11" type="checkbox"
+            value="ventas">
+          <label class="form-check-label" for="check11">
+            Ventas
+          </label>
+        </div>
+
       </form>
 
       <form id="formEditUser" style="display: none;">
@@ -327,81 +341,89 @@ if ($resultAlarmas) {
         <label for="exampleFormControlInput1" class="form-label">Permisos</label>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check11" id="check11" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check12" id="check12" type="checkbox"
             value="alta productos">
-          <label class="form-check-label" for="check11">
+          <label class="form-check-label" for="check12">
             Alta de productos
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check12" id="check12" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check13" id="check13" type="checkbox"
             value="gestion usuarios">
-          <label class="form-check-label" for="check12">
+          <label class="form-check-label" for="check13">
             Gestion de usuarios
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check13" id="check13" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check14" id="check14" type="checkbox"
             value="reportes">
-          <label class="form-check-label" for="check13">
+          <label class="form-check-label" for="check14">
             Reportes
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check14" id="check14" type="checkbox" value="stock">
-          <label class="form-check-label" for="check14">
+          <input class="form-check-input editUserAccessCheck" name="check15" id="check15" type="checkbox" value="stock">
+          <label class="form-check-label" for="check15">
             Stock
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check15" id="check15" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check16" id="check16" type="checkbox"
             value="contacto">
-          <label class="form-check-label" for="check15">
+          <label class="form-check-label" for="check16">
             Contacto
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check16" id="check16" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check17" id="check17" type="checkbox"
             value="revisar contacto">
-          <label class="form-check-label" for="check16">
+          <label class="form-check-label" for="check17">
             Revisar contacto
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check17" id="check17" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check18" id="check18" type="checkbox"
             value="gestion ordenes">
-          <label class="form-check-label" for="check17">
+          <label class="form-check-label" for="check18">
             Gestión órdenes
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check18" id="check18" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check19" id="check19" type="checkbox"
             value="recepcion ordenes">
-          <label class="form-check-label" for="check18">
+          <label class="form-check-label" for="check19">
             Recepción órdenes
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check19" id="check19" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check20" id="check20" type="checkbox"
             value="gestion alarmas">
-          <label class="form-check-label" for="check19">
+          <label class="form-check-label" for="check20">
             Gestión de alarmas
           </label>
         </div>
 
         <div class="form-check">
-          <input class="form-check-input editUserAccessCheck" name="check20" id="check20" type="checkbox"
+          <input class="form-check-input editUserAccessCheck" name="check21" id="check21" type="checkbox"
             value="visualizar alarmas">
-          <label class="form-check-label" for="check20">
+          <label class="form-check-label" for="check21">
             Visualizar alarmas
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input editUserAccessCheck" name="check22" id="check22" type="checkbox"
+            value="ventas">
+          <label class="form-check-label" for="check22">
+            Ventas
           </label>
         </div>
 

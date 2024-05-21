@@ -141,7 +141,7 @@ function conectarBaseDeDatos()
         VALUES ('$id', 'alta productos'), ('$id', 'contacto'), 
         ('$id', 'gestion usuarios'), ('$id', 'reportes'),
          ('$id', 'revisar contacto'), ('$id', 'stock'), ('$id', 'gestion alarmas'),
-          ('$id','visualizar alarmas'), ('$id','gestion ordenes'), ('$id', 'recepcion ordenes')";
+          ('$id','visualizar alarmas'), ('$id','gestion ordenes'), ('$id', 'recepcion ordenes'),('$id', 'ventas')";
     $result = $conn->query($sql);
   }
 
