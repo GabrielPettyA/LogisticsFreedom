@@ -138,7 +138,7 @@ if ($resultado->num_rows > 0) {
         
         $mod = "INSERT INTO mod_stock  (id_old,name_old,sn_old,cant_old,id_new,name_new,sn_new,cant_new,fecha,motivo) VALUE ('$idOld','$nameOld','$snOld','$cantOld','$id','$nameOld','$prodRecep','$cantTotal','$fechaRecep','$motivoRecep')  ";
         if ($conn->query($mod) == TRUE) {
-
+/*
           $sql = "SELECT * FROM mod_stock WHERE sn_old = '$snOld' ";
           $resultado = $conn->query($sql);
           if ($resultado->num_rows > 0) {
@@ -146,7 +146,7 @@ if ($resultado->num_rows > 0) {
             $idReport = $fila[0];
             echo $idReport;
             $resul = "UPDATE mod_stock SET id_new='$id', name_new='$nameOld', sn_new='$prodRecep', cant_new='$cantTotal', fecha='$fechaRecep', motivo='$motivoRecep' WHERE id = '$idReport' ";
-            if ($conn->query($resul) === true) {
+            if ($conn->query($resul) === true) {*/
               $dato = "UPDATE  productos SET cant='$cantTotal' WHERE sn= '$prodRecep' ";
               if ($conn->query($dato) === true) {
                 // FIN DE SECCIÓN PARA CARGAR LOS DATOS DE MERCADERÍA INGRESANTE A LA TABLA DE 'mod_stock'
@@ -171,8 +171,8 @@ if ($resultado->num_rows > 0) {
                   }
                 }// FIN DE SECCIÓN PARA CARGAR ARTÍCULOS DE ORDEN DE COMPRA EN EL ÁREA DE RECEPCIÓN
               }
-            }
-          }
+            //}
+          //}
         }
       } else {
         echo "ERROR: proceso fallido, Intente nuevamente más tarde.";
