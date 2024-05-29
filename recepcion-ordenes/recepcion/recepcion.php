@@ -45,11 +45,13 @@ if (!in_array("recepcion ordenes", $roles)) {
 
   .todoTabla {
     margin-left: 1%;
+    width: 100%;
   }
 
   .inicio {
     color: white;
     justify-content: center;
+    text-align: center;
     margin-left: 28.5%;
     font-family: 'Times New Roman', Times, serif;
     font-size: 8vh;

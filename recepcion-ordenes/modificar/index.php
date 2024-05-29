@@ -29,13 +29,17 @@ if (!in_array("recepcion ordenes", $roles)) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
+<?php 
 
+
+?>
 <body translate="no" class="text-bg-success">
   <h1 style="margin-left:30%; margin-top:2%; margin-bottom:3%; box-shadow: 4px 4px 10px 7px darkgreen; width: 32%; border-radius: 15px; " 
   class="tituloMod"> SISTEMA BAJA DE ÓRDENES</h1>
   <?php
 /* OBTENCIÓN DE LOS DATOS ENVIADOS POR FORMULARIO Y LLAMADO A DB. PARA LISTAR LA INFORMACIÓN QUE POSEE Y PODER
    UTILIZARLA PARA LUEGO HACER LOS CAMBIOS REQUERIDOS VISUALIZÁNDOLOS EN TIEMPO REAL */
+   
 
   $conn = mysqli_connect("localhost", "root", "", "bd_stock");
   $registro = $_POST['eliminar'];
@@ -55,8 +59,11 @@ if (!in_array("recepcion ordenes", $roles)) {
     $estado_orden = $fila[11];
     $motivo_orden = $fila[12];
     //$baja = 'DADA DE BAJA';
+
+    
     ?>
     <!-- FORMULARIO ARMADO PARA MODIFICAR LOS ESTADOS Y AGREGAR MENSAJE DE MOTIVO DE MODIFICACIÓN -->
+
 
     <form style="margin-left:26%" class="formModificar" action="../modificar/eliminar.php" method="post">
       <div>
@@ -141,20 +148,21 @@ if (!in_array("recepcion ordenes", $roles)) {
     <?php
 
 
-  } //else {
+  } else {
   ?>
-  <!--
+  
     <h1 style="justify-content:center; text-align:center; color:brown; margin-top:12%; font-size:3rem; ">
       "ERROR: Orden No Existe. Verifique Nuevamente !!!"</h1>
 
     <a class="botonModificar" style="margin-left: 10%;
       color:blue;  font-size:1.5rem; text-decoration:none;
       font-family:Georgia, 'Times New Roman', Times, serif;
-      " href="../modificar-ordenes/index.php">Volver</a>-->
+      " href="./modificar.php">Volver</a>
   <?php
-  //}
+  }
   $conn->close();
   ?>
+  
 </body>
 
 </html>
