@@ -216,7 +216,7 @@ if ($resultAlarmas) {
 
     <div class="cardBody">
 
-      <select id="selectModType" class="form-select mb-3" aria-label="Select tipo de form" onchange="cangeForm()">
+      <select id="selectModType" class="form-select mb-3" aria-label="Select tipo de form" onchange="changeForm()">
         <option selected>Seleccione tipo de gestion</option>
         <option value="C">Crear usuario</option>
         <option value="E">Editar usuario</option>

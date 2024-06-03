@@ -44,7 +44,7 @@ function obtenerDatos() {
         
 }
 
-function cangeForm() {
+function changeForm() {
     switch (selectModType.value) {
         case "C":
             // Form crear usuario
@@ -55,6 +55,9 @@ function cangeForm() {
             formDelUser.style.display = "none";
             btnEditUser.style.display = "none";
             btnDelUser.style.display = " none";
+            formNewUser.reset(); 
+            formEditUser.reset();
+            formDelUser.reset();
             break;
         case "D":
             resetFormNuevoUsuario();
@@ -203,6 +206,12 @@ function crearUsuario() {
 
         data = formatoNuevoUsuario();
 
+        if(data.roles.length == 0){
+
+            alert("No se han asignado roles al usuario");
+            return;
+        }
+
         const requestOptions = {
             method: "POST",
             headers: {
@@ -300,6 +309,13 @@ function editarUsuario(){
         data = {};
         data.id = dataAll.id;
         data.roles = dataAll.roles;
+
+        if(data.roles.length == 0){
+
+            alert("No se han asignado roles al usuario");
+            return;
+
+        }
 
         const requestOptions = {
             method: "PUT",
