@@ -486,8 +486,7 @@ if ($resultAlarmas) {
           </div>
         </div>
 
-
-        <!-- Modal crear usuario -->
+        <!-- Modal reiniciar formulario -->
         <div class="modal fade" id="modalReiniciarFormNewUser" tabindex="-1"
           aria-labelledby="modalReiniciarFormNewUserLabel" aria-hidden="true">
           <div class="modal-dialog  modal-dialog-centered">
@@ -506,7 +505,7 @@ if ($resultAlarmas) {
               </div>
               <div class="modal-footer">
 
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="resetFormnuevoUsuario()">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="resetFormNuevoUsuario()">
                   Reiniciar
                 </button>
 
