@@ -74,7 +74,7 @@ function validarStockAviso() {
 
     }
 
-    if (stockAviso >= 0 && stockAviso < 10000) {
+    if (stockAviso >= 0 && stockAviso <= 10000 ) {
 
         editarStockAviso.classList.remove("is-invalid");
         editarStockAviso.classList.add("is-valid");

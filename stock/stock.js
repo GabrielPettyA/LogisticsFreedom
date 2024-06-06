@@ -293,7 +293,7 @@ function validarEditarNombre() {
 
     let editName = edit_name.value;
 
-    if (editName.length > 20 || editName < 3) {
+    if (editName.length > 20 || editName.length < 3) {
 
         errorEditName.style.display = "block";
         editarValid[0] = false;
