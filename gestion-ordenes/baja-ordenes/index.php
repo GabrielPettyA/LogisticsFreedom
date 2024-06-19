@@ -30,8 +30,9 @@ if (!in_array("gestion ordenes", $roles)) {
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
+
 <body translate="no" class="text-bg-success">
-  <h1 style="margin-left:30%; margin-top:2%; margin-bottom:3%;" class="tituloMod"> SISTEMA BAJA DE ÓRDENES</h1>
+  <h1 style="margin-left:33%; margin-top:2%; margin-bottom:3%;" class="tituloMod"> SISTEMA BAJA DE ÓRDENES</h1>
   <?php
 
   $conn = mysqli_connect("localhost", "root", "", "bd_stock");
@@ -85,7 +86,7 @@ if (!in_array("gestion ordenes", $roles)) {
           var hab;
           frm = obj.form;
           num = obj.selectedIndex;
-          if (num == -1 || num == 1 || num == 2 || num == 4 ) hab = true;
+          if (num == -1 || num == 1 || num == 2 || num == 4) hab = true;
           else if (num == 3 || num == 5) hab = false;
           frm.mensaje.disabled = hab;
         }
@@ -127,20 +128,27 @@ if (!in_array("gestion ordenes", $roles)) {
     <?php
 
 
-  } //else {
-  ?>
-  <!--
-    <h1 style="justify-content:center; text-align:center; color:brown; margin-top:12%; font-size:3rem; ">
-      "ERROR: Orden No Existe. Verifique Nuevamente !!!"</h1>
+  }else {
+    ?>
+    <p style="margin-left:45px;
+    font-size:xx-large;margin-top:20px;">Nro. orden de compra incorrecta
+    <br>Verifique datos en BD.</p>
+    <a style="font-size: 5rem;
+    text-align:center; color: darkred;
+    text-decoration:none;" 
+    href="../modificar-ordenes/index.php"><br><p>Volver</p></a>
 
-    <a class="botonModificar" style="margin-left: 10%;
-      color:blue;  font-size:1.5rem; text-decoration:none;
-      font-family:Georgia, 'Times New Roman', Times, serif;
-      " href="../modificar-ordenes/index.php">Volver</a>-->
-  <?php
-  //}
+<?php
+/*
+    echo
+      "<script>
+        alert('ERROR: N°orden incorrecta');
+        window.location='../../index.php?page=otrapagina'
+        </script>";*/
+  }
   $conn->close();
   ?>
 </body>
+
 
 </html>

@@ -30,6 +30,7 @@ if (!in_array("gestion ordenes", $roles)) {
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
+
 <body translate="no" class="text-bg-success">
   <h1 style="margin-left:30%; margin-top:2%; margin-bottom:3%;" class="tituloMod"> SISTEMA DE MODIFICACIÓN</h1>
   <?php
@@ -117,7 +118,7 @@ if (!in_array("gestion ordenes", $roles)) {
 
     echo
       "<script>
-  alert('Se requiere : ID para ingresar !!!');
+  alert('ERROR: ID incorrecto!!!');
   window.location='index.php?page=otrapagina'
   </script>";
   }
